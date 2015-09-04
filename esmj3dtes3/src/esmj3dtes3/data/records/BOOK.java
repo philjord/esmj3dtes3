@@ -22,7 +22,6 @@ public class BOOK extends RECO
 
 	public ZString ICON;
 
-	 
 	public BOOK(Record recordData)
 	{
 		super(recordData);
@@ -57,6 +56,14 @@ public class BOOK extends RECO
 			{
 
 			}
+			else if (sr.getType().equals("TEXT"))
+			{
+
+			}
+			else if (sr.getType().equals("ENAM"))
+			{
+
+			}
 			else
 			{
 				System.out.println("unhandled : " + sr.getType() + " in record " + recordData + " in " + this);
@@ -69,5 +76,4 @@ public class BOOK extends RECO
 		return "BOOK : (" + formId + "|" + Integer.toHexString(formId) + ") " + EDID.str + " : " + MODL.model;
 	}
 
-	 
 }

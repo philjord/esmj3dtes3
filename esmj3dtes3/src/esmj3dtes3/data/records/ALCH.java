@@ -50,13 +50,17 @@ public class ALCH extends RECO
 			}
 			else if (sr.getType().equals("ENAM"))
 			{
-				 
+
 			}
 			else if (sr.getType().equals("ITEX"))
 			{
 				ICON = new ZString(bs);
 			}
 			else if (sr.getType().equals("SCRI"))
+			{
+
+			}
+			else if (sr.getType().equals("TEXT"))
 			{
 
 			}

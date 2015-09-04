@@ -54,16 +54,16 @@ public class LEVI extends RECO
 		}
 		itemID = new ZString[numItems];
 		itemLevel = new int[numItems];
-		for (int i = 0; i < numItems; i += 2)
+		for (int i = 0; i < numItems; i++)
 		{
-			sr = subrecords.get(4 + (i*2) + 0);
+			sr = subrecords.get(4 + (i * 2) + 0);
 			bs = sr.getData();
 
 			if (sr.getType().equals("INAM"))
 			{
 				itemID[i] = new ZString(bs);
 			}
-			sr = subrecords.get(4 + (i*2) + 1);
+			sr = subrecords.get(4 + (i * 2) + 1);
 			bs = sr.getData();
 			if (sr.getType().equals("INTV"))
 			{

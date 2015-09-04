@@ -8,14 +8,14 @@ import javax.media.j3d.Node;
 import utils.source.MediaSources;
 import esmLoader.common.data.record.IRecordStore;
 import esmLoader.common.data.record.Record;
+import esmj3d.data.shared.records.LAND;
 import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.BethRenderSettings.UpdateListener;
 import esmj3d.j3d.cell.J3dCELLGeneral;
+import esmj3d.j3d.j3drecords.inst.J3dLAND;
 import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
 import esmj3dtes3.data.records.CELL;
-import esmj3dtes3.data.records.LAND;
 import esmj3dtes3.data.records.REFR;
-import esmj3dtes3.j3d.j3drecords.inst.J3dLAND;
 import esmj3dtes3.j3d.j3drecords.inst.J3dREFRFactory;
 
 public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
@@ -148,13 +148,13 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 				J3dLAND j3dLAND;
 				if (makePhys)
 				{
-					j3dLAND = new J3dLAND(new LAND(record));
+					j3dLAND = new J3dLAND(new LAND(record, true));
 				}
 				else
 				{
-					j3dLAND = new J3dLAND(new LAND(record), master, mediaSources.getTextureSource());
+					j3dLAND = new J3dLAND(new LAND(record, true), master, mediaSources.getTextureSource());
 				}
-
+				//TODO: cellLocation is not correct here?
 				j3dLAND.setLocation(cellLocation);
 				ret = j3dLAND;
 			}

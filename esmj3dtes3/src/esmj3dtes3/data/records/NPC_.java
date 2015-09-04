@@ -114,6 +114,10 @@ public class NPC_ extends RECO
 			{
 
 			}
+			else if (sr.getType().equals("SCRI"))
+			{
+
+			}
 
 			else
 			{
@@ -123,5 +127,4 @@ public class NPC_ extends RECO
 		}
 	}
 
- 
 }

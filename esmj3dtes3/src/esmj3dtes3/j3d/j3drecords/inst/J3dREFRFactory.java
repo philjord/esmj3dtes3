@@ -29,6 +29,7 @@ import esmj3dtes3.data.records.DOOR;
 import esmj3dtes3.data.records.INGR;
 import esmj3dtes3.data.records.LEVC;
 import esmj3dtes3.data.records.LIGH;
+import esmj3dtes3.data.records.LOCK;
 import esmj3dtes3.data.records.MISC;
 import esmj3dtes3.data.records.NPC_;
 import esmj3dtes3.data.records.PROB;
@@ -202,6 +203,20 @@ public class J3dREFRFactory
 			ARMO armo = new ARMO(baseRecord);
 			return makeJ3dRECODynInst(refr, armo, armo.MODL, makePhys, mediaSources);
 		}
+		else if (baseRecord.getRecordType().equals("LOCK"))
+		{
+			LOCK lock = new LOCK(baseRecord);
+			return makeJ3dRECODynInst(refr, lock, lock.MODL, makePhys, mediaSources);
+		}
+		else if (baseRecord.getRecordType().equals("PROB"))
+		{
+			PROB prob = new PROB(baseRecord);
+			return makeJ3dRECODynInst(refr, prob, prob.MODL, makePhys, mediaSources);
+		}
+		else if (baseRecord.getRecordType().equals("SNDG"))
+		{
+			//TODO:?
+		}
 		else if (baseRecord.getRecordType().equals("DOOR"))
 		{
 			if (refr.XTEL != null && !makePhys)
@@ -225,14 +240,7 @@ public class J3dREFRFactory
 		{
 			//SBSP sbsp = new SBSP(baseRecord);
 		}
-		else if (baseRecord.getRecordType().equals("DIAL"))
-		{
-			//TODO: what is a dial here mean?
-			System.out.println("DIAL ?? " + refr.NAMEref.str);
-		}
-		//LOCK
-		//PROB
-		//SNDG
+
 		else if (baseRecord.getRecordType().equals("LEVC"))
 		{
 			if (!makePhys)
@@ -285,11 +293,6 @@ public class J3dREFRFactory
 		{
 			NPC_ npc_ = new NPC_(baseRecord);
 			return new J3dNPC_(npc_, master, mediaSources);
-		}
-		else if (baseRecord.getRecordType().equals("DIAL"))
-		{
-			//TODO: what is a dial here mean?
-			System.out.println("DIAL ?? " + LVLOs[idx].str);
 		}
 		else
 		{

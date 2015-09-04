@@ -55,16 +55,16 @@ public class LEVC extends RECO
 		}
 		charID = new ZString[numChars];
 		charLevel = new int[numChars];
-		for (int i = 0; i < numChars; i += 2)
+		for (int i = 0; i < numChars; i++)
 		{
-			sr = subrecords.get(4 + (i*2) + 0);
+			sr = subrecords.get(4 + (i * 2) + 0);
 			bs = sr.getData();
 
 			if (sr.getType().equals("CNAM"))
 			{
 				charID[i] = new ZString(bs);
 			}
-			sr = subrecords.get(4 + (i*2) + 1);
+			sr = subrecords.get(4 + (i * 2) + 1);
 			bs = sr.getData();
 			if (sr.getType().equals("INTV"))
 			{

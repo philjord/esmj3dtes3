@@ -1,6 +1,7 @@
 package esmj3dtes3.j3d.cell;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.DataFormatException;
 
@@ -86,11 +87,29 @@ public class J3dCellFactory implements J3dICellFactory
 	@Override
 	public J3dCELLPersistent makeBGWRLDPersistent(int formId, boolean makePhys)
 	{
-		// no persistents I'm aware of??
-		/*WRLD wrld = getWRLD(formId);
+		WRLD wrld = getWRLD(formId);
 		if (wrld != null)
-		{
-			WRLDChildren children = esmManager.getWRLDChildren(formId);
+		{ 
+			try
+			{
+				PluginRecord cell = esmManager.getWRLD(formId);
+				// no persistents I'm aware of, so just a new arraylist
+				return new J3dCELLPersistent(wrld, recordStore, new Record(cell, -1), new ArrayList<Record>(), makePhys, mediaSources);
+			}
+			catch (DataFormatException e)
+			{				
+				e.printStackTrace();
+			}
+			catch (IOException e)
+			{				
+				e.printStackTrace();
+			}
+			catch (PluginException e)
+			{				
+				e.printStackTrace();
+			}
+			
+			/*WRLDChildren children = esmManager.getWRLDChildren(formId);
 
 			PluginRecord cell = children.getCell();
 			if (cell != null)
@@ -101,13 +120,13 @@ public class J3dCellFactory implements J3dICellFactory
 					return new J3dCELLPersistent(wrld, recordStore, new Record(cell, -1), ESMUtils.getChildren(cellChildren,
 							PluginGroup.CELL_PERSISTENT), makePhys, mediaSources);
 				}
-			}
+			}*/
 
 		}
 		else
 		{
 			System.out.println("makeBGWRLDPersistent bad formId not wrld " + formId);
-		}*/
+		}
 		return null;
 	}
 
