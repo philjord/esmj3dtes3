@@ -3,12 +3,15 @@ package esmj3dtes3.j3d.cell;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.media.j3d.Group;
+
 import utils.source.MediaSources;
 import esmLoader.common.data.record.IRecordStore;
 import esmLoader.common.data.record.Record;
 import esmj3d.data.shared.records.CommonWRLD;
 import esmj3d.j3d.cell.GridSpaces;
 import esmj3d.j3d.cell.J3dICELLPersistent;
+import esmj3d.j3d.water.WaterApp;
 import esmj3dtes3.data.records.REFR;
 
 public class J3dCELLPersistent extends J3dCELL implements J3dICELLPersistent
@@ -17,7 +20,11 @@ public class J3dCELLPersistent extends J3dCELL implements J3dICELLPersistent
 
 	private CommonWRLD wrld;
 
+	public static WaterApp waterApp; // the single water app used by all waters
+
 	/**
+	 * NOTE! one persisent ever attach at a time, one per entre world one per interior cell (but in fact 2 one phys, one vis)
+	 * good place for singleton parts of scene grpahs to be attached
 	 * CELL presistent is different from temp and distant as it's dynamic refs and achar can move away
 	 * but they are still managed by the cell persistent itself, so we have this crazy grid space sub system to quickly 
 	 * clip wandering things away
@@ -34,8 +41,33 @@ public class J3dCELLPersistent extends J3dCELL implements J3dICELLPersistent
 	{
 		super(master, cellRecord, children, makePhys, mediaSources);
 		this.wrld = wrld;
+		
+		setCapability(Group.ALLOW_CHILDREN_WRITE);
+		setCapability(Group.ALLOW_CHILDREN_EXTEND);
+		
 		addChild(gridSpaces);
 		indexRecords();
+
+		if (!makePhys)
+		{
+			if (waterApp == null)
+			{
+				//water00 to water31 are J3dNiFlipController style images put them all in
+				int waterCount = 32;
+				String[] waterTexs = new String[waterCount];
+				for (int i = 0; i < waterCount; i++)
+				{
+					waterTexs[i] = "textures\\water\\water" + (i < 10 ? "0" + i : i) + ".dds";
+				}
+				waterApp = new WaterApp(waterTexs, mediaSources.getTextureSource());
+			}
+			else
+			{
+				waterApp.detach();
+
+			}
+			addChild(waterApp);
+		}
 	}
 
 	private void indexRecords()

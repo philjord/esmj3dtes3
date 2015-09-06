@@ -16,8 +16,8 @@ public class J3dCELLTemporary extends J3dCELL
 	{
 		super(master, cellRecord, children, makePhys, mediaSources);
 		indexRecords();
-		//TODO: water00 to water31 are J3dNiFlipController style images put them all in
-		makeWater(cell.WHGT * ESConfig.ES_TO_METERS_SCALE, "textures\\water\\water00.dds");
+		
+		makeWater(cell.WHGT * ESConfig.ES_TO_METERS_SCALE, J3dCELLPersistent.waterApp);
 	}
 
 	private void indexRecords()
