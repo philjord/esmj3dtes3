@@ -16,7 +16,7 @@ public class CELL extends InstRECO// note not from CommonCELL
 
 	public boolean interior = false;
 
-	public int WHGT = 0;
+	public float WHGT = 0;
 
 	public CELL(Record recordData)
 	{
@@ -59,7 +59,7 @@ public class CELL extends InstRECO// note not from CommonCELL
 			}
 			else if (sr.getType().equals("WHGT"))
 			{
-				WHGT = ESMByteConvert.extractInt(bs, 0);
+				WHGT = ESMByteConvert.extractFloat(bs, 0);
 			}
 			else if (sr.getType().equals("AMBI"))
 			{

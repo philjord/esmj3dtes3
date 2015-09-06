@@ -3,6 +3,7 @@ package esmj3dtes3.j3d.cell;
 import java.util.Iterator;
 import java.util.List;
 
+import utils.ESConfig;
 import utils.source.MediaSources;
 import esmLoader.common.data.record.IRecordStore;
 import esmLoader.common.data.record.Record;
@@ -15,10 +16,10 @@ public class J3dCELLTemporary extends J3dCELL
 	{
 		super(master, cellRecord, children, makePhys, mediaSources);
 		indexRecords();
-		//makeWater(cell.XCLW * ESConfig.ES_TO_METERS_SCALE, "textures\\landscape\\landscapewater.dds");
+		//TODO: water00 to water31 are J3dNiFlipController style images put them all in
+		makeWater(cell.WHGT * ESConfig.ES_TO_METERS_SCALE, "textures\\water\\water00.dds");
 	}
-	
-	
+
 	private void indexRecords()
 	{
 		for (Iterator<Record> i = children.iterator(); i.hasNext();)
