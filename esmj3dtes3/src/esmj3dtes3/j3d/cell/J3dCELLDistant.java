@@ -21,7 +21,10 @@ public class J3dCELLDistant extends J3dCELL
 	private void indexRecords()
 	{
 		if (makePhys == true)
+		{
 			System.out.println("Hahahaha distant physics!");
+			new Throwable().printStackTrace();
+		}
 
 		for (Iterator<Record> i = children.iterator(); i.hasNext();)
 		{

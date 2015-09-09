@@ -16,12 +16,15 @@ public class J3dCELLTemporary extends J3dCELL
 	{
 		super(master, cellRecord, children, makePhys, mediaSources);
 		indexRecords();
-		
+
 		makeWater(cell.WHGT * ESConfig.ES_TO_METERS_SCALE, J3dCELLPersistent.waterApp);
+
 	}
 
+	// static int c = 0;
 	private void indexRecords()
 	{
+		//if(c++<15)
 		for (Iterator<Record> i = children.iterator(); i.hasNext();)
 		{
 			Record record = i.next();
