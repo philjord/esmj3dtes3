@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.media.j3d.Node;
 
+import utils.ESConfig;
 import utils.source.MediaSources;
 import esmLoader.common.data.record.IRecordStore;
 import esmLoader.common.data.record.Record;
@@ -16,6 +17,8 @@ public class J3dCELLDistant extends J3dCELL
 	{
 		super(master, cellRecord, children, makePhys, mediaSources);
 		indexRecords();
+		//TODO: distant could have a simpler water?
+		makeWater(cell.WHGT * ESConfig.ES_TO_METERS_SCALE, J3dCELLPersistent.waterApp);
 	}
 
 	private void indexRecords()
