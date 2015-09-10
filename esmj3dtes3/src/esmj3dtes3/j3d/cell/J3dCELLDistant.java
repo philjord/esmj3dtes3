@@ -11,7 +11,7 @@ import esmLoader.common.data.record.Record;
 
 public class J3dCELLDistant extends J3dCELL
 {
-	//Notice this distant has it's own children list(defined by DISTANT type children)
+	//tes3 has no lod on nothing so instead I'm gonna make a simple land for distants
 	public J3dCELLDistant(IRecordStore master, Record cellRecord, List<Record> children, boolean makePhys, MediaSources mediaSources)
 	{
 		super(master, cellRecord, children, makePhys, mediaSources);

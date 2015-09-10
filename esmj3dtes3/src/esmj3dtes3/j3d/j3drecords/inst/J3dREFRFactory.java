@@ -78,6 +78,7 @@ public class J3dREFRFactory
 
 	public static Node makeJ3DReferFar(REFR refr, IRecordStore master, MediaSources mediaSources)
 	{
+
 		Record baseRecord = master.getRecord(refr.NAME.formId);
 
 		if (baseRecord.getRecordType().equals("STAT"))

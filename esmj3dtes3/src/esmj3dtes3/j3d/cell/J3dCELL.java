@@ -13,6 +13,7 @@ import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.BethRenderSettings.UpdateListener;
 import esmj3d.j3d.cell.J3dCELLGeneral;
 import esmj3d.j3d.j3drecords.inst.J3dLAND;
+import esmj3d.j3d.j3drecords.inst.J3dLANDFar;
 import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
 import esmj3dtes3.data.records.CELL;
 import esmj3dtes3.data.records.REFR;
@@ -62,6 +63,16 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 			if (record.getRecordType().equals("REFR"))
 			{
 				ret = J3dREFRFactory.makeJ3DReferFar(new REFR(record), master, mediaSources);
+			}
+			else if (record.getRecordType().equals("LAND"))
+			{
+				J3dLANDFar j3dLAND;
+				if (!makePhys)
+				{
+					j3dLAND = new J3dLANDFar(new LAND(record, true), master, mediaSources.getTextureSource() );
+					j3dLAND.setLocation(cellLocation);
+					ret = j3dLAND;
+				}
 			}
 			else
 			{
@@ -154,7 +165,6 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 				{
 					j3dLAND = new J3dLAND(new LAND(record, true), master, mediaSources.getTextureSource());
 				}
-				//TODO: cellLocation is not correct here?
 				j3dLAND.setLocation(cellLocation);
 				ret = j3dLAND;
 			}

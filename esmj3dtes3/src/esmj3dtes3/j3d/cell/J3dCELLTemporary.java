@@ -21,10 +21,8 @@ public class J3dCELLTemporary extends J3dCELL
 
 	}
 
-	// static int c = 0;
 	private void indexRecords()
 	{
-		//if(c++<15)
 		for (Iterator<Record> i = children.iterator(); i.hasNext();)
 		{
 			Record record = i.next();
