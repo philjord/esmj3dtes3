@@ -2,6 +2,7 @@ package esmj3dtes3.data.records;
 
 import java.util.ArrayList;
 
+import tools.io.ESMByteConvert;
 import esmLoader.common.data.record.Record;
 import esmLoader.common.data.record.Subrecord;
 import esmj3d.data.shared.records.RECO;
@@ -19,6 +20,14 @@ public class NPC_ extends RECO
 	public MODL MODL = null;
 
 	public DATA DATA;
+
+	public MODL BNAM;
+
+	public MODL KNAM;
+
+	public ZString RNAM;
+
+	public int FLAG;
 
 	public NPC_(Record recordData)
 	{
@@ -44,7 +53,7 @@ public class NPC_ extends RECO
 			}
 			else if (sr.getType().equals("RNAM"))
 			{
-
+				RNAM = new ZString(bs);
 			}
 			else if (sr.getType().equals("ANAM"))
 			{
@@ -52,7 +61,7 @@ public class NPC_ extends RECO
 			}
 			else if (sr.getType().equals("BNAM"))
 			{
-
+				BNAM = new MODL(bs);
 			}
 			else if (sr.getType().equals("CNAM"))
 			{
@@ -60,7 +69,7 @@ public class NPC_ extends RECO
 			}
 			else if (sr.getType().equals("KNAM"))
 			{
-
+				KNAM = new MODL(bs);
 			}
 			else if (sr.getType().equals("NPDT"))
 			{
@@ -68,7 +77,7 @@ public class NPC_ extends RECO
 			}
 			else if (sr.getType().equals("FLAG"))
 			{
-
+				FLAG = ESMByteConvert.extractInt(bs, 0);
 			}
 			else if (sr.getType().equals("NPCO"))
 			{
