@@ -62,14 +62,14 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 		{
 			if (record.getRecordType().equals("REFR"))
 			{
-				ret = J3dREFRFactory.makeJ3DReferFar(new REFR(record), master, mediaSources);
+				//	ret = J3dREFRFactory.makeJ3DReferFar(new REFR(record), master, mediaSources);
 			}
 			else if (record.getRecordType().equals("LAND"))
 			{
 				J3dLANDFar j3dLAND;
 				if (!makePhys)
 				{
-					j3dLAND = new J3dLANDFar(new LAND(record, true), master, mediaSources.getTextureSource() );
+					j3dLAND = new J3dLANDFar(new LAND(record, true), master, mediaSources.getTextureSource());
 					j3dLAND.setLocation(cellLocation);
 					ret = j3dLAND;
 				}
@@ -127,6 +127,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 		float YRotate
 		float ZRotate
 		*/
+
 	public J3dRECOInst makeJ3dRECO(Record record)
 	{
 		J3dRECOInst ret = null;
@@ -157,6 +158,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 			else if (record.getRecordType().equals("LAND"))
 			{
 				J3dLAND j3dLAND;
+
 				if (makePhys)
 				{
 					j3dLAND = new J3dLAND(new LAND(record, true));

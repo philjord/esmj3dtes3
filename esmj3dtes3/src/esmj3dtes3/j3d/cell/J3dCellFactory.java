@@ -159,10 +159,8 @@ public class J3dCellFactory implements J3dICellFactory
 
 				if (cellChildren != null)
 				{
-					//note distants are also part of close up
-					List<Record> records = ESMUtils.getChildren(cellChildren, PluginGroup.CELL_TEMPORARY);
-					records.addAll(ESMUtils.getChildren(cellChildren, PluginGroup.CELL_DISTANT));
-					return new J3dCELLTemporary(recordStore, new Record(record, -1), records, makePhys, mediaSources);
+					return new J3dCELLTemporary(recordStore, new Record(record, -1), ESMUtils.getChildren(cellChildren,
+							PluginGroup.CELL_TEMPORARY), makePhys, mediaSources);
 				}
 			}
 

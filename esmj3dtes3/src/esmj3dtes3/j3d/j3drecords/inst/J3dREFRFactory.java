@@ -108,18 +108,34 @@ public class J3dREFRFactory
 
 		if (baseRecord.getRecordType().equals("CREA"))
 		{
-			CREA crea = new CREA(baseRecord);
-			J3dRECODynInst j3dinst = new J3dRECODynInst(refr, false, makePhys);
-			j3dinst.setJ3dRECOType(new J3dCREA(crea, master, mediaSources));
-			return j3dinst;
+			if (!makePhys)
+			{
+					CREA crea = new CREA(baseRecord);
+					J3dRECODynInst j3dinst = new J3dRECODynInst(refr, false, makePhys);
+					j3dinst.setJ3dRECOType(new J3dCREA(crea, master, mediaSources));
+					return j3dinst;
+			}
 		}
 		else if (baseRecord.getRecordType().equals("NPC_"))
 		{
 			// it is in fact a pointer across to another leveled creature (LVLC)
-			NPC_ npc_ = new NPC_(baseRecord);
-			J3dRECODynInst j3dinst = new J3dRECODynInst(refr, false, makePhys);
-			j3dinst.setJ3dRECOType(new J3dNPC_(npc_, master, mediaSources));
-			return j3dinst;
+			if (!makePhys)
+			{
+					NPC_ npc_ = new NPC_(baseRecord);
+					J3dRECODynInst j3dinst = new J3dRECODynInst(refr, false, makePhys);
+					j3dinst.setJ3dRECOType(new J3dNPC_(npc_, master, mediaSources));
+					return j3dinst;
+			}
+		}
+		else if (baseRecord.getRecordType().equals("LEVC"))
+		{
+			if (!makePhys)
+			{
+				LEVC lvlc = new LEVC(baseRecord);
+				J3dRECODynInst j3dinst = new J3dRECODynInst(refr, false, makePhys);
+				j3dinst.setJ3dRECOType(makeLVLC(lvlc, master, mediaSources));
+				return j3dinst;
+			}
 		}
 		else if (baseRecord.getRecordType().equals("STAT"))
 		{
@@ -242,16 +258,6 @@ public class J3dREFRFactory
 			//SBSP sbsp = new SBSP(baseRecord);
 		}
 
-		else if (baseRecord.getRecordType().equals("LEVC"))
-		{
-			if (!makePhys)
-			{
-				LEVC lvlc = new LEVC(baseRecord);
-				J3dRECODynInst j3dinst = new J3dRECODynInst(refr, false, makePhys);
-				j3dinst.setJ3dRECOType(makeLVLC(lvlc, master, mediaSources));
-				return j3dinst;
-			}
-		}
 		else
 		{
 			System.out.println("REFR record type not converted to j3d " + baseRecord.getRecordType());
@@ -269,7 +275,7 @@ public class J3dREFRFactory
 	 * @param soundSource
 	 * @return
 	 */
-	protected static J3dRECOType makeLVLC(LEVC lvlc, IRecordStore master, MediaSources mediaSources)
+	private static J3dRECOType makeLVLC(LEVC lvlc, IRecordStore master, MediaSources mediaSources)
 	{
 		// TODO: randomly picked for now
 		ZString[] LVLOs = lvlc.charID;
