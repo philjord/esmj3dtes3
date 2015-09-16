@@ -25,7 +25,12 @@ public class J3dCellFactory implements J3dICellFactory
 
 	private MediaSources mediaSources;
 
-	public J3dCellFactory(IMaster esmManager2, IRecordStore recordStore, MediaSources mediaSources)
+	public J3dCellFactory()
+	{
+
+	}
+
+	public void setSources(IMaster esmManager2, IRecordStore recordStore, MediaSources mediaSources)
 	{
 		this.esmManager = esmManager2;
 		this.recordStore = recordStore;
@@ -89,7 +94,7 @@ public class J3dCellFactory implements J3dICellFactory
 	{
 		WRLD wrld = getWRLD(formId);
 		if (wrld != null)
-		{ 
+		{
 			try
 			{
 				PluginRecord cell = esmManager.getWRLD(formId);
@@ -97,18 +102,18 @@ public class J3dCellFactory implements J3dICellFactory
 				return new J3dCELLPersistent(wrld, recordStore, new Record(cell, -1), new ArrayList<Record>(), makePhys, mediaSources);
 			}
 			catch (DataFormatException e)
-			{				
+			{
 				e.printStackTrace();
 			}
 			catch (IOException e)
-			{				
+			{
 				e.printStackTrace();
 			}
 			catch (PluginException e)
-			{				
+			{
 				e.printStackTrace();
 			}
-			
+
 			/*WRLDChildren children = esmManager.getWRLDChildren(formId);
 
 			PluginRecord cell = children.getCell();
