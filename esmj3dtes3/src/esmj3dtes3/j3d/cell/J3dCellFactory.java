@@ -2,6 +2,8 @@ package esmj3dtes3.j3d.cell;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.zip.DataFormatException;
 
@@ -15,6 +17,8 @@ import esmLoader.common.data.record.IRecordStore;
 import esmLoader.common.data.record.Record;
 import esmj3d.j3d.cell.J3dICellFactory;
 import esmj3d.j3d.cell.MorphingLandscape;
+import esmj3dtes3.data.records.REFR;
+import esmj3dtes3.data.records.STAT;
 import esmj3dtes3.data.records.WRLD;
 
 public class J3dCellFactory implements J3dICellFactory
@@ -203,6 +207,7 @@ public class J3dCellFactory implements J3dICellFactory
 				if (cellChildren != null)
 				{
 					List<Record> records = ESMUtils.getChildren(cellChildren, PluginGroup.CELL_DISTANT);
+					records.addAll(getDistantTemps(ESMUtils.getChildren(cellChildren, PluginGroup.CELL_TEMPORARY)));
 					return new J3dCELLDistant(recordStore, new Record(record, -1), records, makePhys, mediaSources);
 				}
 			}
@@ -314,9 +319,40 @@ public class J3dCellFactory implements J3dICellFactory
 		return null;
 	}
 
+	private Collection<Record> getDistantTemps(List<Record> children)
+	{
+		ArrayList<Record> ret = new ArrayList<Record>();
+
+		for (Iterator<Record> i = children.iterator(); i.hasNext();)
+		{
+			Record record = i.next();
+			if (record.getRecordType().equals("REFR"))
+			{
+				REFR refr = new REFR(record);
+				Record baseRecord = recordStore.getRecord(refr.NAMEref.str);
+				if (baseRecord.getRecordType().equals("STAT"))
+				{
+					STAT stat = new STAT(baseRecord);
+
+					if (stat.MODL != null)
+					{
+						String m = stat.MODL.model.str.toLowerCase();
+						Float size = Tes3ModelSizes.modelSizes.get(m);
+						if (size != null && size * refr.getScale() > 10.0f)
+							ret.add(record);
+
+					}
+
+				}
+			}
+		}
+		return ret;
+	}
+
 	@Override
 	public String getMainESMFileName()
 	{
 		return esmManager.getName();
 	}
+
 }

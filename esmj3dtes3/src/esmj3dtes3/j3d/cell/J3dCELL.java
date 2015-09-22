@@ -62,7 +62,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 		{
 			if (record.getRecordType().equals("REFR"))
 			{
-				//	ret = J3dREFRFactory.makeJ3DReferFar(new REFR(record), master, mediaSources);
+				ret = J3dREFRFactory.makeJ3DReferFar(new REFR(record), master, mediaSources);
 			}
 			else if (record.getRecordType().equals("LAND"))
 			{

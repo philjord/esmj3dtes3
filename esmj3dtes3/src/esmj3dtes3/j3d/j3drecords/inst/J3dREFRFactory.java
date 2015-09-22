@@ -9,7 +9,6 @@ import esmLoader.common.data.record.Record;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
-import esmj3d.j3d.LODNif;
 import esmj3d.j3d.j3drecords.inst.J3dRECODynInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECOStatInst;
@@ -79,20 +78,19 @@ public class J3dREFRFactory
 	public static Node makeJ3DReferFar(REFR refr, IRecordStore master, MediaSources mediaSources)
 	{
 
-		Record baseRecord = master.getRecord(refr.NAME.formId);
+		Record baseRecord = master.getRecord(refr.NAMEref.str);
 
 		if (baseRecord.getRecordType().equals("STAT"))
 		{
 			STAT stat = new STAT(baseRecord);
 
-			String farNif = stat.MODL.model.str.substring(0, stat.MODL.model.str.toLowerCase().indexOf(".nif")) + "_far.nif";
-			J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, false, false);
-			if (mediaSources.getMeshSource().nifFileExists(farNif))
-				j3dinst.addNodeChild(new LODNif(farNif, mediaSources));
-			else
+			if (stat.MODL != null)
+			{
+				// no fars
+				J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, false, false);
 				j3dinst.addNodeChild(new J3dRECOTypeGeneral(stat, stat.MODL.model.str, false, mediaSources));
-			return j3dinst;
-
+				return j3dinst;
+			}
 		}
 		else
 		{
@@ -110,10 +108,10 @@ public class J3dREFRFactory
 		{
 			if (!makePhys)
 			{
-					CREA crea = new CREA(baseRecord);
-					J3dRECODynInst j3dinst = new J3dRECODynInst(refr, false, makePhys);
-					j3dinst.setJ3dRECOType(new J3dCREA(crea, master, mediaSources));
-					return j3dinst;
+				CREA crea = new CREA(baseRecord);
+				J3dRECODynInst j3dinst = new J3dRECODynInst(refr, false, makePhys);
+				j3dinst.setJ3dRECOType(new J3dCREA(crea, master, mediaSources));
+				return j3dinst;
 			}
 		}
 		else if (baseRecord.getRecordType().equals("NPC_"))
@@ -121,10 +119,10 @@ public class J3dREFRFactory
 			// it is in fact a pointer across to another leveled creature (LVLC)
 			if (!makePhys)
 			{
-					NPC_ npc_ = new NPC_(baseRecord);
-					J3dRECODynInst j3dinst = new J3dRECODynInst(refr, false, makePhys);
-					j3dinst.setJ3dRECOType(new J3dNPC_(npc_, master, mediaSources));
-					return j3dinst;
+				NPC_ npc_ = new NPC_(baseRecord);
+				J3dRECODynInst j3dinst = new J3dRECODynInst(refr, false, makePhys);
+				j3dinst.setJ3dRECOType(new J3dNPC_(npc_, master, mediaSources));
+				return j3dinst;
 			}
 		}
 		else if (baseRecord.getRecordType().equals("LEVC"))
@@ -143,21 +141,10 @@ public class J3dREFRFactory
 
 			if (stat.MODL != null)
 			{
-				String farNif = stat.MODL.model.str.substring(0, stat.MODL.model.str.toLowerCase().indexOf(".nif")) + "_far.nif";
-				if (mediaSources.getMeshSource().nifFileExists(farNif))
-				{
-					J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, true, makePhys);
-					j3dinst.setJ3dRECOType(new J3dRECOTypeGeneral(stat, stat.MODL.model.str, makePhys, mediaSources), J3dRECOTypeGeneral
-							.loadNif(farNif, false, mediaSources).getRootNode());
-					return j3dinst;
-
-				}
-				else
-				{
-					J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, true, makePhys);
-					j3dinst.setJ3dRECOType(new J3dRECOTypeGeneral(stat, stat.MODL.model.str, makePhys, mediaSources));
-					return j3dinst;
-				}
+				// no fars
+				J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, true, makePhys);
+				j3dinst.setJ3dRECOType(new J3dRECOTypeGeneral(stat, stat.MODL.model.str, makePhys, mediaSources));
+				return j3dinst;
 			}
 
 		}

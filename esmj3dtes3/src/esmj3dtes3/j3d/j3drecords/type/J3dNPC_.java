@@ -66,13 +66,22 @@ public class J3dNPC_ extends J3dRECOType
 		}
 		if (npc_.RNAM != null)
 		{
+			//nif Meshes\b\b_n_Argonian_f_foot.nif not found
+			//nif Meshes\b\b_n_Khajiit_m_foot.nif
+			//nif Meshes\b\b_n_Khajiit_f_foot.nif
 			String[] bodyparts = new String[]
 			{ "ankle", "foot", "forearm", "groin", "knee", "neck", "skins", "upper arm", "upper leg", "wrist" };
 
-			String pre = "b\\b_n_" + npc_.RNAM + "_" + (((npc_.FLAG & 0x1) != 0) ? "f" : "m") + "_";
+			boolean female = ((npc_.FLAG & 0x1) != 0);
+			String pre = "b\\b_n_" + npc_.RNAM.str + "_" + (female ? "f" : "m") + "_";
 
 			for (String bp : bodyparts)
 			{
+				// feet tails part of skins for for beast race
+				//f_forearm_Argonia also missing but not m version!
+				if ((bp.equals("foot") && (npc_.RNAM.str.equals("Argonian") || npc_.RNAM.str.equals("Khajiit")))
+						|| (bp.equals("forearm") && npc_.RNAM.str.equals("Argonian") && female))
+					continue;
 
 				String nifFileName = pre + bp + nif;
 
@@ -89,5 +98,4 @@ public class J3dNPC_ extends J3dRECOType
 			}
 		}
 	}
-
 }

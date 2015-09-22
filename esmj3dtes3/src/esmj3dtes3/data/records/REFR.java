@@ -40,6 +40,7 @@ public class REFR extends CommonREFR
 			{
 				this.extractInstData(bs);
 			}
+			 
 		}
 
 	}
