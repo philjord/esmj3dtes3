@@ -4,6 +4,21 @@ import java.util.HashMap;
 
 public class Tes3ModelSizes
 {
+	public static boolean distant(String model, float scale)
+	{
+		model = model.toLowerCase();
+		Float s = Tes3ModelSizes.modelSizes.get(model);
+		if (s != null)
+		{
+			float size = s * scale;
+
+			//f = flora = lots of transparency
+			return (model.startsWith("f") && size > 42f) || (model.startsWith("x") && size > 10f);
+		}
+		//nulls are a few i\\in_* that are placed outside
+		return false;
+	}
+
 	public static HashMap<String, Float> modelSizes = new HashMap<String, Float>();
 	static
 	{

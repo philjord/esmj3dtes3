@@ -336,9 +336,7 @@ public class J3dCellFactory implements J3dICellFactory
 
 					if (stat.MODL != null)
 					{
-						String m = stat.MODL.model.str.toLowerCase();
-						Float size = Tes3ModelSizes.modelSizes.get(m);
-						if (size != null && size * refr.getScale() > 10.0f)
+						if (Tes3ModelSizes.distant(stat.MODL.model.str, refr.getScale()))
 							ret.add(record);
 
 					}
