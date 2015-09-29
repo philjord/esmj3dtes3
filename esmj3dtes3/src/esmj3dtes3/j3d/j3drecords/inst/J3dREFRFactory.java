@@ -144,7 +144,6 @@ public class J3dREFRFactory
 			{
 				if (Tes3ModelSizes.distant(stat.MODL.model.str, refr.getScale()))
 				{
-					System.out.println("local " +stat.MODL.model.str );
 					J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, false, makePhys);
 					j3dinst.setJ3dRECOType(new J3dRECOTypeGeneral(stat, stat.MODL.model.str, makePhys, mediaSources));
 					return j3dinst;

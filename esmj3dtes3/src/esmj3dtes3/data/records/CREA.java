@@ -2,6 +2,7 @@ package esmj3dtes3.data.records;
 
 import java.util.ArrayList;
 
+import tools.io.ESMByteConvert;
 import esmLoader.common.data.record.Record;
 import esmLoader.common.data.record.Subrecord;
 import esmj3d.data.shared.records.RECO;
@@ -16,8 +17,6 @@ public class CREA extends RECO
 	public LString FULL = null;
 
 	public MODL MODL = null;
-
-	
 
 	//data data
 	public byte unknown1;
@@ -50,10 +49,14 @@ public class CREA extends RECO
 
 	public byte Luc;
 
+	public float scale = 1;
+
+	public int FLAG;
+
 	public CREA(Record recordData)
 	{
 		super(recordData);
-		
+
 		ArrayList<Subrecord> subrecords = recordData.getSubrecords();
 		for (int i = 0; i < subrecords.size(); i++)
 		{
@@ -74,66 +77,63 @@ public class CREA extends RECO
 			}
 			else if (sr.getType().equals("NPDT"))
 			{
-				
+
 			}
 			else if (sr.getType().equals("FLAG"))
 			{
-				 
+				FLAG = ESMByteConvert.extractInt(bs, 0);
 			}
 			else if (sr.getType().equals("SCRI"))
 			{
-				 
+
 			}
 			else if (sr.getType().equals("NPCO"))
 			{
-				 // many items
+				// many items
 			}
 			else if (sr.getType().equals("AIDT"))
 			{
-				 
+
 			}
 			else if (sr.getType().equals("AI_W"))
 			{
-				 
+
 			}
 			else if (sr.getType().equals("AI_T"))
 			{
-				
+
 			}
 			else if (sr.getType().equals("AI_F"))
 			{
-				
+
 			}
 			else if (sr.getType().equals("AI_E"))
 			{
-				
+
 			}
 			else if (sr.getType().equals("AI_A"))
 			{
-				
+
 			}
 			else if (sr.getType().equals("XSCL"))
 			{
-				 
+				scale = ESMByteConvert.extractFloat(bs, 0);
 			}
 			else if (sr.getType().equals("CNAM"))
 			{
-				 
+
 			}
 			else if (sr.getType().equals("NPCS"))
 			{
-				 
+
 			}
-			
+
 			else
 			{
 				System.out.println("unhandled : " + sr.getType() + " in record " + recordData + " in " + this);
 			}
 
-			
-
 		}
 	}
 
-	
 }
