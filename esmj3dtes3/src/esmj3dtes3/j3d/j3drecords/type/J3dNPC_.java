@@ -108,10 +108,11 @@ public class J3dNPC_ extends J3dRECOType
 		//kna takes priority I wager
 		String skeletonNifFile = ESConfig.TES_MESH_PATH + "xbase_anim" + (kna ? "kna.nif" : (female ? "_female.nif" : ".nif"));
 
-		if (npc_.MODL != null)
+		// don't use as it points to the non x version of the files, which is a hassle
+		//if (npc_.MODL != null)
 		{
-			skeletonNifFile = npc_.MODL.model.str;
-			System.out.println("MODL " + skeletonNifFile);
+			//skeletonNifFile = npc_.MODL.model.str;
+			//System.out.println("MODL " + skeletonNifFile);
 		}
 
 		nifCharacter = new NifCharacterTes3(skeletonNifFile, fileNames, mediaSources);
