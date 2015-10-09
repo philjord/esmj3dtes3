@@ -9,12 +9,13 @@ import esmLoader.common.data.record.Record;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
+import esmj3d.j3d.j3drecords.inst.J3dRECOChaInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECODynInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECOStatInst;
 import esmj3d.j3d.j3drecords.type.J3dCONT;
 import esmj3d.j3d.j3drecords.type.J3dDOOR;
-import esmj3d.j3d.j3drecords.type.J3dRECOType;
+import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeGeneral;
 import esmj3dtes3.data.records.ACTI;
 import esmj3dtes3.data.records.ALCH;
@@ -45,6 +46,8 @@ import esmj3dtes3.j3d.j3drecords.type.J3dSOUN;
 
 public class J3dREFRFactory
 {
+
+	public static boolean DEBUG_FIRST_LIST_ITEM_ONLY = true;
 
 	private static J3dRECODynInst makeJ3dRECODynInst(REFR refr, RECO reco, MODL modl, boolean makePhys, MediaSources mediaSources)
 	{
@@ -105,24 +108,24 @@ public class J3dREFRFactory
 	{
 		Record baseRecord = master.getRecord(refr.NAMEref.str);
 
-		if (baseRecord.getRecordType().equals("CREA"))
-		{
-			if (!makePhys)
-			{
-				CREA crea = new CREA(baseRecord);
-				J3dRECODynInst j3dinst = new J3dRECODynInst(refr, false, makePhys);
-				j3dinst.setJ3dRECOType(new J3dCREA(crea, master, mediaSources));
-				return j3dinst;
-			}
-		}
-		else if (baseRecord.getRecordType().equals("NPC_"))
+		if (baseRecord.getRecordType().equals("NPC_"))
 		{
 			// it is in fact a pointer across to another leveled creature (LVLC)
 			if (!makePhys)
 			{
 				NPC_ npc_ = new NPC_(baseRecord);
-				J3dRECODynInst j3dinst = new J3dRECODynInst(refr, false, makePhys);
+				J3dRECOChaInst j3dinst = new J3dRECOChaInst(refr);
 				j3dinst.setJ3dRECOType(new J3dNPC_(npc_, master, mediaSources));
+				return j3dinst;
+			}
+		}
+		else if (baseRecord.getRecordType().equals("CREA"))
+		{
+			if (!makePhys)
+			{
+				CREA crea = new CREA(baseRecord);
+				J3dRECOChaInst j3dinst = new J3dRECOChaInst(refr);
+				j3dinst.setJ3dRECOType(new J3dCREA(crea, master, mediaSources));
 				return j3dinst;
 			}
 		}
@@ -131,7 +134,7 @@ public class J3dREFRFactory
 			if (!makePhys)
 			{
 				LEVC lvlc = new LEVC(baseRecord);
-				J3dRECODynInst j3dinst = new J3dRECODynInst(refr, false, makePhys);
+				J3dRECOChaInst j3dinst = new J3dRECOChaInst(refr);
 				j3dinst.setJ3dRECOType(makeLVLC(lvlc, master, mediaSources));
 				return j3dinst;
 			}
@@ -271,13 +274,16 @@ public class J3dREFRFactory
 	 * @param soundSource
 	 * @return
 	 */
-	private static J3dRECOType makeLVLC(LEVC lvlc, IRecordStore master, MediaSources mediaSources)
+	private static J3dRECOTypeCha makeLVLC(LEVC lvlc, IRecordStore master, MediaSources mediaSources)
 	{
 		// TODO: randomly picked for now
 		ZString[] LVLOs = lvlc.charID;
 
 		int idx = (int) (Math.random() * LVLOs.length);
 		idx = idx == LVLOs.length ? 0 : idx;
+
+		if (DEBUG_FIRST_LIST_ITEM_ONLY)
+			idx = 0;
 
 		Record baseRecord = master.getRecord(LVLOs[idx].str);
 

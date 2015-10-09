@@ -9,10 +9,10 @@ import javax.media.j3d.TransformGroup;
 import nif.character.NifCharacterTes3;
 import utils.source.MediaSources;
 import esmLoader.common.data.record.IRecordStore;
-import esmj3d.j3d.j3drecords.type.J3dRECOType;
+import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
 import esmj3dtes3.data.records.CREA;
 
-public class J3dCREA extends J3dRECOType
+public class J3dCREA extends J3dRECOTypeCha
 {
 	/**52 x*.kf
 	 * 53 non x*.nif (golden saint.nif is extra)
@@ -49,11 +49,9 @@ public class J3dCREA extends J3dRECOType
 	 * @param mediaSources
 	 */
 
-	private NifCharacterTes3 nifCharacter;
-
 	public J3dCREA(CREA crea, IRecordStore master, MediaSources mediaSources)
 	{
-		super(crea, null);
+		super(crea);
 
 		if (crea.MODL != null)
 		{

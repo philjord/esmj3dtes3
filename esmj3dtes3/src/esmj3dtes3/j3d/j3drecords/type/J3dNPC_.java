@@ -7,13 +7,13 @@ import utils.ESConfig;
 import utils.source.MediaSources;
 import esmLoader.common.data.record.IRecordStore;
 import esmj3d.data.shared.subrecords.MODL;
-import esmj3d.j3d.j3drecords.type.J3dRECOType;
-import esmj3dtes3.data.records.NPC_;
+import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
 import esmj3dtes3.data.records.ARMO;
 import esmj3dtes3.data.records.CLOT;
+import esmj3dtes3.data.records.NPC_;
 import esmj3dtes3.data.records.WEAP;
 
-public class J3dNPC_ extends J3dRECOType
+public class J3dNPC_ extends J3dRECOTypeCha
 {
 	private String helmetStr = null;
 
@@ -35,8 +35,6 @@ public class J3dNPC_ extends J3dRECOType
 
 	private boolean female = false;
 
-	private NifCharacterTes3 nifCharacter;
-
 	/**
 	    MODL = Animation file
 		RNAM = Race Name	}
@@ -56,7 +54,7 @@ public class J3dNPC_ extends J3dRECOType
 	 */
 	public J3dNPC_(NPC_ npc_, IRecordStore master, MediaSources mediaSources)
 	{
-		super(npc_, null);
+		super(npc_);
 		female = ((npc_.FLAG & 0x1) != 0);
 		ArrayList<String> fileNames = new ArrayList<String>();
 
@@ -108,30 +106,30 @@ public class J3dNPC_ extends J3dRECOType
 		//kna takes priority I wager
 		String skeletonNifFile = ESConfig.TES_MESH_PATH + "xbase_anim" + (kna ? "kna.nif" : (female ? "_female.nif" : ".nif"));
 
-		// don't use as it points to the non x version of the files, which is a hassle
+		// hassle!
 		//if (npc_.MODL != null)
 		{
 			//skeletonNifFile = npc_.MODL.model.str;
+			//skeletonNifFile = "r\\x" + skeletonNifFile.substring(2);
 			//System.out.println("MODL " + skeletonNifFile);
 		}
 
 		nifCharacter = new NifCharacterTes3(skeletonNifFile, fileNames, mediaSources);
 		addChild(nifCharacter);
 	}
-	
-	
+
 	private void addCLOT(CLOT clot, IRecordStore master)
 	{
 		MODL m = clot.MODL;
-	/*	if (female && clot.MOD3 != null)
-		{
-			m = clot.MOD3;
-		}
-		helmetStr = clot.BMDT.isHair() ? m.model.str : helmetStr;
-		upperStr = clot.BMDT.isUpperBody() ? m.model.str : upperStr;
-		lowerStr = clot.BMDT.isLowerBody() ? m.model.str : lowerStr;
-		handStr = clot.BMDT.isHand() ? m.model.str : handStr;
-		footStr = clot.BMDT.isFoot() ? m.model.str : footStr;*/
+		/*	if (female && clot.MOD3 != null)
+			{
+				m = clot.MOD3;
+			}
+			helmetStr = clot.BMDT.isHair() ? m.model.str : helmetStr;
+			upperStr = clot.BMDT.isUpperBody() ? m.model.str : upperStr;
+			lowerStr = clot.BMDT.isLowerBody() ? m.model.str : lowerStr;
+			handStr = clot.BMDT.isHand() ? m.model.str : handStr;
+			footStr = clot.BMDT.isFoot() ? m.model.str : footStr;*/
 
 	}
 
