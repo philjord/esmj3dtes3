@@ -7,27 +7,21 @@ import javax.vecmath.Color3f;
 import tools.io.ESMByteConvert;
 import esmLoader.common.data.record.Record;
 import esmLoader.common.data.record.Subrecord;
-import esmj3d.data.shared.records.RECO;
+import esmj3d.data.shared.records.CommonLIGH;
+import esmj3d.data.shared.records.LAND.DATA;
 import esmj3d.data.shared.subrecords.LString;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
-import esmj3dtes3.data.subrecords.DATA;
 
-public class LIGH extends RECO
+public class LIGH extends CommonLIGH
 {
 	public ZString EDID;
 
 	public LString FULL;
 
-	public MODL MODL;
-
 	public DATA DATA;
 
 	public ZString ICON;
-
-	public Color3f color;
-
-	public float radius;
 
 	public LIGH(Record recordData)
 	{
@@ -49,7 +43,6 @@ public class LIGH extends RECO
 			}
 			else if (sr.getType().equals("LHDT"))
 			{
-				DATA = new DATA(bs);
 				radius = ESMByteConvert.extractInt(bs, 12);
 				color = new Color3f();
 				color.x = ESMByteConvert.extractByte(bs, 16);
@@ -68,7 +61,6 @@ public class LIGH extends RECO
 			{
 				MODL = new MODL(bs);
 			}
-
 			else if (sr.getType().equals("SNAM"))
 			{
 
@@ -77,7 +69,6 @@ public class LIGH extends RECO
 			{
 
 			}
-
 			else
 			{
 				System.out.println("unhandled : " + sr.getType() + " in record " + recordData + " in " + this);

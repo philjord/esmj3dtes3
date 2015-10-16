@@ -2,11 +2,15 @@ package esmj3dtes3.j3d.j3drecords.type;
 
 import java.util.ArrayList;
 
+import javax.vecmath.Color3f;
+
 import nif.character.NifCharacterTes3;
+import tools3d.utils.scenegraph.Fadable;
 import utils.ESConfig;
 import utils.source.MediaSources;
 import esmLoader.common.data.record.IRecordStore;
 import esmj3d.data.shared.subrecords.MODL;
+import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
 import esmj3dtes3.data.records.ARMO;
 import esmj3dtes3.data.records.CLOT;
@@ -116,6 +120,10 @@ public class J3dNPC_ extends J3dRECOTypeCha
 
 		nifCharacter = new NifCharacterTes3(skeletonNifFile, fileNames, mediaSources);
 		addChild(nifCharacter);
+		
+		setOutline(new Color3f(1.0f, 1.0f, 0f));
+		if (!BethRenderSettings.isOutlineChars())
+			((Fadable) nifCharacter).setOutline(null);
 	}
 
 	private void addCLOT(CLOT clot, IRecordStore master)

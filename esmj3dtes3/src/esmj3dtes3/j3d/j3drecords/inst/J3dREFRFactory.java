@@ -2,10 +2,10 @@ package esmj3dtes3.j3d.j3drecords.inst;
 
 import javax.media.j3d.Node;
 
-import utils.ESUtils;
 import utils.source.MediaSources;
 import esmLoader.common.data.record.IRecordStore;
 import esmLoader.common.data.record.Record;
+import esmj3d.data.shared.records.CommonLIGH;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
@@ -15,8 +15,10 @@ import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECOStatInst;
 import esmj3d.j3d.j3drecords.type.J3dCONT;
 import esmj3d.j3d.j3drecords.type.J3dDOOR;
+import esmj3d.j3d.j3drecords.type.J3dLIGH;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeGeneral;
+import esmj3d.j3d.j3drecords.type.J3dSOUN;
 import esmj3dtes3.data.records.ACTI;
 import esmj3dtes3.data.records.ALCH;
 import esmj3dtes3.data.records.APPA;
@@ -28,7 +30,6 @@ import esmj3dtes3.data.records.CREA;
 import esmj3dtes3.data.records.DOOR;
 import esmj3dtes3.data.records.INGR;
 import esmj3dtes3.data.records.LEVC;
-import esmj3dtes3.data.records.LIGH;
 import esmj3dtes3.data.records.LOCK;
 import esmj3dtes3.data.records.MISC;
 import esmj3dtes3.data.records.NPC_;
@@ -40,9 +41,7 @@ import esmj3dtes3.data.records.STAT;
 import esmj3dtes3.data.records.WEAP;
 import esmj3dtes3.j3d.cell.Tes3ModelSizes;
 import esmj3dtes3.j3d.j3drecords.type.J3dCREA;
-import esmj3dtes3.j3d.j3drecords.type.J3dLIGH;
 import esmj3dtes3.j3d.j3drecords.type.J3dNPC_;
-import esmj3dtes3.j3d.j3drecords.type.J3dSOUN;
 
 public class J3dREFRFactory
 {
@@ -235,15 +234,13 @@ public class J3dREFRFactory
 		}
 		else if (baseRecord.getRecordType().equals("DOOR"))
 		{
-			if (refr.XTEL != null && !makePhys)
-			{
-				System.out.println("DOOR at " + ESUtils.makeTrans(refr.getTrans()));
-			}
+			System.out.println("DOOR here now? I think not");
+
 			return new J3dRECOStatInst(refr, new J3dDOOR(new DOOR(baseRecord), makePhys, mediaSources), true, makePhys);
 		}
 		else if (baseRecord.getRecordType().equals("LIGH"))
 		{
-			return new J3dRECOStatInst(refr, new J3dLIGH(new LIGH(baseRecord), makePhys, mediaSources), true, makePhys);
+			return new J3dRECOStatInst(refr, new J3dLIGH(new CommonLIGH(baseRecord), makePhys, mediaSources), true, makePhys);
 		}
 		else if (baseRecord.getRecordType().equals("SOUN"))
 		{

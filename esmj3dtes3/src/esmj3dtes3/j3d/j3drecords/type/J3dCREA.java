@@ -5,10 +5,13 @@ import java.util.List;
 
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.vecmath.Color3f;
 
 import nif.character.NifCharacterTes3;
+import tools3d.utils.scenegraph.Fadable;
 import utils.source.MediaSources;
 import esmLoader.common.data.record.IRecordStore;
+import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
 import esmj3dtes3.data.records.CREA;
 
@@ -78,6 +81,10 @@ public class J3dCREA extends J3dRECOTypeCha
 				addChild(scaler);
 				scaler.addChild(nifCharacter);
 			}
+
+			setOutline(new Color3f(1.0f, 1.0f, 0f));
+			if (!BethRenderSettings.isOutlineChars())
+				((Fadable) nifCharacter).setOutline(null);
 		}
 		else
 		{
