@@ -234,8 +234,7 @@ public class J3dREFRFactory
 		}
 		else if (baseRecord.getRecordType().equals("DOOR"))
 		{
-			System.out.println("DOOR here now? I think not");
-
+			//TODO: physics can't see these doors
 			return new J3dRECOStatInst(refr, new J3dDOOR(new DOOR(baseRecord), makePhys, mediaSources), true, makePhys);
 		}
 		else if (baseRecord.getRecordType().equals("LIGH"))
