@@ -12,8 +12,6 @@ import esmj3dtes3.data.subrecords.DATA;
 
 public class CONT extends GenericCONT
 {
-	public LString FULL;
-
 	public DATA DATA;
 
 	public FormID SCRI;

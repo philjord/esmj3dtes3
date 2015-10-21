@@ -10,8 +10,6 @@ import esmj3d.data.shared.subrecords.ZString;
 
 public class DOOR extends GenericDOOR
 {
-	public LString FULL;
-
 	public DOOR(Record recordData)
 	{
 		super(recordData);
