@@ -6,6 +6,7 @@ import tools.io.ESMByteConvert;
 import esmLoader.common.data.record.Record;
 import esmLoader.common.data.record.Subrecord;
 import esmj3d.data.shared.records.CommonREFR;
+import esmj3d.data.shared.subrecords.XTEL;
 import esmj3d.data.shared.subrecords.ZString;
 
 public class REFR extends CommonREFR
@@ -16,6 +17,7 @@ public class REFR extends CommonREFR
 
 	public ZString DNAM;
 
+	//loaded by commonREFR for us into xtel
 	/*DODT = XYZ Pos, XYZ Rotation of exit (24 bytes, Door objects)
 			float XPos
 			float YPos
@@ -46,6 +48,10 @@ public class REFR extends CommonREFR
 			else if (sr.getType().equals("DNAM"))
 			{
 				DNAM = new ZString(bs);
+			}
+			else if (sr.getType().equals("DODT"))
+			{//noe load data into xtel
+				XTEL = new XTEL(bs);
 			}
 			else if (sr.getType().equals("XSCL"))
 			{
