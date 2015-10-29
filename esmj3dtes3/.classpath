@@ -6,7 +6,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/jnifj3d"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/jnif"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Tools"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/ElderScrollsUtils"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/esmj3d"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/BSAManager"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
