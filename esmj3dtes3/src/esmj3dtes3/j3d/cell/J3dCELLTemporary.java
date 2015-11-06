@@ -4,10 +4,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import utils.source.MediaSources;
-import esmLoader.common.data.record.IRecordStore;
-import esmLoader.common.data.record.Record;
 import esmj3d.j3d.j3drecords.inst.J3dLAND;
 import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
+import esmmanager.common.data.record.IRecordStore;
+import esmmanager.common.data.record.Record;
 
 public class J3dCELLTemporary extends J3dCELL
 {

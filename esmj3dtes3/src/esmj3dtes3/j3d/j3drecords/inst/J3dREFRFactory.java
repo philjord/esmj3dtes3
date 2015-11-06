@@ -3,8 +3,6 @@ package esmj3dtes3.j3d.j3drecords.inst;
 import javax.media.j3d.Node;
 
 import utils.source.MediaSources;
-import esmLoader.common.data.record.IRecordStore;
-import esmLoader.common.data.record.Record;
 import esmj3d.data.shared.records.CommonLIGH;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.MODL;
@@ -42,6 +40,8 @@ import esmj3dtes3.data.records.WEAP;
 import esmj3dtes3.j3d.cell.Tes3ModelSizes;
 import esmj3dtes3.j3d.j3drecords.type.J3dCREA;
 import esmj3dtes3.j3d.j3drecords.type.J3dNPC_;
+import esmmanager.common.data.record.IRecordStore;
+import esmmanager.common.data.record.Record;
 
 public class J3dREFRFactory
 {

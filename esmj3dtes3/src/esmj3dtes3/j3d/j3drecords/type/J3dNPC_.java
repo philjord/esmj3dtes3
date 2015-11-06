@@ -11,7 +11,6 @@ import nif.character.NifCharacterTes3;
 import tools3d.utils.scenegraph.Fadable;
 import utils.ESConfig;
 import utils.source.MediaSources;
-import esmLoader.common.data.record.IRecordStore;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
@@ -19,6 +18,7 @@ import esmj3dtes3.data.records.ARMO;
 import esmj3dtes3.data.records.CLOT;
 import esmj3dtes3.data.records.NPC_;
 import esmj3dtes3.data.records.WEAP;
+import esmmanager.common.data.record.IRecordStore;
 
 public class J3dNPC_ extends J3dRECOTypeCha
 {

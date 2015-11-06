@@ -3,10 +3,10 @@ package esmj3dtes3.data.records;
 import java.util.ArrayList;
 
 import tools.io.ESMByteConvert;
-import esmLoader.common.data.record.Record;
-import esmLoader.common.data.record.Subrecord;
 import esmj3d.data.shared.records.InstRECO;
 import esmj3d.data.shared.subrecords.ZString;
+import esmmanager.common.data.record.Record;
+import esmmanager.common.data.record.Subrecord;
 
 public class CELL extends InstRECO// note not from CommonCELL
 {

@@ -3,11 +3,11 @@ package esmj3dtes3.data.records;
 import java.util.ArrayList;
 
 import tools.io.ESMByteConvert;
-import esmLoader.common.data.record.Record;
-import esmLoader.common.data.record.Subrecord;
 import esmj3d.data.shared.records.CommonREFR;
 import esmj3d.data.shared.subrecords.XTEL;
 import esmj3d.data.shared.subrecords.ZString;
+import esmmanager.common.data.record.Record;
+import esmmanager.common.data.record.Subrecord;
 
 public class REFR extends CommonREFR
 {

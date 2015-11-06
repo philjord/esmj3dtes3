@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import javax.vecmath.Color3f;
 
 import tools.io.ESMByteConvert;
-import esmLoader.common.data.record.Record;
-import esmLoader.common.data.record.Subrecord;
 import esmj3d.data.shared.records.CommonLIGH;
 import esmj3d.data.shared.records.LAND.DATA;
 import esmj3d.data.shared.subrecords.LString;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
+import esmmanager.common.data.record.Record;
+import esmmanager.common.data.record.Subrecord;
 
 public class LIGH extends CommonLIGH
 {

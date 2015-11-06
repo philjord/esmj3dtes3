@@ -6,9 +6,9 @@ import java.util.List;
 import javax.media.j3d.Node;
 
 import utils.source.MediaSources;
-import esmLoader.common.data.record.IRecordStore;
-import esmLoader.common.data.record.Record;
 import esmj3d.j3d.j3drecords.inst.J3dLANDFar;
+import esmmanager.common.data.record.IRecordStore;
+import esmmanager.common.data.record.Record;
 
 public class J3dCELLDistant extends J3dCELL
 {
