@@ -2,7 +2,10 @@ package esmj3dtes3.j3d.j3drecords.type;
 
 import java.util.ArrayList;
 
+import javax.media.j3d.Transform3D;
+import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
+import javax.vecmath.Vector3f;
 
 import nif.character.NifCharacterTes3;
 import tools3d.utils.scenegraph.Fadable;
@@ -119,8 +122,18 @@ public class J3dNPC_ extends J3dRECOTypeCha
 		}
 
 		nifCharacter = new NifCharacterTes3(skeletonNifFile, fileNames, mediaSources);
-		addChild(nifCharacter);
-		
+
+		//TODO: fix up npcs so not in floor
+		TransformGroup tg = new TransformGroup();
+		Vector3f v = new Vector3f();
+		v.y += 1.15f;
+		Transform3D t = new Transform3D();
+		t.set(v);
+		tg.setTransform(t);
+		tg.addChild(nifCharacter);
+
+		addChild(tg);
+
 		setOutline(new Color3f(1.0f, 1.0f, 0f));
 		if (!BethRenderSettings.isOutlineChars())
 			((Fadable) nifCharacter).setOutline(null);
