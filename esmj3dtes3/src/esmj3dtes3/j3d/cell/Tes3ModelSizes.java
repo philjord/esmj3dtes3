@@ -19,6 +19,20 @@ public class Tes3ModelSizes
 		return false;
 	}
 
+	public static float getSize(String model, float scale)
+	{
+		model = model.toLowerCase();
+		Float s = Tes3ModelSizes.modelSizes.get(model);
+		if (s != null)
+		{
+			float size = s * scale;
+
+			return size;
+		}
+		//nulls are a few i\\in_* that are placed outside
+		return 0;
+	}
+
 	public static HashMap<String, Float> modelSizes = new HashMap<String, Float>();
 	static
 	{

@@ -89,8 +89,8 @@ public class J3dREFRFactory
 
 			if (stat.MODL != null)
 			{
-				// no fars
-				J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, false, false);
+				float size = Tes3ModelSizes.getSize(stat.MODL.model.str, refr.getScale());
+				J3dRECOStatInst j3dinst = new J3dRECOStatInstFar(refr, size);
 				j3dinst.setJ3dRECOType(new J3dRECOTypeGeneral(stat, stat.MODL.model.str, false, mediaSources));
 				return j3dinst;
 			}
