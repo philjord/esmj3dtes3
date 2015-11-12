@@ -3,7 +3,6 @@ package esmj3dtes3.j3d.j3drecords.inst;
 import javax.media.j3d.Node;
 
 import utils.source.MediaSources;
-import esmj3d.data.shared.records.CommonLIGH;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
@@ -28,6 +27,7 @@ import esmj3dtes3.data.records.CREA;
 import esmj3dtes3.data.records.DOOR;
 import esmj3dtes3.data.records.INGR;
 import esmj3dtes3.data.records.LEVC;
+import esmj3dtes3.data.records.LIGH;
 import esmj3dtes3.data.records.LOCK;
 import esmj3dtes3.data.records.MISC;
 import esmj3dtes3.data.records.NPC_;
@@ -239,7 +239,7 @@ public class J3dREFRFactory
 		}
 		else if (baseRecord.getRecordType().equals("LIGH"))
 		{
-			return new J3dRECOStatInst(refr, new J3dLIGH(new CommonLIGH(baseRecord), makePhys, mediaSources), true, makePhys);
+			return new J3dRECOStatInst(refr, new J3dLIGH(new LIGH(baseRecord), makePhys, mediaSources), true, makePhys);
 		}
 		else if (baseRecord.getRecordType().equals("SOUN"))
 		{

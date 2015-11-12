@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 
 import esmj3d.data.shared.records.LAND;
-import esmj3d.data.shared.records.CommonLIGH;
 import esmj3d.data.shared.records.LTEX;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.ZString;
@@ -28,6 +27,7 @@ import esmj3dtes3.data.records.GMST;
 import esmj3dtes3.data.records.INGR;
 import esmj3dtes3.data.records.LEVC;
 import esmj3dtes3.data.records.LEVI;
+import esmj3dtes3.data.records.LIGH;
 import esmj3dtes3.data.records.MGEF;
 import esmj3dtes3.data.records.MISC;
 import esmj3dtes3.data.records.NPC_;
@@ -253,7 +253,7 @@ public class RecordToRECO
 		}
 		else if (baseRecord.getRecordType().equals("LIGH"))
 		{
-			return new CommonLIGH(baseRecord);
+			return new LIGH(baseRecord);
 		}
 		else if (baseRecord.getRecordType().equals("MISC"))
 		{

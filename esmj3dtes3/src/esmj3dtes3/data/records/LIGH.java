@@ -2,8 +2,6 @@ package esmj3dtes3.data.records;
 
 import java.util.ArrayList;
 
-import javax.vecmath.Color3f;
-
 import tools.io.ESMByteConvert;
 import esmj3d.data.shared.records.CommonLIGH;
 import esmj3d.data.shared.records.LAND.DATA;
@@ -26,6 +24,7 @@ public class LIGH extends CommonLIGH
 	public LIGH(Record recordData)
 	{
 		super(recordData);
+		System.out.println("LIGH");
 
 		ArrayList<Subrecord> subrecords = recordData.getSubrecords();
 		for (int i = 0; i < subrecords.size(); i++)
@@ -43,11 +42,14 @@ public class LIGH extends CommonLIGH
 			}
 			else if (sr.getType().equals("LHDT"))
 			{
+				//System.out.println("" + ESMByteConvert.extractFloat(bs, 0)); weight
+				fade = ESMByteConvert.extractInt(bs, 4);// value fade?
+				//System.out.println("" + ESMByteConvert.extractInt(bs, 8)); time
+
 				radius = ESMByteConvert.extractInt(bs, 12);
-				color = new Color3f();
-				color.x = ESMByteConvert.extractByte(bs, 16);
-				color.y = ESMByteConvert.extractByte(bs, 17);
-				color.z = ESMByteConvert.extractByte(bs, 18);
+				color.x = ESMByteConvert.extractUnsignedByte(bs, 16);
+				color.y = ESMByteConvert.extractUnsignedByte(bs, 17);
+				color.z = ESMByteConvert.extractUnsignedByte(bs, 18);
 			}
 			else if (sr.getType().equals("SCPT"))
 			{
@@ -60,6 +62,7 @@ public class LIGH extends CommonLIGH
 			else if (sr.getType().equals("MODL"))
 			{
 				MODL = new MODL(bs);
+				System.out.println("light model just there? " + MODL.model.str);
 			}
 			else if (sr.getType().equals("SNAM"))
 			{
