@@ -24,8 +24,6 @@ public class LIGH extends CommonLIGH
 	public LIGH(Record recordData)
 	{
 		super(recordData);
-		System.out.println("LIGH");
-
 		ArrayList<Subrecord> subrecords = recordData.getSubrecords();
 		for (int i = 0; i < subrecords.size(); i++)
 		{
@@ -62,7 +60,6 @@ public class LIGH extends CommonLIGH
 			else if (sr.getType().equals("MODL"))
 			{
 				MODL = new MODL(bs);
-				System.out.println("light model just there? " + MODL.model.str);
 			}
 			else if (sr.getType().equals("SNAM"))
 			{

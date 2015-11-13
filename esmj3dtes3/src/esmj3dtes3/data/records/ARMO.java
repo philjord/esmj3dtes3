@@ -59,7 +59,8 @@ public class ARMO extends RECO
 			}
 			else if (sr.getType().equals("BNAM"))
 			{
-
+				//modely string
+				//System.out.println("BNAM " + new String(bs));
 			}
 			else if (sr.getType().equals("CNAM"))
 			{
@@ -81,5 +82,4 @@ public class ARMO extends RECO
 		}
 	}
 
-	 
 }

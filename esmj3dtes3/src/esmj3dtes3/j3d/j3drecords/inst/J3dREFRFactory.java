@@ -13,8 +13,10 @@ import esmj3d.j3d.j3drecords.inst.J3dRECOStatInst;
 import esmj3d.j3d.j3drecords.type.J3dCONT;
 import esmj3d.j3d.j3drecords.type.J3dDOOR;
 import esmj3d.j3d.j3drecords.type.J3dLIGH;
+import esmj3d.j3d.j3drecords.type.J3dRECOTypeActionable;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
-import esmj3d.j3d.j3drecords.type.J3dRECOTypeGeneral;
+import esmj3d.j3d.j3drecords.type.J3dRECOTypeDynamic;
+import esmj3d.j3d.j3drecords.type.J3dRECOTypeStatic;
 import esmj3d.j3d.j3drecords.type.J3dSOUN;
 import esmj3dtes3.data.records.ACTI;
 import esmj3dtes3.data.records.ALCH;
@@ -46,14 +48,14 @@ import esmmanager.common.data.record.Record;
 public class J3dREFRFactory
 {
 
-	public static boolean DEBUG_FIRST_LIST_ITEM_ONLY = true;
+	public static boolean DEBUG_FIRST_LIST_ITEM_ONLY = false;
 
 	private static J3dRECODynInst makeJ3dRECODynInst(REFR refr, RECO reco, MODL modl, boolean makePhys, MediaSources mediaSources)
 	{
 		if (modl != null)
 		{
 			J3dRECODynInst j3dinst = new J3dRECODynInst(refr, true, makePhys);
-			j3dinst.setJ3dRECOType(new J3dRECOTypeGeneral(reco, modl.model.str, makePhys, mediaSources));
+			j3dinst.setJ3dRECOType(new J3dRECOTypeDynamic(reco, modl.model.str, makePhys, mediaSources));
 			return j3dinst;
 		}
 		else
@@ -63,12 +65,12 @@ public class J3dREFRFactory
 		}
 	}
 
-	private static J3dRECOStatInst makeJ3dRECOStatInst(REFR refr, RECO reco, MODL modl, boolean makePhys, MediaSources mediaSources)
+	private static J3dRECOStatInst makeJ3dRECOActionInst(REFR refr, RECO reco, MODL modl, boolean makePhys, MediaSources mediaSources)
 	{
 		if (modl != null)
 		{
 			J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, true, makePhys);
-			j3dinst.setJ3dRECOType(new J3dRECOTypeGeneral(reco, modl.model.str, makePhys, mediaSources));
+			j3dinst.setJ3dRECOType(new J3dRECOTypeActionable(reco, modl.model.str, makePhys, mediaSources));
 			return j3dinst;
 		}
 		else
@@ -91,7 +93,7 @@ public class J3dREFRFactory
 			{
 				float size = Tes3ModelSizes.getSize(stat.MODL.model.str, refr.getScale());
 				J3dRECOStatInst j3dinst = new J3dRECOStatInstFar(refr, size);
-				j3dinst.setJ3dRECOType(new J3dRECOTypeGeneral(stat, stat.MODL.model.str, false, mediaSources));
+				j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model.str, false, mediaSources));
 				return j3dinst;
 			}
 		}
@@ -147,13 +149,13 @@ public class J3dREFRFactory
 				if (Tes3ModelSizes.distant(stat.MODL.model.str, refr.getScale()))
 				{
 					J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, false, makePhys);
-					j3dinst.setJ3dRECOType(new J3dRECOTypeGeneral(stat, stat.MODL.model.str, makePhys, mediaSources));
+					j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model.str, makePhys, mediaSources));
 					return j3dinst;
 				}
 				else
 				{
 					J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, true, makePhys);
-					j3dinst.setJ3dRECOType(new J3dRECOTypeGeneral(stat, stat.MODL.model.str, makePhys, mediaSources));
+					j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model.str, makePhys, mediaSources));
 					return j3dinst;
 				}
 			}
@@ -206,7 +208,7 @@ public class J3dREFRFactory
 		else if (baseRecord.getRecordType().equals("ACTI"))
 		{
 			ACTI acti = new ACTI(baseRecord);
-			return makeJ3dRECOStatInst(refr, acti, acti.MODL, makePhys, mediaSources);
+			return makeJ3dRECOActionInst(refr, acti, acti.MODL, makePhys, mediaSources);
 		}
 		else if (baseRecord.getRecordType().equals("WEAP"))
 		{
