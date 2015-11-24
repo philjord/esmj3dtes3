@@ -32,8 +32,7 @@ public class Tes3esmanalyzer extends EsmFormatAnalyzer
 
 	public static void main(String args[])
 	{
-		EsmFormatAnalyzer.recordLoader = new RecordLoader()
-		{
+		EsmFormatAnalyzer.recordLoader = new RecordLoader() {
 			public void loadRecord(Record rec)
 			{
 				RecordToRECO.makeRECO(rec);
@@ -45,8 +44,8 @@ public class Tes3esmanalyzer extends EsmFormatAnalyzer
 					if (j3dCellFactory.isWRLD(rec.getFormID()))
 					{
 						j3dCellFactory.makeBGWRLDPersistent(rec.getFormID(), false);
-						j3dCellFactory.makeBGWRLDTemporary(rec.getFormID(), false);
-						j3dCellFactory.makeBGWRLDDistant(rec.getFormID(), false);
+						j3dCellFactory.makeBGWRLDTemporary(rec.getFormID(), 0, false);
+						j3dCellFactory.makeBGWRLDDistant(rec.getFormID(), 0, false);
 					}
 					else
 					{

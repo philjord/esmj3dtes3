@@ -27,7 +27,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 
 	public J3dCELL(IRecordStore master, Record cellRecord, List<Record> children, boolean makePhys, MediaSources mediaSources)
 	{
-		super(master, children, makePhys, mediaSources);
+		super(master, 0, children, makePhys, mediaSources);
 		cell = new CELL(cellRecord);
 		setCell(cell);
 
