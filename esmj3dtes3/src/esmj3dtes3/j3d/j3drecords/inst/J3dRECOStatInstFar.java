@@ -9,7 +9,7 @@ import esmj3d.j3d.j3drecords.type.J3dRECOType;
 public class J3dRECOStatInstFar extends J3dRECOStatInst
 {
 	private float size = 1;
-	
+
 	private int sizeMultiplierForFade = 35;
 
 	public J3dRECOStatInstFar(InstRECO instRECO, float size)
@@ -31,7 +31,9 @@ public class J3dRECOStatInstFar extends J3dRECOStatInst
 
 	public void setJ3dRECOType(J3dRECOType j3dRECOType)
 	{
-		super.setJ3dRECOType(j3dRECOType, new BranchGroup());
+		BranchGroup blank = new BranchGroup();
+		blank.clearCapabilities();
+		super.setJ3dRECOType(j3dRECOType, blank);
 		if (dl != null)
 		{
 			dl.setDistance(0, size * sizeMultiplierForFade);

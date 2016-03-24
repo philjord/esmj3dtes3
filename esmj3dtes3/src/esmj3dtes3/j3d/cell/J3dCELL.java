@@ -69,8 +69,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 				J3dLANDFar j3dLAND;
 				if (!makePhys)
 				{
-					j3dLAND = new J3dLANDFar(new LAND(record, true), master, mediaSources.getTextureSource());
-					j3dLAND.setLocation(cellLocation);
+					j3dLAND = new J3dLANDFar(new LAND(record, true), master, mediaSources.getTextureSource(), cellLocation);
 					ret = j3dLAND;
 				}
 			}
@@ -92,7 +91,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 				REFR refr = new REFR(record);
 				Record baseRecord = master.getRecord(refr.NAME.formId);
 				System.out.println("And it's a REFR with base of " + baseRecord.getRecordType());
-				
+
 				//e.printStackTrace();
 			}
 		}
@@ -167,13 +166,13 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 
 				if (makePhys)
 				{
-					j3dLAND = new J3dLAND(new LAND(record, true));
+					j3dLAND = new J3dLAND(new LAND(record, true), cellLocation);
 				}
 				else
 				{
-					j3dLAND = new J3dLAND(new LAND(record, true), master, mediaSources.getTextureSource());
+					j3dLAND = new J3dLAND(new LAND(record, true), master, mediaSources.getTextureSource(), cellLocation);
 				}
-				j3dLAND.setLocation(cellLocation);
+
 				ret = j3dLAND;
 			}
 			else
