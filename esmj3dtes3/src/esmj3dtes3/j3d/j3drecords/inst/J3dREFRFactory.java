@@ -1,8 +1,5 @@
 package esmj3dtes3.j3d.j3drecords.inst;
 
-import javax.media.j3d.Node;
-
-import utils.source.MediaSources;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
@@ -12,7 +9,6 @@ import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECOStatInst;
 import esmj3d.j3d.j3drecords.type.J3dCONT;
 import esmj3d.j3d.j3drecords.type.J3dDOOR;
-import esmj3d.j3d.j3drecords.type.J3dLIGH;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeActionable;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeDynamic;
@@ -29,7 +25,6 @@ import esmj3dtes3.data.records.CREA;
 import esmj3dtes3.data.records.DOOR;
 import esmj3dtes3.data.records.INGR;
 import esmj3dtes3.data.records.LEVC;
-import esmj3dtes3.data.records.LIGH;
 import esmj3dtes3.data.records.LOCK;
 import esmj3dtes3.data.records.MISC;
 import esmj3dtes3.data.records.NPC_;
@@ -44,6 +39,7 @@ import esmj3dtes3.j3d.j3drecords.type.J3dCREA;
 import esmj3dtes3.j3d.j3drecords.type.J3dNPC_;
 import esmmanager.common.data.record.IRecordStore;
 import esmmanager.common.data.record.Record;
+import utils.source.MediaSources;
 
 public class J3dREFRFactory
 {
@@ -80,7 +76,7 @@ public class J3dREFRFactory
 		}
 	}
 
-	public static Node makeJ3DReferFar(REFR refr, IRecordStore master, MediaSources mediaSources)
+	public static J3dRECOStatInst makeJ3DReferFar(REFR refr, IRecordStore master, MediaSources mediaSources)
 	{
 
 		Record baseRecord = master.getRecord(refr.NAMEref.str);
@@ -148,8 +144,12 @@ public class J3dREFRFactory
 			{
 				if (Tes3ModelSizes.distant(stat.MODL.model.str, refr.getScale()))
 				{
-					J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, false, makePhys);
-					j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model.str, makePhys, mediaSources));
+					//J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, false, makePhys);
+					//j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model.str, makePhys, mediaSources));
+					//return j3dinst;
+					float size = Tes3ModelSizes.getSize(stat.MODL.model.str, refr.getScale());
+					J3dRECOStatInst j3dinst = new J3dRECOStatInstFar(refr, size);
+					j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model.str, false, mediaSources));
 					return j3dinst;
 				}
 				else

@@ -3,12 +3,11 @@ package esmj3dtes3.j3d.cell;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.media.j3d.Node;
-
-import utils.source.MediaSources;
 import esmj3d.j3d.j3drecords.inst.J3dLANDFar;
+import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
 import esmmanager.common.data.record.IRecordStore;
 import esmmanager.common.data.record.Record;
+import utils.source.MediaSources;
 
 public class J3dCELLDistant extends J3dCELL
 {
@@ -31,13 +30,13 @@ public class J3dCELLDistant extends J3dCELL
 		for (Iterator<Record> i = children.iterator(); i.hasNext();)
 		{
 			Record record = i.next();
-			Node n = makeJ3dRECOFar(record);
-			addChild(n);
+			J3dRECOInst jri = (J3dRECOInst) makeJ3dRECOFar(record);			 
+			addJ3dRECOInst(jri);
 
-			if (n instanceof J3dLANDFar)
+			if (jri instanceof J3dLANDFar)
 			{
 				//TODO: distant could have a simpler water?
-				J3dLANDFar l = (J3dLANDFar) n;
+				J3dLANDFar l = (J3dLANDFar) jri;
 				float wl = getWaterLevel(cell.WHGT);
 				if (wl > l.getLowestHeight())
 				{

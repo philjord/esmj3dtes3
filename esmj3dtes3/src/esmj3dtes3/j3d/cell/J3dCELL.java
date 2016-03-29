@@ -54,10 +54,11 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 			j3dRECOInsts.add(j3dRECOInst);
 		}
 	}
-
+	
+	@Override
 	public Node makeJ3dRECOFar(Record record)
 	{
-		Node ret = null;
+		J3dRECOInst ret = null;
 		try
 		{
 			if (record.getRecordType().equals("REFR"))
@@ -96,7 +97,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 			}
 		}
 
-		return ret;
+		return (Node) ret;
 	}
 
 	/*Referenced Object Data Grouping

@@ -3,6 +3,7 @@ package esmj3dtes3.j3d.j3drecords.inst;
 import javax.media.j3d.BranchGroup;
 
 import esmj3d.data.shared.records.InstRECO;
+import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.j3drecords.inst.J3dRECOStatInst;
 import esmj3d.j3d.j3drecords.type.J3dRECOType;
 
@@ -10,7 +11,7 @@ public class J3dRECOStatInstFar extends J3dRECOStatInst
 {
 	private float size = 1;
 
-	private int sizeMultiplierForFade = 35;
+	public static float FAR_FADE_MULTIPLY = 0.1f;// a size 10 (small ish) fades at the same rate as near objects
 
 	public J3dRECOStatInstFar(InstRECO instRECO, float size)
 	{
@@ -22,10 +23,13 @@ public class J3dRECOStatInstFar extends J3dRECOStatInst
 	public void renderSettingsUpdated()
 	{
 		super.renderSettingsUpdated();
-		//sizeMultiplierForFade = ...
 		if (dl != null)
 		{
-			dl.setDistance(0, size * sizeMultiplierForFade);
+			dl.setDistance(0, BethRenderSettings.getObjectFade() * (size * FAR_FADE_MULTIPLY));
+		}
+		if (j3dRECOType != null)
+		{
+			j3dRECOType.renderSettingsUpdated();
 		}
 	}
 
@@ -36,7 +40,7 @@ public class J3dRECOStatInstFar extends J3dRECOStatInst
 		super.setJ3dRECOType(j3dRECOType, blank);
 		if (dl != null)
 		{
-			dl.setDistance(0, size * sizeMultiplierForFade);
+			dl.setDistance(0, BethRenderSettings.getObjectFade() * (size * FAR_FADE_MULTIPLY));
 		}
 	}
 
