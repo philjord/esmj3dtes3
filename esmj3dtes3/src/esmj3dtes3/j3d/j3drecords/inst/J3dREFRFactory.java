@@ -39,6 +39,7 @@ import esmj3dtes3.j3d.j3drecords.type.J3dCREA;
 import esmj3dtes3.j3d.j3drecords.type.J3dNPC_;
 import esmmanager.common.data.record.IRecordStore;
 import esmmanager.common.data.record.Record;
+import esmmanager.tes3.IRecordStoreTes3;
 import utils.source.MediaSources;
 
 public class J3dREFRFactory
@@ -79,7 +80,7 @@ public class J3dREFRFactory
 	public static J3dRECOStatInst makeJ3DReferFar(REFR refr, IRecordStore master, MediaSources mediaSources)
 	{
 
-		Record baseRecord = master.getRecord(refr.NAMEref.str);
+		Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref.str);
 
 		if (baseRecord.getRecordType().equals("STAT"))
 		{
@@ -103,7 +104,7 @@ public class J3dREFRFactory
 
 	public static J3dRECOInst makeJ3DRefer(REFR refr, boolean makePhys, IRecordStore master, MediaSources mediaSources)
 	{
-		Record baseRecord = master.getRecord(refr.NAMEref.str);
+		Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref.str);
 
 		if (baseRecord.getRecordType().equals("NPC_"))
 		{
@@ -284,7 +285,7 @@ public class J3dREFRFactory
 		if (DEBUG_FIRST_LIST_ITEM_ONLY)
 			idx = 0;
 
-		Record baseRecord = master.getRecord(LVLOs[idx].str);
+		Record baseRecord = ((IRecordStoreTes3) master).getRecord(LVLOs[idx].str);
 
 		if (baseRecord.getRecordType().equals("LEVC"))
 		{

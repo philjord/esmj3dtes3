@@ -18,6 +18,7 @@ import esmj3dtes3.data.records.REFR;
 import esmj3dtes3.j3d.j3drecords.inst.J3dREFRFactory;
 import esmmanager.common.data.record.IRecordStore;
 import esmmanager.common.data.record.Record;
+import esmmanager.tes3.IRecordStoreTes3;
 
 public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 {
@@ -54,7 +55,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 			j3dRECOInsts.add(j3dRECOInst);
 		}
 	}
-	
+
 	@Override
 	public Node makeJ3dRECOFar(Record record)
 	{
@@ -192,7 +193,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 			if (record.getRecordType().equals("REFR"))
 			{
 				REFR refr = new REFR(record);
-				Record baseRecord = master.getRecord(refr.NAMEref.str);
+				Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref.str);
 				System.out.println("And it's a REFR with base of " + baseRecord.getRecordType());
 				//e.printStackTrace();
 			}

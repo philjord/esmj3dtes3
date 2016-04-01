@@ -42,6 +42,7 @@ import esmj3dtes3.data.records.STAT;
 import esmj3dtes3.data.records.WEAP;
 import esmmanager.common.data.record.IRecordStore;
 import esmmanager.common.data.record.Record;
+import esmmanager.tes3.IRecordStoreTes3;
 
 public class RecordToRECO
 {
@@ -111,7 +112,7 @@ public class RecordToRECO
 			int idx = (int) (Math.random() * LVLOs.length);
 			idx = idx == LVLOs.length ? 0 : idx;
 
-			Record baseRecord = master.getRecord(LVLOs[idx].str);
+			Record baseRecord = ((IRecordStoreTes3) master).getRecord(LVLOs[idx].str);
 
 			if (baseRecord.getRecordType().equals("CREA"))
 			{
@@ -144,7 +145,7 @@ public class RecordToRECO
 		int idx = (int) (Math.random() * LVLOs.length);
 		idx = idx == LVLOs.length ? 0 : idx;
 
-		Record baseRecord = master.getRecord(LVLOs[idx].str);
+		Record baseRecord = ((IRecordStoreTes3) master).getRecord(LVLOs[idx].str);
 
 		if (baseRecord.getRecordType().equals("NPC_"))
 		{
