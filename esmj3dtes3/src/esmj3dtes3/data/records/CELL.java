@@ -1,12 +1,12 @@
 package esmj3dtes3.data.records;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import tools.io.ESMByteConvert;
 import esmj3d.data.shared.records.InstRECO;
 import esmj3d.data.shared.subrecords.ZString;
 import esmmanager.common.data.record.Record;
 import esmmanager.common.data.record.Subrecord;
+import tools.io.ESMByteConvert;
 
 public class CELL extends InstRECO// note not from CommonCELL
 {
@@ -22,18 +22,18 @@ public class CELL extends InstRECO// note not from CommonCELL
 	{
 		super(recordData);
 
-		ArrayList<Subrecord> subrecords = recordData.getSubrecords();
+		List<Subrecord> subrecords = recordData.getSubrecords();
 
 		// heaps of FRMR at the end so just do the top few
 		Subrecord sr = subrecords.get(0);
-		byte[] bs = sr.getData();
-		if (sr.getType().equals("NAME"))
+		byte[] bs = sr.getSubrecordData();
+		if (sr.getSubrecordType().equals("NAME"))
 		{
 			EDID = new ZString(bs);
 		}
 		sr = subrecords.get(1);
-		bs = sr.getData();
-		if (sr.getType().equals("DATA"))
+		bs = sr.getSubrecordData();
+		if (sr.getSubrecordType().equals("DATA"))
 		{
 			flags = ESMByteConvert.extractInt(bs, 0);
 			interior = (flags & 0x1) == 1;
@@ -44,28 +44,28 @@ public class CELL extends InstRECO// note not from CommonCELL
 		for (int i = 2; i < subrecords.size(); i++)
 		{
 			sr = subrecords.get(i);
-			bs = sr.getData();
-			if (sr.getType().equals("RGNN"))
+			bs = sr.getSubrecordData();
+			if (sr.getSubrecordType().equals("RGNN"))
 			{
 
 			}
-			else if (sr.getType().equals("NAM0"))
+			else if (sr.getSubrecordType().equals("NAM0"))
 			{
 
 			}
-			else if (sr.getType().equals("NAM5"))
+			else if (sr.getSubrecordType().equals("NAM5"))
 			{
 
 			}
-			else if (sr.getType().equals("WHGT"))
+			else if (sr.getSubrecordType().equals("WHGT"))
 			{
 				WHGT = ESMByteConvert.extractFloat(bs, 0);
 			}
-			else if (sr.getType().equals("AMBI"))
+			else if (sr.getSubrecordType().equals("AMBI"))
 			{
 
 			}
-			else if (sr.getType().equals("FRMR"))
+			else if (sr.getSubrecordType().equals("FRMR"))
 			{ //ignore all others REFRs data
 				break;
 			}

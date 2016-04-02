@@ -7,13 +7,13 @@ import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
 
-import nif.character.NifCharacterTes3;
-import tools3d.utils.scenegraph.Fadable;
-import utils.source.MediaSources;
 import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
 import esmj3dtes3.data.records.CREA;
 import esmmanager.common.data.record.IRecordStore;
+import nif.character.NifCharacterTes3;
+import tools3d.utils.scenegraph.Fadable;
+import utils.source.MediaSources;
 
 public class J3dCREA extends J3dRECOTypeCha
 {

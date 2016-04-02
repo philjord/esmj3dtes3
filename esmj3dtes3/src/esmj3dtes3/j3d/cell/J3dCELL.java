@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.media.j3d.Node;
 
-import utils.source.MediaSources;
 import esmj3d.data.shared.records.LAND;
 import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.BethRenderSettings.UpdateListener;
@@ -19,6 +18,7 @@ import esmj3dtes3.j3d.j3drecords.inst.J3dREFRFactory;
 import esmmanager.common.data.record.IRecordStore;
 import esmmanager.common.data.record.Record;
 import esmmanager.tes3.IRecordStoreTes3;
+import utils.source.MediaSources;
 
 public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 {

@@ -1,7 +1,7 @@
 package esmj3dtes3.data.subrecords;
 
-import tools.io.ESMByteConvert;
 import esmj3d.data.shared.subrecords.FormID;
+import tools.io.ESMByteConvert;
 
 public class CSDT
 {

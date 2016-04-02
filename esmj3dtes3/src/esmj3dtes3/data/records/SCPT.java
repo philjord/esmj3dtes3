@@ -1,6 +1,6 @@
 package esmj3dtes3.data.records;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import esmj3d.data.shared.records.RECO;
 import esmmanager.common.data.record.Record;
@@ -12,31 +12,31 @@ public class SCPT extends RECO
 	public SCPT(Record recordData)
 	{
 		super(recordData);
-		ArrayList<Subrecord> subrecords = recordData.getSubrecords();
+		List<Subrecord> subrecords = recordData.getSubrecords();
 		for (int i = 0; i < subrecords.size(); i++)
 		{
 			Subrecord sr = subrecords.get(i);
-			byte[] bs = sr.getData();
+			byte[] bs = sr.getSubrecordData();
 
-			if (sr.getType().equals("SCHD"))
+			if (sr.getSubrecordType().equals("SCHD"))
 			{
 			}
-			else if (sr.getType().equals("SCVR"))
-			{
-
-			}
-			else if (sr.getType().equals("SCDT"))
+			else if (sr.getSubrecordType().equals("SCVR"))
 			{
 
 			}
-			else if (sr.getType().equals("SCTX"))
+			else if (sr.getSubrecordType().equals("SCDT"))
+			{
+
+			}
+			else if (sr.getSubrecordType().equals("SCTX"))
 			{
 
 			}
 
 			else
 			{
-				System.out.println("unhandled : " + sr.getType() + " in record " + recordData + " in " + this);
+				System.out.println("unhandled : " + sr.getSubrecordType() + " in record " + recordData + " in " + this);
 			}
 
 		}

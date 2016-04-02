@@ -1,13 +1,13 @@
 package esmj3dtes3.data.records;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import tools.io.ESMByteConvert;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.ZString;
 import esmj3dtes3.data.subrecords.DATA;
 import esmmanager.common.data.record.Record;
 import esmmanager.common.data.record.Subrecord;
+import tools.io.ESMByteConvert;
 
 public class LEVI extends RECO
 {
@@ -25,30 +25,30 @@ public class LEVI extends RECO
 	{
 		super(recordData);
 
-		ArrayList<Subrecord> subrecords = recordData.getSubrecords();
+		List<Subrecord> subrecords = recordData.getSubrecords();
 		Subrecord sr = subrecords.get(0);
-		byte[] bs = sr.getData();
+		byte[] bs = sr.getSubrecordData();
 
-		if (sr.getType().equals("NAME"))
+		if (sr.getSubrecordType().equals("NAME"))
 		{
 			EDID = new ZString(bs);
 		}
 		sr = subrecords.get(1);
-		bs = sr.getData();
+		bs = sr.getSubrecordData();
 
-		if (sr.getType().equals("DATA"))
+		if (sr.getSubrecordType().equals("DATA"))
 		{
 			DATA = new DATA(bs);
 		}
 		sr = subrecords.get(2);
-		bs = sr.getData();
-		if (sr.getType().equals("NNAM"))
+		bs = sr.getSubrecordData();
+		if (sr.getSubrecordType().equals("NNAM"))
 		{
 
 		}
 		sr = subrecords.get(3);
-		bs = sr.getData();
-		if (sr.getType().equals("INDX"))
+		bs = sr.getSubrecordData();
+		if (sr.getSubrecordType().equals("INDX"))
 		{
 			numItems = ESMByteConvert.extractInt(bs, 0);
 		}
@@ -57,21 +57,21 @@ public class LEVI extends RECO
 		for (int i = 0; i < numItems; i++)
 		{
 			sr = subrecords.get(4 + (i * 2) + 0);
-			bs = sr.getData();
+			bs = sr.getSubrecordData();
 
-			if (sr.getType().equals("INAM"))
+			if (sr.getSubrecordType().equals("INAM"))
 			{
 				itemID[i] = new ZString(bs);
 			}
 			sr = subrecords.get(4 + (i * 2) + 1);
-			bs = sr.getData();
-			if (sr.getType().equals("INTV"))
+			bs = sr.getSubrecordData();
+			if (sr.getSubrecordType().equals("INTV"))
 			{
 				itemLevel[i] = ESMByteConvert.extractShort(bs, 0);
 			}
 			else
 			{
-				System.out.println("unhandled : " + sr.getType() + " in record " + recordData + " in " + this);
+				System.out.println("unhandled : " + sr.getSubrecordType() + " in record " + recordData + " in " + this);
 			}
 
 		}

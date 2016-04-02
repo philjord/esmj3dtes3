@@ -1,8 +1,7 @@
 package esmj3dtes3.data.records;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import tools.io.ESMByteConvert;
 import esmj3d.data.shared.records.CommonLIGH;
 import esmj3d.data.shared.records.LAND.DATA;
 import esmj3d.data.shared.subrecords.LString;
@@ -10,6 +9,7 @@ import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
 import esmmanager.common.data.record.Record;
 import esmmanager.common.data.record.Subrecord;
+import tools.io.ESMByteConvert;
 
 public class LIGH extends CommonLIGH
 {
@@ -24,21 +24,21 @@ public class LIGH extends CommonLIGH
 	public LIGH(Record recordData)
 	{
 		super(recordData);
-		ArrayList<Subrecord> subrecords = recordData.getSubrecords();
+		List<Subrecord> subrecords = recordData.getSubrecords();
 		for (int i = 0; i < subrecords.size(); i++)
 		{
 			Subrecord sr = subrecords.get(i);
-			byte[] bs = sr.getData();
+			byte[] bs = sr.getSubrecordData();
 
-			if (sr.getType().equals("NAME"))
+			if (sr.getSubrecordType().equals("NAME"))
 			{
 				EDID = new ZString(bs);
 			}
-			else if (sr.getType().equals("FNAM"))
+			else if (sr.getSubrecordType().equals("FNAM"))
 			{
 				FULL = new LString(bs);
 			}
-			else if (sr.getType().equals("LHDT"))
+			else if (sr.getSubrecordType().equals("LHDT"))
 			{
 				//System.out.println("" + ESMByteConvert.extractFloat(bs, 0)); weight
 				fade = ESMByteConvert.extractInt(bs, 4);// value fade?
@@ -49,29 +49,29 @@ public class LIGH extends CommonLIGH
 				color.y = ESMByteConvert.extractUnsignedByte(bs, 17);
 				color.z = ESMByteConvert.extractUnsignedByte(bs, 18);
 			}
-			else if (sr.getType().equals("SCPT"))
+			else if (sr.getSubrecordType().equals("SCPT"))
 			{
 
 			}
-			else if (sr.getType().equals("ITEX"))
+			else if (sr.getSubrecordType().equals("ITEX"))
 			{
 				ICON = new ZString(bs);
 			}
-			else if (sr.getType().equals("MODL"))
+			else if (sr.getSubrecordType().equals("MODL"))
 			{
 				MODL = new MODL(bs);
 			}
-			else if (sr.getType().equals("SNAM"))
+			else if (sr.getSubrecordType().equals("SNAM"))
 			{
 
 			}
-			else if (sr.getType().equals("SCRI"))
+			else if (sr.getSubrecordType().equals("SCRI"))
 			{
 
 			}
 			else
 			{
-				System.out.println("unhandled : " + sr.getType() + " in record " + recordData + " in " + this);
+				System.out.println("unhandled : " + sr.getSubrecordType() + " in record " + recordData + " in " + this);
 			}
 		}
 	}

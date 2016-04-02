@@ -1,6 +1,6 @@
 package esmj3dtes3.data.records;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.MODL;
@@ -25,67 +25,67 @@ public class MGEF extends RECO
 	public MGEF(Record recordData)
 	{
 		super(recordData);
-		ArrayList<Subrecord> subrecords = recordData.getSubrecords();
+		List<Subrecord> subrecords = recordData.getSubrecords();
 		for (int i = 0; i < subrecords.size(); i++)
 		{
 			Subrecord sr = subrecords.get(i);
-			byte[] bs = sr.getData();
+			byte[] bs = sr.getSubrecordData();
 
-			if (sr.getType().equals("NAME"))
+			if (sr.getSubrecordType().equals("NAME"))
 			{
 				EDID = new ZString(bs);
 			}
-			else if (sr.getType().equals("MEDT"))
+			else if (sr.getSubrecordType().equals("MEDT"))
 			{
 				DATA = new DATA(bs);
 			}
-			else if (sr.getType().equals("ITEX"))
+			else if (sr.getSubrecordType().equals("ITEX"))
 			{
 				ICON = new ZString(bs);
 			}
-			else if (sr.getType().equals("PTEX"))
+			else if (sr.getSubrecordType().equals("PTEX"))
 			{
 
 			}
-			else if (sr.getType().equals("CVFX"))
+			else if (sr.getSubrecordType().equals("CVFX"))
 			{
 
 			}
-			else if (sr.getType().equals("BVFX"))
+			else if (sr.getSubrecordType().equals("BVFX"))
 			{
 
 			}
-			else if (sr.getType().equals("HVFX"))
+			else if (sr.getSubrecordType().equals("HVFX"))
 			{
 
 			}
-			else if (sr.getType().equals("AVFX"))
+			else if (sr.getSubrecordType().equals("AVFX"))
 			{
 
 			}
-			else if (sr.getType().equals("DESC"))
+			else if (sr.getSubrecordType().equals("DESC"))
 			{
 				DESC = new ZString(bs);
 			}
-			else if (sr.getType().equals("CSND"))
+			else if (sr.getSubrecordType().equals("CSND"))
 			{
 
 			}
-			else if (sr.getType().equals("BSND"))
+			else if (sr.getSubrecordType().equals("BSND"))
 			{
 
 			}
-			else if (sr.getType().equals("HSND"))
+			else if (sr.getSubrecordType().equals("HSND"))
 			{
 
 			}
-			else if (sr.getType().equals("ASND"))
+			else if (sr.getSubrecordType().equals("ASND"))
 			{
 
 			}
 			else
 			{
-				System.out.println("unhandled : " + sr.getType() + " in record " + recordData + " in " + this);
+				System.out.println("unhandled : " + sr.getSubrecordType() + " in record " + recordData + " in " + this);
 			}
 
 		}

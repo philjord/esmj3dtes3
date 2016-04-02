@@ -1,6 +1,6 @@
 package esmj3dtes3.data.records;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.ZString;
@@ -17,35 +17,35 @@ public class BSGN extends RECO
 	public BSGN(Record recordData)
 	{
 		super(recordData);
-		ArrayList<Subrecord> subrecords = recordData.getSubrecords();
+		List<Subrecord> subrecords = recordData.getSubrecords();
 		for (int i = 0; i < subrecords.size(); i++)
 		{
 			Subrecord sr = subrecords.get(i);
-			byte[] bs = sr.getData();
+			byte[] bs = sr.getSubrecordData();
 
-			if (sr.getType().equals("NAME"))
+			if (sr.getSubrecordType().equals("NAME"))
 			{
 				EDID = new ZString(bs);
 			}
-			else if (sr.getType().equals("FNAM"))
+			else if (sr.getSubrecordType().equals("FNAM"))
 			{
 				FULL = new ZString(bs);
 			}
-			else if (sr.getType().equals("TNAM"))
+			else if (sr.getSubrecordType().equals("TNAM"))
 			{
 				ICON = new ZString(bs);
 			}
-			else if (sr.getType().equals("DESC"))
+			else if (sr.getSubrecordType().equals("DESC"))
 			{
 				DESC = new ZString(bs);
 			}
-			else if (sr.getType().equals("NPCS"))
+			else if (sr.getSubrecordType().equals("NPCS"))
 			{
 
 			}
 			else
 			{
-				System.out.println("unhandled : " + sr.getType() + " in record " + recordData + " in " + this);
+				System.out.println("unhandled : " + sr.getSubrecordType() + " in record " + recordData + " in " + this);
 			}
 
 		}

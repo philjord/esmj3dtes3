@@ -1,13 +1,13 @@
 package esmj3dtes3.data.records;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import tools.io.ESMByteConvert;
 import esmj3d.data.shared.records.CommonREFR;
 import esmj3d.data.shared.subrecords.XTEL;
 import esmj3d.data.shared.subrecords.ZString;
 import esmmanager.common.data.record.Record;
 import esmmanager.common.data.record.Subrecord;
+import tools.io.ESMByteConvert;
 
 public class REFR extends CommonREFR
 {
@@ -31,33 +31,33 @@ public class REFR extends CommonREFR
 	{
 		super(recordData, false);
 
-		ArrayList<Subrecord> subrecords = recordData.getSubrecords();
+		List<Subrecord> subrecords = recordData.getSubrecords();
 		for (int i = 0; i < subrecords.size(); i++)
 		{
 			Subrecord sr = subrecords.get(i);
-			byte[] bs = sr.getData();
+			byte[] bs = sr.getSubrecordData();
 
-			if (sr.getType().equals("FRMR"))
+			if (sr.getSubrecordType().equals("FRMR"))
 			{
 				FRMR = ESMByteConvert.extractInt(bs, 0);
 			}
-			else if (sr.getType().equals("NAME"))
+			else if (sr.getSubrecordType().equals("NAME"))
 			{
 				NAMEref = new ZString(bs);
 			}
-			else if (sr.getType().equals("DNAM"))
+			else if (sr.getSubrecordType().equals("DNAM"))
 			{
 				DNAM = new ZString(bs);
 			}
-			else if (sr.getType().equals("DODT"))
+			else if (sr.getSubrecordType().equals("DODT"))
 			{//noe load data into xtel
 				XTEL = new XTEL(bs);
 			}
-			else if (sr.getType().equals("XSCL"))
+			else if (sr.getSubrecordType().equals("XSCL"))
 			{
 				scale = ESMByteConvert.extractFloat(bs, 0);
 			}
-			else if (sr.getType().equals("DATA"))
+			else if (sr.getSubrecordType().equals("DATA"))
 			{
 				this.extractInstData(bs);
 			}

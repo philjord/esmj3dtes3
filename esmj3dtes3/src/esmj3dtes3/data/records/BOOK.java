@@ -1,6 +1,6 @@
 package esmj3dtes3.data.records;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.LString;
@@ -26,47 +26,47 @@ public class BOOK extends RECO
 	{
 		super(recordData);
 
-		ArrayList<Subrecord> subrecords = recordData.getSubrecords();
+		List<Subrecord> subrecords = recordData.getSubrecords();
 		for (int i = 0; i < subrecords.size(); i++)
 		{
 			Subrecord sr = subrecords.get(i);
-			byte[] bs = sr.getData();
+			byte[] bs = sr.getSubrecordData();
 
-			if (sr.getType().equals("NAME"))
+			if (sr.getSubrecordType().equals("NAME"))
 			{
 				EDID = new ZString(bs);
 			}
-			else if (sr.getType().equals("MODL"))
+			else if (sr.getSubrecordType().equals("MODL"))
 			{
 				MODL = new MODL(bs);
 			}
-			else if (sr.getType().equals("FNAM"))
+			else if (sr.getSubrecordType().equals("FNAM"))
 			{
 				FULL = new LString(bs);
 			}
-			else if (sr.getType().equals("BKDT"))
+			else if (sr.getSubrecordType().equals("BKDT"))
 			{
 				DATA = new DATA(bs);
 			}
-			else if (sr.getType().equals("ITEX"))
+			else if (sr.getSubrecordType().equals("ITEX"))
 			{
 				ICON = new ZString(bs);
 			}
-			else if (sr.getType().equals("SCRI"))
+			else if (sr.getSubrecordType().equals("SCRI"))
 			{
 
 			}
-			else if (sr.getType().equals("TEXT"))
+			else if (sr.getSubrecordType().equals("TEXT"))
 			{
 
 			}
-			else if (sr.getType().equals("ENAM"))
+			else if (sr.getSubrecordType().equals("ENAM"))
 			{
 
 			}
 			else
 			{
-				System.out.println("unhandled : " + sr.getType() + " in record " + recordData + " in " + this);
+				System.out.println("unhandled : " + sr.getSubrecordType() + " in record " + recordData + " in " + this);
 			}
 		}
 	}
