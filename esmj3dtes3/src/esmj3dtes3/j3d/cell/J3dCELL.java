@@ -71,7 +71,8 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 				J3dLANDFar j3dLAND;
 				if (!makePhys)
 				{
-					j3dLAND = new J3dLANDFar(new LAND(record, true), master, mediaSources.getTextureSource(), cellLocation);
+					j3dLAND = new J3dLANDFar(new LAND(record, true), master, mediaSources.getTextureSource());
+					j3dLAND.setLocation(cellLocation);
 					ret = j3dLAND;
 				}
 			}
@@ -168,13 +169,13 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 
 				if (makePhys)
 				{
-					j3dLAND = new J3dLAND(new LAND(record, true), cellLocation);
+					j3dLAND = new J3dLAND(new LAND(record, true));
 				}
 				else
 				{
-					j3dLAND = new J3dLAND(new LAND(record, true), master, mediaSources.getTextureSource(), cellLocation);
+					j3dLAND = new J3dLAND(new LAND(record, true), master, mediaSources.getTextureSource());
 				}
-
+				j3dLAND.setLocation(cellLocation);
 				ret = j3dLAND;
 			}
 			else
