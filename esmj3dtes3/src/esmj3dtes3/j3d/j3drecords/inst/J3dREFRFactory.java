@@ -143,6 +143,12 @@ public class J3dREFRFactory
 
 			if (stat.MODL != null)
 			{
+
+			/*	if (stat.MODL.model.str.toLowerCase().contains("ex_dae_claw_01.nif"))
+				{
+					System.out.println("Howdy howdy!");
+				}*/
+
 				if (Tes3ModelSizes.distant(stat.MODL.model.str, refr.getScale()))
 				{
 					//J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, false, makePhys);
