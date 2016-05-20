@@ -9,6 +9,7 @@ import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECOStatInst;
 import esmj3d.j3d.j3drecords.type.J3dCONT;
 import esmj3d.j3d.j3drecords.type.J3dDOOR;
+import esmj3d.j3d.j3drecords.type.J3dLIGH;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeActionable;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeDynamic;
@@ -25,6 +26,7 @@ import esmj3dtes3.data.records.CREA;
 import esmj3dtes3.data.records.DOOR;
 import esmj3dtes3.data.records.INGR;
 import esmj3dtes3.data.records.LEVC;
+import esmj3dtes3.data.records.LIGH;
 import esmj3dtes3.data.records.LOCK;
 import esmj3dtes3.data.records.MISC;
 import esmj3dtes3.data.records.NPC_;
@@ -104,6 +106,7 @@ public class J3dREFRFactory
 
 	public static J3dRECOInst makeJ3DRefer(REFR refr, boolean makePhys, IRecordStore master, MediaSources mediaSources)
 	{
+
 		Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref.str);
 
 		if (baseRecord.getRecordType().equals("NPC_"))
@@ -144,10 +147,10 @@ public class J3dREFRFactory
 			if (stat.MODL != null)
 			{
 
-			/*	if (stat.MODL.model.str.toLowerCase().contains("ex_dae_claw_01.nif"))
-				{
-					System.out.println("Howdy howdy!");
-				}*/
+				/*	if (stat.MODL.model.str.toLowerCase().contains("ex_dae_claw_01.nif"))
+					{
+						System.out.println("Howdy howdy!");
+					}*/
 
 				if (Tes3ModelSizes.distant(stat.MODL.model.str, refr.getScale()))
 				{
@@ -243,13 +246,18 @@ public class J3dREFRFactory
 		}
 		else if (baseRecord.getRecordType().equals("DOOR"))
 		{
-			//TODO: physics can't see these doors
-			return new J3dRECOStatInst(refr, new J3dDOOR(new DOOR(baseRecord), makePhys, mediaSources), true, makePhys);
+			//TODO: other markers
+			DOOR door = new DOOR(baseRecord);
+			if (door.MODL.model.str.startsWith("Marker_"))
+				return null;
+			return new J3dRECOStatInst(refr, new J3dDOOR(door, makePhys, mediaSources), true, makePhys);
 		}
 		else if (baseRecord.getRecordType().equals("LIGH"))
 		{
+			LIGH ligh = new LIGH(baseRecord);
+			//System.out.println("ligh " +ligh.MODL.model.str);
 			//FIXME: Morrowind is adding hundreds of lights, which is odd?
-			//return new J3dRECOStatInst(refr, new J3dLIGH(new LIGH(baseRecord), makePhys, mediaSources), true, makePhys);
+			return new J3dRECOStatInst(refr, new J3dLIGH(ligh, makePhys, mediaSources), true, makePhys);
 		}
 		else if (baseRecord.getRecordType().equals("SOUN"))
 		{
