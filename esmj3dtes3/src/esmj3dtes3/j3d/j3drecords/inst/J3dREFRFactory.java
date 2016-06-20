@@ -53,7 +53,7 @@ public class J3dREFRFactory
 	{
 		if (modl != null)
 		{
-			J3dRECODynInst j3dinst = new J3dRECODynInst(refr, true, makePhys);
+			J3dRECODynInst j3dinst = new J3dRECODynInst(refr, true, true, makePhys);
 			j3dinst.setJ3dRECOType(new J3dRECOTypeDynamic(reco, modl.model.str, makePhys, mediaSources));
 			return j3dinst;
 		}
@@ -68,7 +68,7 @@ public class J3dREFRFactory
 	{
 		if (modl != null)
 		{
-			J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, true, makePhys);
+			J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, true, true, makePhys);
 			j3dinst.setJ3dRECOType(new J3dRECOTypeActionable(reco, modl.model.str, makePhys, mediaSources));
 			return j3dinst;
 		}
@@ -164,7 +164,7 @@ public class J3dREFRFactory
 				}
 				else
 				{
-					J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, true, makePhys);
+					J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, true, true, makePhys);
 					j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model.str, makePhys, mediaSources));
 					return j3dinst;
 				}
@@ -193,7 +193,7 @@ public class J3dREFRFactory
 		}
 		else if (baseRecord.getRecordType().equals("CONT"))
 		{
-			return new J3dRECOStatInst(refr, new J3dCONT(new CONT(baseRecord), makePhys, mediaSources), true, makePhys);
+			return new J3dRECOStatInst(refr, new J3dCONT(new CONT(baseRecord), makePhys, mediaSources), true, true, makePhys);
 		}
 		else if (baseRecord.getRecordType().equals("CLOT"))
 		{
@@ -250,14 +250,14 @@ public class J3dREFRFactory
 			DOOR door = new DOOR(baseRecord);
 			if (door.MODL.model.str.startsWith("Marker_"))
 				return null;
-			return new J3dRECOStatInst(refr, new J3dDOOR(door, makePhys, mediaSources), true, makePhys);
+			return new J3dRECOStatInst(refr, new J3dDOOR(door, makePhys, mediaSources), true, true, makePhys);
 		}
 		else if (baseRecord.getRecordType().equals("LIGH"))
 		{
 			LIGH ligh = new LIGH(baseRecord);
 			//System.out.println("ligh " +ligh.MODL.model.str);
 			//FIXME: Morrowind is adding hundreds of lights, which is odd?
-			return new J3dRECOStatInst(refr, new J3dLIGH(ligh, makePhys, mediaSources), true, makePhys);
+			return new J3dRECOStatInst(refr, new J3dLIGH(ligh, makePhys, mediaSources), true, true, makePhys);
 		}
 		else if (baseRecord.getRecordType().equals("SOUN"))
 		{

@@ -15,7 +15,7 @@ public class J3dRECOStatInstFar extends J3dRECOStatInst
 
 	public J3dRECOStatInstFar(InstRECO instRECO, float size)
 	{
-		super(instRECO, true, false);
+		super(instRECO, true, true, false);
 		this.size = size;
 	}
 
@@ -33,6 +33,7 @@ public class J3dRECOStatInstFar extends J3dRECOStatInst
 		}
 	}
 
+	@Override
 	public void setJ3dRECOType(J3dRECOType j3dRECOType)
 	{
 		BranchGroup blank = new BranchGroup();
