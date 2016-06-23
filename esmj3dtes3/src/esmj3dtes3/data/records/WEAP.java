@@ -6,21 +6,25 @@ import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.LString;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
-import esmj3dtes3.data.subrecords.DATA;
 import esmmanager.common.data.record.Record;
 import esmmanager.common.data.record.Subrecord;
+import tools.io.ESMByteConvert;
 
 public class WEAP extends RECO
 {
 	public ZString EDID;
 
+	public MODL MODL;
+
 	public LString FULL;
 
 	public DATA DATA;
 
-	public MODL MODL;
-
 	public ZString ICON;
+
+	public ZString ENAM;
+
+	public ZString SCRI;
 
 	public WEAP(Record recordData)
 	{
@@ -54,12 +58,13 @@ public class WEAP extends RECO
 			}
 			else if (sr.getSubrecordType().equals("ENAM"))
 			{
-
+				ENAM = new ZString(bs);
 			}
 			else if (sr.getSubrecordType().equals("SCRI"))
 			{
-
+				SCRI = new ZString(bs);
 			}
+
 			else
 			{
 				System.out.println("unhandled : " + sr.getSubrecordType() + " in record " + recordData + " in " + this);
@@ -67,7 +72,73 @@ public class WEAP extends RECO
 		}
 	}
 
-	 
+	public class DATA
+	{
 
-	 
+		public float Weight;
+		public int Value;
+		public int Type;
+		public int Health;
+		public float Speed;
+		public float Reach;
+		public int EnchantPts;
+		public byte ChopMin;
+		public byte ChopMax;
+		public byte SlashMin;
+		public byte SlashMax;
+		public byte ThrustMin;
+		public byte ThrustMax;
+		public int Flags;
+
+		public DATA(byte[] bs)
+		{
+			Weight = ESMByteConvert.extractFloat(bs, 0);
+			Value = ESMByteConvert.extractInt(bs, 4);
+			Type = ESMByteConvert.extractShort(bs, 8);
+			Health = ESMByteConvert.extractInt(bs, 10);
+			Speed = ESMByteConvert.extractFloat(bs, 12);
+			Reach = ESMByteConvert.extractFloat(bs, 16);
+			EnchantPts = ESMByteConvert.extractShort(bs, 20);
+			ChopMin = bs[22];
+			ChopMax = bs[23];
+			SlashMin = bs[24];
+			SlashMax = bs[25];
+			ThrustMin = bs[26];
+			ThrustMax = bs[27];
+			Flags = ESMByteConvert.extractInt(bs, 28);
+
+		}
+		/*
+		float Weight
+		long  Value
+		short Type? (0 to 13)
+			0 = ShortBladeOneHand
+			1 = LongBladeOneHand
+			2 = LongBladeTwoClose
+			3 = BluntOneHand
+			4 = BluntTwoClose
+			5 = BluntTwoWide
+			6 = SpearTwoWide
+			7 = AxeOneHand
+			8 = AxeTwoHand
+			9 = MarksmanBow
+			10 = MarksmanCrossbow
+			11 = MarksmanThrown
+			12 = Arrow
+			13 = Bolt
+		short Health
+		float Speed
+		float Reach
+		short EnchantPts
+		byte  ChopMin
+		byte  ChopMax
+		byte  SlashMin
+		byte  SlashMax
+		byte  ThrustMin
+		byte  ThrustMax
+		long  Flags (0 to 1)
+			0 = ?
+			1 = Ignore Normal Weapon Resistance?
+		 */
+	}
 }

@@ -1,5 +1,6 @@
 package esmj3dtes3.data.records;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import esmj3d.data.shared.records.RECO;
@@ -29,9 +30,13 @@ public class NPC_ extends RECO
 
 	public int FLAG;
 
+	public NPCO[] NPCOs;
+
 	public NPC_(Record recordData)
 	{
 		super(recordData);
+
+		ArrayList<NPCO> npcos = new ArrayList<NPCO>();
 
 		List<Subrecord> subrecords = recordData.getSubrecords();
 		for (int i = 0; i < subrecords.size(); i++)
@@ -81,7 +86,7 @@ public class NPC_ extends RECO
 			}
 			else if (sr.getSubrecordType().equals("NPCO"))
 			{
-
+				npcos.add(new NPCO(bs));
 			}
 			else if (sr.getSubrecordType().equals("NPCS"))
 			{
@@ -132,6 +137,9 @@ public class NPC_ extends RECO
 			{
 				System.out.println("unhandled : " + sr.getSubrecordType() + " in record " + recordData + " in " + this);
 			}
+
+			NPCOs = new NPCO[npcos.size()];
+			npcos.toArray(NPCOs);
 
 		}
 	}

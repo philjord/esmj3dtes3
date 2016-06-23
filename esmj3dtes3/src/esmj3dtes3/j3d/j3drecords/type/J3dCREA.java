@@ -66,7 +66,7 @@ public class J3dCREA extends J3dRECOTypeCha
 
 			List<String> skinNifs = new ArrayList<String>();
 			skinNifs.add(nifFileName);
-			nifCharacter = new NifCharacterTes3(nifFileName, skinNifs, mediaSources);
+			nifCharacter = new NifCharacterTes3(nifFileName, skinNifs, null, mediaSources);
 
 			if (crea.scale == 1)
 			{
