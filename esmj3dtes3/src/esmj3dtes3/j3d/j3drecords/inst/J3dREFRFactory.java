@@ -8,7 +8,6 @@ import esmj3d.j3d.j3drecords.inst.J3dRECODynInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECOStatInst;
 import esmj3d.j3d.j3drecords.type.J3dCONT;
-import esmj3d.j3d.j3drecords.type.J3dDOOR;
 import esmj3d.j3d.j3drecords.type.J3dLIGH;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeActionable;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
@@ -39,6 +38,7 @@ import esmj3dtes3.data.records.WEAP;
 import esmj3dtes3.j3d.cell.Tes3ModelSizes;
 import esmj3dtes3.j3d.j3drecords.type.J3dCREA;
 import esmj3dtes3.j3d.j3drecords.type.J3dNPC_;
+import esmj3dtes3.j3d.j3drecords.type.J3dPivotDOOR;
 import esmmanager.common.data.record.IRecordStore;
 import esmmanager.common.data.record.Record;
 import esmmanager.tes3.IRecordStoreTes3;
@@ -250,7 +250,7 @@ public class J3dREFRFactory
 			DOOR door = new DOOR(baseRecord);
 			if (door.MODL.model.str.startsWith("Marker_"))
 				return null;
-			return new J3dRECOStatInst(refr, new J3dDOOR(door, makePhys, mediaSources), true, true, makePhys);
+			return new J3dRECOStatInst(refr, new J3dPivotDOOR(door, makePhys, mediaSources), true, true, makePhys);
 		}
 		else if (baseRecord.getRecordType().equals("LIGH"))
 		{
