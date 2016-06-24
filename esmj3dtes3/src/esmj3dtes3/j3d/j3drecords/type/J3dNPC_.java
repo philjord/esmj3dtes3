@@ -1,7 +1,5 @@
 package esmj3dtes3.j3d.j3drecords.type;
 
-import java.util.ArrayList;
-
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
@@ -17,6 +15,7 @@ import esmmanager.common.data.record.IRecordStore;
 import esmmanager.common.data.record.Record;
 import esmmanager.tes3.IRecordStoreTes3;
 import nif.character.AttachedParts;
+import nif.character.AttachedParts.Part;
 import nif.character.NifCharacterTes3;
 import tools3d.utils.scenegraph.Fadable;
 import utils.ESConfig;
@@ -24,13 +23,14 @@ import utils.source.MediaSources;
 
 public class J3dNPC_ extends J3dRECOTypeCha
 {
+	private static String nif = ".nif";
+
 	private boolean female = false;
 
 	private boolean isBeast = false;
 
 	private NPC_ npc_;
 
-	private AttachedParts skinFileNames = new AttachedParts();
 	private AttachedParts attachFileNames = new AttachedParts();
 
 	/**
@@ -102,11 +102,11 @@ public class J3dNPC_ extends J3dRECOTypeCha
 		}
 
 		// interface only accepts an array for skins for now
-		ArrayList<String> skins = new ArrayList<String>();
-		for (String nif : skinFileNames.parts.values())
-			skins.add(nif);
+		//	ArrayList<String> skins = new ArrayList<String>();
+		//	for (String nif : skinFileNames.parts.values())
+		//		skins.add(nif);
 
-		nifCharacter = new NifCharacterTes3(skeletonNifFile, skins, attachFileNames, mediaSources);
+		nifCharacter = new NifCharacterTes3(skeletonNifFile, attachFileNames, mediaSources);
 
 		//TODO: fix up npcs so not in floor
 		TransformGroup tg = new TransformGroup();
@@ -145,12 +145,8 @@ public class J3dNPC_ extends J3dRECOTypeCha
 					hasOneNif = true;
 					nifFileName = "c\\" + p.partName + ".nif";
 				}
-				// feet and tails part of skins for beast races	
-				boolean isBeast = npc_.RNAM.str.equals("Argonian") || npc_.RNAM.str.equals("Khajiit");
-				if (AttachedParts.isSkinned(p.index, isBeast))
-					skinFileNames.addPart(AttachedParts.getPartForLoc(p.index), nifFileName);
-				else
-					attachFileNames.addPart(AttachedParts.getPartForLoc(p.index), nifFileName);
+
+				attachFileNames.addPart(AttachedParts.getPartForLoc(p.index), nifFileName);
 
 			}
 			if (!hasOneNif)
@@ -190,9 +186,6 @@ public class J3dNPC_ extends J3dRECOTypeCha
 		boolean hasOneNif = false;
 		for (ARMO.PART p : armo.parts)
 		{
-			//for armo partname appears to give the actual nif file name, 
-			// if shown and in the first slot
-			// skinned and unskinned
 			String nifFileName = "";// blank mean reserved but no nif file
 			if (p.partName.length() > 0)
 			{
@@ -200,25 +193,34 @@ public class J3dNPC_ extends J3dRECOTypeCha
 				nifFileName = "a\\" + p.partName + ".nif";
 			}
 
-			// some known mismatches
-			//a\imperial cuirass.nif a\a_imperial_gauntlet.nif both in a_imperial_skins.nif
-			//a\imperial boot foot.nif in a_imperial_f_shoe.nif (f for foot, not female)
-
+			// some known names for nifs
 			if (p.partName.equals("imperial cuirass") || p.partName.equals("a_imperial_gauntlet"))
 				nifFileName = "a\\a_imperial_skins.nif";
 			if (p.partName.equals("imperial boot foot"))
-				nifFileName = "a\\a_imperial_f_shoe.nif";
+				nifFileName = "a\\a_imperial_f_shoe.nif";//(f for foot, not female)
 			if (p.partName.equals("imperial boot ankle"))
 				nifFileName = "a\\a_imperial_a_boot.nif";
 			if (p.partName.equals("imperial helmet"))
 				nifFileName = "a\\a_imperial_m_helmet.nif";
+			if (p.partName.equals("a_nordicfur_cuirass") || p.partName.equals("a_nordicfur_gauntlet"))
+				nifFileName = "a\\a_nordicfur_skinned.nif";
+			if (p.partName.equals("a_steel_cuirass"))
+				nifFileName = "a\\a_steel_skin.nif";
+			if (p.partName.equals("a_m_chitin_chest"))
+				nifFileName = "a\\a_m_chitin_skinned.nif";
+			if (p.partName.equals("c_slave_bracer"))
+				nifFileName = "c\\c_slave_bracer.nif";
+			if (p.partName.equals("c_m_bracer_w_leather01"))
+				nifFileName = "c\\c_m_bracer_w_leather01.nif";
 
-			// feet and tails part of skins for beast races	
+			//a_iron_skinned.nif
 
-			if (AttachedParts.isSkinned(p.index, isBeast))
-				skinFileNames.addPart(AttachedParts.getPartForLoc(p.index), nifFileName);
-			else
-				attachFileNames.addPart(AttachedParts.getPartForLoc(p.index), nifFileName);
+			//a_glass_cuirass.nif - skinned for example
+
+			// looks like things with the name curaiss are skiinned with no hands
+			// looks like things with the name skin are chest and hands
+
+			attachFileNames.addPart(AttachedParts.getPartForLoc(p.index), nifFileName);
 
 		}
 		if (!hasOneNif)
@@ -246,17 +248,14 @@ public class J3dNPC_ extends J3dRECOTypeCha
 	private void addUndressedParts()
 	{
 
-		String nif = ".nif";
-		if (npc_.BNAM != null && !attachFileNames.hasPart(AttachedParts.Part.Head))
+		if (npc_.BNAM != null)
 		{
-			String headStr = "b\\" + npc_.BNAM.model.str + nif;
-			attachFileNames.addPart(AttachedParts.Part.Head, headStr);
+			addAttachNoSwap(AttachedParts.Part.Head, "b\\" + npc_.BNAM.model.str + nif);
 		}
 
-		if (npc_.KNAM != null && !attachFileNames.hasPart(AttachedParts.Part.Hair))
+		if (npc_.KNAM != null)
 		{
-			String hairStr = "b\\" + npc_.KNAM.model.str + nif;
-			attachFileNames.addPart(AttachedParts.Part.Hair, hairStr);
+			addAttachNoSwap(AttachedParts.Part.Hair, "b\\" + npc_.KNAM.model.str + nif);
 		}
 
 		if (npc_.RNAM != null)
@@ -266,47 +265,50 @@ public class J3dNPC_ extends J3dRECOTypeCha
 			// feet and tails part of skins for beast races		 
 			if (!npc_.RNAM.str.equals("Argonian") && !npc_.RNAM.str.equals("Khajiit"))
 			{
-				attachFileNames.addPartNoSwap(AttachedParts.Part.Right_Foot, pre + "foot" + nif);
-				attachFileNames.addPartNoSwap(AttachedParts.Part.Left_Foot, pre + "foot" + nif);
+				addAttachNoSwap(AttachedParts.Part.Right_Foot, pre + "foot" + nif);
+				addAttachNoSwap(AttachedParts.Part.Left_Foot, pre + "foot" + nif);
 			}
 
-			attachFileNames.addPartNoSwap(AttachedParts.Part.Right_Ankle, pre + "ankle" + nif);
-			attachFileNames.addPartNoSwap(AttachedParts.Part.Left_Ankle, pre + "ankle" + nif);
+			addAttachNoSwap(AttachedParts.Part.Right_Ankle, pre + "ankle" + nif);
+			addAttachNoSwap(AttachedParts.Part.Left_Ankle, pre + "ankle" + nif);
 
-			if (!skinFileNames.hasPart(AttachedParts.Part.Skirt))
+			if (!attachFileNames.hasPart(AttachedParts.Part.Skirt))
 			{
-				attachFileNames.addPartNoSwap(AttachedParts.Part.Right_Knee, pre + "knee" + nif);
-				attachFileNames.addPartNoSwap(AttachedParts.Part.Left_Knee, pre + "knee" + nif);
+				addAttachNoSwap(AttachedParts.Part.Right_Knee, pre + "knee" + nif);
+				addAttachNoSwap(AttachedParts.Part.Left_Knee, pre + "knee" + nif);
 
-				attachFileNames.addPartNoSwap(AttachedParts.Part.Right_Upper_Leg, pre + "upper leg" + nif);
-				attachFileNames.addPartNoSwap(AttachedParts.Part.Left_Upper_Leg, pre + "upper leg" + nif);
+				addAttachNoSwap(AttachedParts.Part.Right_Upper_Leg, pre + "upper leg" + nif);
+				addAttachNoSwap(AttachedParts.Part.Left_Upper_Leg, pre + "upper leg" + nif);
 
-				attachFileNames.addPartNoSwap(AttachedParts.Part.Groin, pre + "groin" + nif);
+				addAttachNoSwap(AttachedParts.Part.Groin, pre + "groin" + nif);
 			}
 
-			attachFileNames.addPartNoSwap(AttachedParts.Part.Neck, pre + "neck" + nif);
+			addAttachNoSwap(AttachedParts.Part.Neck, pre + "neck" + nif);
 
-			attachFileNames.addPartNoSwap(AttachedParts.Part.Right_Upper_Arm, pre + "upper arm" + nif);
-			attachFileNames.addPartNoSwap(AttachedParts.Part.Left_Upper_Arm, pre + "upper arm" + nif);
+			addAttachNoSwap(AttachedParts.Part.Right_Upper_Arm, pre + "upper arm" + nif);
+			addAttachNoSwap(AttachedParts.Part.Left_Upper_Arm, pre + "upper arm" + nif);
 
 			String fa = pre + "forearm" + nif;
 			// argonian female forearms missing, odd?
 			if (npc_.RNAM.str.equals("Argonian") && female)
 				fa = "b\\b_n_Argonian_m_forearm" + nif;
 
-			attachFileNames.addPartNoSwap(AttachedParts.Part.Right_Forearm, fa);
-			attachFileNames.addPartNoSwap(AttachedParts.Part.Left_Forearm, fa);
+			addAttachNoSwap(AttachedParts.Part.Right_Forearm, fa);
+			addAttachNoSwap(AttachedParts.Part.Left_Forearm, fa);
 
-			attachFileNames.addPartNoSwap(AttachedParts.Part.Right_Wrist, pre + "wrist" + nif);
-			attachFileNames.addPartNoSwap(AttachedParts.Part.Left_Wrist, pre + "wrist" + nif);
+			addAttachNoSwap(AttachedParts.Part.Right_Wrist, pre + "wrist" + nif);
+			addAttachNoSwap(AttachedParts.Part.Left_Wrist, pre + "wrist" + nif);
 
 			//TODO: how the hell do I check this guy out? 
 			//also hands and beast feet?
-			if (!skinFileNames.hasPart(AttachedParts.Part.Chest))
-			{
-				skinFileNames.addPart(AttachedParts.Part.Chest, pre + "skins" + nif);
-			}
-
+			addAttachNoSwap(AttachedParts.Part.Chest, pre + "skins" + nif);
 		}
 	}
+
+	private void addAttachNoSwap(Part part, String nifFileName)
+	{
+		if (!attachFileNames.hasPart(part))
+			attachFileNames.addPart(part, nifFileName);
+	}
+
 }

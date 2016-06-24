@@ -11,6 +11,7 @@ import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
 import esmj3dtes3.data.records.CREA;
 import esmmanager.common.data.record.IRecordStore;
+import nif.character.AttachedParts;
 import nif.character.NifCharacterTes3;
 import tools3d.utils.scenegraph.Fadable;
 import utils.source.MediaSources;
@@ -35,9 +36,9 @@ public class J3dCREA extends J3dRECOTypeCha
 	 * non-x*.nif file is animations as well, same format but no bone map as each track is
 	 * directly off the bone it controls
 	 * 
-	 * non-x*.nif a set of time starts stop for each animationn  in an nitextkeyextradata
+	 * non-x*.nif a set of time starts stop for each animation  in an nitextkeyextradata
 	 * 
-	 * I presume non-x*.nif this is for editing and x*.kf/nif seperates are for havok?
+	 * I presume non-x*.nif this is for editing and x*.kf/nif separates are for havok?
 	 * 
 	 * So I need to make a tes3 animation system that use the skinning system, but has a seperate animation system
 	 * 
@@ -45,7 +46,7 @@ public class J3dCREA extends J3dRECOTypeCha
 	 * 
 	 * 
 	 * xbalbelfish has a  bone system with older namings whereas fire atronach uses nearly the oblivion system
-	 * test nodes only for skeleton then use taht in the nifs of tes3
+	 * test nodes only for skeleton then use that in the nifs of tes3
 	 * 
 	 * @param crea
 	 * @param master
@@ -66,7 +67,11 @@ public class J3dCREA extends J3dRECOTypeCha
 
 			List<String> skinNifs = new ArrayList<String>();
 			skinNifs.add(nifFileName);
-			nifCharacter = new NifCharacterTes3(nifFileName, skinNifs, null, mediaSources);
+
+			AttachedParts attachFileNames = new AttachedParts();
+			attachFileNames.addPart(AttachedParts.Part.Root, nifFileName);
+
+			nifCharacter = new NifCharacterTes3(nifFileName, attachFileNames, mediaSources);
 
 			if (crea.scale == 1)
 			{
