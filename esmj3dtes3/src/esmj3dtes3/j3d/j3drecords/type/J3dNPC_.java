@@ -9,6 +9,7 @@ import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
 import esmj3dtes3.data.records.ARMO;
 import esmj3dtes3.data.records.CLOT;
+import esmj3dtes3.data.records.NPCO;
 import esmj3dtes3.data.records.NPC_;
 import esmj3dtes3.data.records.WEAP;
 import esmmanager.common.data.record.IRecordStore;
@@ -32,6 +33,8 @@ public class J3dNPC_ extends J3dRECOTypeCha
 	private NPC_ npc_;
 
 	private AttachedParts attachFileNames = new AttachedParts();
+
+	private IRecordStoreTes3 recordStoreTes3;
 
 	/**
 	    MODL = Animation file
@@ -59,30 +62,31 @@ public class J3dNPC_ extends J3dRECOTypeCha
 		isBeast = npc_.RNAM.str.equals("Argonian") || npc_.RNAM.str.equals("Khajiit");
 
 		//Do the inventory items
-		IRecordStoreTes3 recordStoreTes3 = (IRecordStoreTes3) master;
+		recordStoreTes3 = (IRecordStoreTes3) master;
 
 		for (int i = 0; i < npc_.NPCOs.length; i++)
 		{
+			NPCO npco = npc_.NPCOs[i];
 			//System.out.println("item " + npc_.NPCOs[i].count + " " + npc_.NPCOs[i].itemName);
-			Record rec = recordStoreTes3.getRecord(npc_.NPCOs[i].itemName);
+			Record rec = recordStoreTes3.getRecord(npco.itemName);
 			if (rec != null)
 			{
 				if (rec.getRecordType().equals("ARMO"))
 				{
-					addARMO(new ARMO(rec));
+					addARMO(new ARMO(rec), attachFileNames, recordStoreTes3);
 				}
 				else if (rec.getRecordType().equals("CLOT"))
 				{
-					addCLOT(new CLOT(rec));
+					addCLOT(new CLOT(rec), attachFileNames, recordStoreTes3);
 				}
 				else if (rec.getRecordType().equals("WEAP"))
 				{
-					addWEAP(new WEAP(rec));
+					addWEAP(new WEAP(rec), attachFileNames, recordStoreTes3);
 				}
 			}
 			else
 			{
-				System.out.println("why is this item not found? <" + npc_.NPCOs[i].itemName + ">");
+				System.out.println("why is this item not found? <" + npco.itemName + ">");
 			}
 
 		}
@@ -124,7 +128,12 @@ public class J3dNPC_ extends J3dRECOTypeCha
 			((Fadable) nifCharacter).setOutline(null);
 	}
 
-	private void addCLOT(CLOT clot)
+	public static void addCLOT(CLOT clot, AttachedParts attachFileNames, IRecordStoreTes3 recordStoreTes3)
+	{
+		addCLOT(clot, attachFileNames, recordStoreTes3, false);
+	}
+
+	public static void addCLOT(CLOT clot, AttachedParts attachFileNames, IRecordStoreTes3 recordStoreTes3, boolean firstPerson)
 	{
 		//	System.out.println("It's an clot " + " " + clot.EDID.str);
 		//	System.out.println("clot.MODL.model.str " + clot.MODL.model.str);//MODL is ground
@@ -140,13 +149,18 @@ public class J3dNPC_ extends J3dRECOTypeCha
 				// if shown and in the first slot
 				// skinned and unskinned
 				String nifFileName = "";// blank mean reserved but no nif file
+				String ext = (firstPerson && AttachedParts.hasFirstPersonModel(AttachedParts.getPartForLoc(p.index)) ? ".1st." : "")
+						+ ".nif";
 				if (p.partName.length() > 0)
 				{
 					hasOneNif = true;
-					nifFileName = "c\\" + p.partName + ".nif";
+					nifFileName = "c\\" + p.partName + ext;
 				}
 
-				attachFileNames.addPart(AttachedParts.getPartForLoc(p.index), nifFileName);
+				//Bad model name in NifCharacterTes3 c\imperial skirt.nif
+
+				if (!firstPerson || AttachedParts.isFirstPersonVisible(AttachedParts.getPartForLoc(p.index)))
+					attachFileNames.addPart(AttachedParts.getPartForLoc(p.index), nifFileName);
 
 			}
 			if (!hasOneNif)
@@ -165,7 +179,12 @@ public class J3dNPC_ extends J3dRECOTypeCha
 
 	}
 
-	private void addARMO(ARMO armo)
+	public static void addARMO(ARMO armo, AttachedParts attachFileNames, IRecordStoreTes3 recordStoreTes3)
+	{
+		addARMO(armo, attachFileNames, recordStoreTes3, false);
+	}
+
+	public static void addARMO(ARMO armo, AttachedParts attachFileNames, IRecordStoreTes3 recordStoreTes3, boolean firstPerson)
 	{
 		//	System.out.println("It's an armo " + " " + armo.EDID.str);
 		//	System.out.println("armo.MODL.model.str " + armo.MODL.model.str);//MODL is ground
@@ -182,45 +201,67 @@ public class J3dNPC_ extends J3dRECOTypeCha
 		// I have to separate them from each other and the curaiss
 
 		//a_imperial_hands.1st.nif appear to be boned too obviously 
-
 		boolean hasOneNif = false;
 		for (ARMO.PART p : armo.parts)
 		{
 			String nifFileName = "";// blank mean reserved but no nif file
+			String ext = (firstPerson && AttachedParts.hasFirstPersonModel(AttachedParts.getPartForLoc(p.index)) ? ".1st." : "") + ".nif";
+
 			if (p.partName.length() > 0)
 			{
 				hasOneNif = true;
-				nifFileName = "a\\" + p.partName + ".nif";
+				nifFileName = "a\\" + p.partName + ext;
+
+				Record rec = recordStoreTes3.getRecord(p.partName);
+				if (rec != null && rec.getRecordType().equals("BODY"))
+				{
+					// adds very little info in fact
+					//BODY body = new BODY(rec);
+				}
+				else
+				{
+					System.out.println("body part NOT found " + p.partName);
+				}
 			}
 
 			// some known names for nifs
 			if (p.partName.equals("imperial cuirass") || p.partName.equals("a_imperial_gauntlet"))
 				nifFileName = "a\\a_imperial_skins.nif";
-			if (p.partName.equals("imperial boot foot"))
+			else if (p.partName.equals("imperial boot foot"))
 				nifFileName = "a\\a_imperial_f_shoe.nif";//(f for foot, not female)
-			if (p.partName.equals("imperial boot ankle"))
+			else if (p.partName.equals("imperial boot ankle"))
 				nifFileName = "a\\a_imperial_a_boot.nif";
-			if (p.partName.equals("imperial helmet"))
+			else if (p.partName.equals("imperial helmet"))
 				nifFileName = "a\\a_imperial_m_helmet.nif";
-			if (p.partName.equals("a_nordicfur_cuirass") || p.partName.equals("a_nordicfur_gauntlet"))
+			else if (p.partName.equals("imperial skirt"))
+				nifFileName = "a\\a_imperial_skirt.nif";
+			else if (p.partName.equals("imperial ua"))
+				nifFileName = "a\\a_imperial_ua_pauldron.nif";
+			else if (p.partName.equals("imperial cl pauldron"))
+				nifFileName = "a\\a_imperial_cl_pauldron.nif";
+			else if (p.partName.equals("a_nordicfur_cuirass") || p.partName.equals("a_nordicfur_gauntlet"))
 				nifFileName = "a\\a_nordicfur_skinned.nif";
-			if (p.partName.equals("a_steel_cuirass"))
+			else if (p.partName.equals("a_steel_cuirass"))
 				nifFileName = "a\\a_steel_skin.nif";
-			if (p.partName.equals("a_m_chitin_chest"))
+			else if (p.partName.equals("a_m_chitin_chest"))
 				nifFileName = "a\\a_m_chitin_skinned.nif";
-			if (p.partName.equals("c_slave_bracer"))
+			else if (p.partName.equals("a_netch_m_chest"))
+				nifFileName = "a\\a_netch_m_cuirass2.nif";
+			else if (p.partName.equals("c_slave_bracer"))
 				nifFileName = "c\\c_slave_bracer.nif";
-			if (p.partName.equals("c_m_bracer_w_leather01"))
+			else if (p.partName.equals("c_m_bracer_w_leather01"))
 				nifFileName = "c\\c_m_bracer_w_leather01.nif";
+			else if (p.partName.equals("c_m_bracer_w_clothwrap02"))
+				nifFileName = "c\\c_m_bracer_w_clothwrap02.nif";
 
 			//a_iron_skinned.nif
 
 			//a_glass_cuirass.nif - skinned for example
 
-			// looks like things with the name curaiss are skiinned with no hands
+			// looks like things with the name cuirass are skinned with no hands
 			// looks like things with the name skin are chest and hands
-
-			attachFileNames.addPart(AttachedParts.getPartForLoc(p.index), nifFileName);
+			if (!firstPerson || AttachedParts.isFirstPersonVisible(AttachedParts.getPartForLoc(p.index)))
+				attachFileNames.addPart(AttachedParts.getPartForLoc(p.index), nifFileName);
 
 		}
 		if (!hasOneNif)
@@ -232,7 +273,7 @@ public class J3dNPC_ extends J3dRECOTypeCha
 
 	}
 
-	private void addWEAP(WEAP weap)
+	public static void addWEAP(WEAP weap, AttachedParts attachFileNames, IRecordStoreTes3 recordStoreTes3)
 	{
 		/*weapStr = weap.MODL.model.str;
 		System.out.println("It's an weap " + " " + weap.EDID.str);

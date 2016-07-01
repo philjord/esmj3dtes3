@@ -7,6 +7,13 @@ public class NPCO
 	public int count = 0;
 	public String itemName = "";
 
+	//for use in characters etc
+	public NPCO(int count, String itemName)
+	{
+		this.count = count;
+		this.itemName = itemName;
+	}
+
 	public NPCO(byte[] bs)
 	{
 		count = ESMByteConvert.extractInt(bs, 0);
