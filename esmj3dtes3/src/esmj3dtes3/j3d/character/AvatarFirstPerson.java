@@ -16,7 +16,6 @@ import esmmanager.common.data.record.Record;
 import esmmanager.tes3.IRecordStoreTes3;
 import nif.character.AttachedParts;
 import nif.character.AttachedParts.Part;
-import nif.character.NifCharacter;
 import nif.character.NifCharacterTes3;
 import utils.ESConfig;
 import utils.source.MediaSources;
@@ -27,7 +26,7 @@ public class AvatarFirstPerson extends BranchGroup
 
 	private CharacterSheet characterSheet;
 
-	private NifCharacter nifCharacter;
+	private NifCharacterTes3 nifCharacter;
 
 	private IRecordStoreTes3 recordStoreTes3;
 
@@ -37,8 +36,22 @@ public class AvatarFirstPerson extends BranchGroup
 
 	public AvatarFirstPerson(CharacterSheet characterSheet, IRecordStore master, MediaSources mediaSources)
 	{
+		this.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
+		this.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
 		this.characterSheet = characterSheet;
 		this.recordStoreTes3 = (IRecordStoreTes3) master;
+
+		//SoundGen labels are just record indicators
+		/*	Record rec2 = recordStoreTes3.getRecord("Land");
+			if (rec2 != null && rec2.getRecordType().equals("SOUN"))
+			{
+				SOUN soun = new SOUN(rec2);
+				soun.getClass();
+			}
+			else
+			{
+				System.out.println("Not a SOUN");
+			}*/
 
 		for (NPCO npco : characterSheet.getNPCOs())
 		{
@@ -73,7 +86,7 @@ public class AvatarFirstPerson extends BranchGroup
 
 		addUndressedParts();
 
-		nifCharacter = new NifCharacterTes3(skeletonNifFile, attachFileNames, mediaSources);
+		nifCharacter = new NifCharacterTes3(skeletonNifFile, attachFileNames, mediaSources);		
 
 		//TODO: do I need a pelvis adjustment?
 		TransformGroup tg = new TransformGroup();
@@ -181,5 +194,34 @@ public class AvatarFirstPerson extends BranchGroup
 		this.firstPerson = firstPerson;
 
 		//TODO: rejig the model to be thrid person now
+	}
+
+	public void playAnimation(String animationName, boolean looping)
+	{
+		System.out.println("animationName " +animationName);
+		nifCharacter.startAnimation(animationName, false);
+		
+	/*	
+		J3dNiSequenceStreamHelper j3dNiSequenceStreamHelper = nifCharacter.getJ3dNiSequenceStreamHelper();
+		J3dNiControllerSequenceTes3 seq = j3dNiSequenceStreamHelper.getSequence(animationName);
+		if (seq != null)
+		{
+			if (!seq.isLive())
+			{
+				BranchGroup newKfBg = seq.getBranchGroup();
+				addChild(newKfBg);
+			}
+
+			seq.fireSequence(!looping, 0);
+		}
+		else
+		{
+			System.out.println("Bad animation name " + animationName);
+		}
+
+		//for (String fireName : j3dNiSequenceStreamHelper.getAllSequences())
+		//	System.out.println("Seq: " + fireName);
+		 
+		 */
 	}
 }

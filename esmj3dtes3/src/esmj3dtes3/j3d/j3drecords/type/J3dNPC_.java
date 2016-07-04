@@ -158,6 +158,8 @@ public class J3dNPC_ extends J3dRECOTypeCha
 				}
 
 				//Bad model name in NifCharacterTes3 c\imperial skirt.nif
+				if (p.partName.equals("imperial skirt"))
+					nifFileName = "a\\a_imperial_skirt.nif";
 
 				if (!firstPerson || AttachedParts.isFirstPersonVisible(AttachedParts.getPartForLoc(p.index)))
 					attachFileNames.addPart(AttachedParts.getPartForLoc(p.index), nifFileName);
@@ -233,12 +235,12 @@ public class J3dNPC_ extends J3dRECOTypeCha
 				nifFileName = "a\\a_imperial_a_boot.nif";
 			else if (p.partName.equals("imperial helmet"))
 				nifFileName = "a\\a_imperial_m_helmet.nif";
-			else if (p.partName.equals("imperial skirt"))
-				nifFileName = "a\\a_imperial_skirt.nif";
 			else if (p.partName.equals("imperial ua"))
 				nifFileName = "a\\a_imperial_ua_pauldron.nif";
 			else if (p.partName.equals("imperial cl pauldron"))
 				nifFileName = "a\\a_imperial_cl_pauldron.nif";
+			else if (p.partName.equals("a_iron_cuirass"))
+				nifFileName = "a\\a_iron_skinned.nif";		 
 			else if (p.partName.equals("a_nordicfur_cuirass") || p.partName.equals("a_nordicfur_gauntlet"))
 				nifFileName = "a\\a_nordicfur_skinned.nif";
 			else if (p.partName.equals("a_steel_cuirass"))
@@ -254,9 +256,7 @@ public class J3dNPC_ extends J3dRECOTypeCha
 			else if (p.partName.equals("c_m_bracer_w_clothwrap02"))
 				nifFileName = "c\\c_m_bracer_w_clothwrap02.nif";
 
-			//a_iron_skinned.nif
-
-			//a_glass_cuirass.nif - skinned for example
+			//a_nordicfur_hands.1st.nif needs to be considered above
 
 			// looks like things with the name cuirass are skinned with no hands
 			// looks like things with the name skin are chest and hands
