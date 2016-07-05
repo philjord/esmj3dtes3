@@ -240,7 +240,7 @@ public class J3dNPC_ extends J3dRECOTypeCha
 			else if (p.partName.equals("imperial cl pauldron"))
 				nifFileName = "a\\a_imperial_cl_pauldron.nif";
 			else if (p.partName.equals("a_iron_cuirass"))
-				nifFileName = "a\\a_iron_skinned.nif";		 
+				nifFileName = "a\\a_iron_skinned.nif";
 			else if (p.partName.equals("a_nordicfur_cuirass") || p.partName.equals("a_nordicfur_gauntlet"))
 				nifFileName = "a\\a_nordicfur_skinned.nif";
 			else if (p.partName.equals("a_steel_cuirass"))
@@ -275,13 +275,10 @@ public class J3dNPC_ extends J3dRECOTypeCha
 
 	public static void addWEAP(WEAP weap, AttachedParts attachFileNames, IRecordStoreTes3 recordStoreTes3)
 	{
-		/*weapStr = weap.MODL.model.str;
-		System.out.println("It's an weap " + " " + weap.EDID.str);
-		System.out.println("weap.MODL.model.str " + weap.MODL.model.str);//MODL is ground
-		System.out.println(" " + weap.DATA.Type);
-		System.out.println("ITEX = Icon Filename, required " + weap.ICON.str);
-		System.out.println("FULL " + weap.FULL.str);*/
+		String weapStr = weap.MODL.model.str;
+		attachFileNames.addPart(AttachedParts.Part.Weapon, weapStr);
 
+		
 		// right hand has a bone called "Weapon Bone"
 
 	}
