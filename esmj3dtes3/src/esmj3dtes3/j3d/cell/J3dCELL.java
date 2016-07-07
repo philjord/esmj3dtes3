@@ -3,7 +3,13 @@ package esmj3dtes3.j3d.cell;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Node;
+import javax.media.j3d.Transform3D;
+import javax.media.j3d.TransformGroup;
+import javax.vecmath.Vector3f;
+
+import com.frostwire.util.SparseArray;
 
 import esmj3d.data.shared.records.LAND;
 import esmj3d.j3d.BethRenderSettings;
@@ -11,8 +17,10 @@ import esmj3d.j3d.BethRenderSettings.UpdateListener;
 import esmj3d.j3d.cell.J3dCELLGeneral;
 import esmj3d.j3d.j3drecords.inst.J3dLAND;
 import esmj3d.j3d.j3drecords.inst.J3dLANDFar;
+import esmj3d.j3d.j3drecords.inst.J3dRECOChaInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
 import esmj3dtes3.data.records.CELL;
+import esmj3dtes3.data.records.PGRD;
 import esmj3dtes3.data.records.REFR;
 import esmj3dtes3.j3d.j3drecords.inst.J3dREFRFactory;
 import esmmanager.common.data.record.IRecordStore;
@@ -22,9 +30,21 @@ import utils.source.MediaSources;
 
 public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 {
+
+	// Record all visuals that are made for characters
+	// these will be picked up by the AI system and it will link them to the 
+	// dynamics equivalent for moving and animating
+	// the AI system is responsible for removing these from this hashmap when done
+	private SparseArray<J3dRECOChaInst> allJ3dRECOChaInsts = new SparseArray<J3dRECOChaInst>();
+
 	protected CELL cell;
 
 	private ArrayList<J3dRECOInst> j3dRECOInsts = new ArrayList<J3dRECOInst>();
+
+	private boolean showPathGrid = false;
+
+	private PGRD pgrd;
+	private BranchGroup j3dPGRDbg;
 
 	public J3dCELL(IRecordStore master, Record cellRecord, List<Record> children, boolean makePhys, MediaSources mediaSources)
 	{
@@ -33,6 +53,8 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 		setCell(cell);
 
 		BethRenderSettings.addUpdateListener(this);
+
+		showPathGrid = BethRenderSettings.isShowPathGrid();
 	}
 
 	@Override
@@ -43,6 +65,49 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 			for (J3dRECOInst j3dRECOInst : j3dRECOInsts)
 			{
 				j3dRECOInst.renderSettingsUpdated();
+			}
+
+			updateShowPathGrid(BethRenderSettings.isShowPathGrid());
+
+		}
+	}
+
+	private void updateShowPathGrid(boolean newShowPathGrid)
+	{
+		if (pgrd != null)
+		{
+			if (showPathGrid != newShowPathGrid)
+			{
+				showPathGrid = BethRenderSettings.isShowPathGrid();
+
+				if (showPathGrid)
+				{
+					j3dPGRDbg = new BranchGroup();
+					j3dPGRDbg.setCapability(ALLOW_DETACH);
+
+					TransformGroup transformGroup = new TransformGroup();
+					transformGroup.clearCapabilities();
+					Transform3D transform = new Transform3D();
+
+					float landSize = J3dLAND.LAND_SIZE;
+					//we don't use instCell.getTrans().z even if set
+					// from corner not center
+					Vector3f loc = new Vector3f((instCell.getTrans().x * landSize), 0, -(instCell.getTrans().y * landSize));
+					transform.set(loc);
+
+					transformGroup.setTransform(transform);
+
+					J3dPGRD j3dPGRD = new J3dPGRD(pgrd);
+					transformGroup.addChild(j3dPGRD);
+					j3dPGRDbg.addChild(transformGroup);
+
+					addChild(j3dPGRDbg);
+
+				}
+				else
+				{
+					// hide it
+				}
 			}
 		}
 	}
@@ -136,6 +201,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 		float ZRotate
 		*/
 
+	@Override
 	public J3dRECOInst makeJ3dRECO(Record record)
 	{
 		J3dRECOInst ret = null;
@@ -143,25 +209,32 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 		{
 			if (record.getRecordType().equals("REFR"))
 			{
-				ret = J3dREFRFactory.makeJ3DRefer(new REFR(record), makePhys, master, mediaSources);
-			}
-			//TODO: these are now just plain REFR's consider this
-			/*else if (record.getRecordType().equals("ACRE"))
-			{
-				if (!makePhys)
+
+				REFR refr = new REFR(record);
+				Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref.str);
+
+				// it might be in the cache still used by AI system
+				if (baseRecord.getRecordType().equals("NPC_") || baseRecord.getRecordType().equals("CREA")
+						|| baseRecord.getRecordType().equals("LEVC"))
 				{
-					ret = new J3dACRE(new ACRE(record), master, mediaSources);
+					ret = allJ3dRECOChaInsts.get(refr.formId);
+				}
+
+				if (ret == null)
+				{
+					ret = J3dREFRFactory.makeJ3DRefer(refr, makePhys, master, mediaSources);
+
+					// make some AI for CHA
+					if (ret instanceof J3dRECOChaInst)
+					{
+						allJ3dRECOChaInsts.put(refr.formId, (J3dRECOChaInst) ret);
+					}
 				}
 			}
-			else if (record.getRecordType().equals("ACHR"))
-			{
-				if (!makePhys)
-				{
-					ret = new J3dACHR(new ACHR(record), master, mediaSources);
-				}
-			}*/
 			else if (record.getRecordType().equals("PGRD"))
 			{
+				// always grab it for showing later
+				pgrd = new PGRD(record);
 			}
 			else if (record.getRecordType().equals("LAND"))
 			{

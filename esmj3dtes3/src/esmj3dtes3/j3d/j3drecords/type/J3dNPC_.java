@@ -50,6 +50,7 @@ public class J3dNPC_ extends J3dRECOTypeCha
 			char	Name[32]  The ID of the item	
 			
 	 * @param npc_
+	 * @param makePhys 
 	 * @param master
 	 * @param mediaSources
 	 */
@@ -278,7 +279,6 @@ public class J3dNPC_ extends J3dRECOTypeCha
 		String weapStr = weap.MODL.model.str;
 		attachFileNames.addPart(AttachedParts.Part.Weapon, weapStr);
 
-		
 		// right hand has a bone called "Weapon Bone"
 
 	}

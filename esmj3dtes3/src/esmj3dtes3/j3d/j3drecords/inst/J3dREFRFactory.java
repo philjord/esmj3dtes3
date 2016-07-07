@@ -46,7 +46,6 @@ import utils.source.MediaSources;
 
 public class J3dREFRFactory
 {
-
 	public static boolean DEBUG_FIRST_LIST_ITEM_ONLY = false;
 
 	private static J3dRECODynInst makeJ3dRECODynInst(REFR refr, RECO reco, MODL modl, boolean makePhys, MediaSources mediaSources)
