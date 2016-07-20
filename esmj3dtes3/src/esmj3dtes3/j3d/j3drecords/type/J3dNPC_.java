@@ -297,26 +297,21 @@ public class J3dNPC_ extends J3dRECOTypeCha
 	private void addUndressedParts()
 	{
 
+		if (npc_.KNAM != null)
+		{
+			// if head has been replaced by a full helmet already don't add hair
+			if (!attachFileNames.hasPart(AttachedParts.Part.Head))
+				addAttachNoSwap(AttachedParts.Part.Hair, "b\\" + npc_.KNAM.model.str + nif);
+		}
+
 		if (npc_.BNAM != null)
 		{
 			addAttachNoSwap(AttachedParts.Part.Head, "b\\" + npc_.BNAM.model.str + nif);
 		}
 
-		if (npc_.KNAM != null)
-		{
-			addAttachNoSwap(AttachedParts.Part.Hair, "b\\" + npc_.KNAM.model.str + nif);
-		}
-
 		if (npc_.RNAM != null)
 		{
 			String pre = "b\\b_n_" + npc_.RNAM.str + "_" + (female ? "f" : "m") + "_";
-
-			// feet and tails part of skins for beast races		 
-			if (!npc_.RNAM.str.equals("Argonian") && !npc_.RNAM.str.equals("Khajiit"))
-			{
-				addAttachNoSwap(AttachedParts.Part.Right_Foot, pre + "foot" + nif);
-				addAttachNoSwap(AttachedParts.Part.Left_Foot, pre + "foot" + nif);
-			}
 
 			addAttachNoSwap(AttachedParts.Part.Right_Ankle, pre + "ankle" + nif);
 			addAttachNoSwap(AttachedParts.Part.Left_Ankle, pre + "ankle" + nif);
@@ -351,6 +346,21 @@ public class J3dNPC_ extends J3dRECOTypeCha
 			//TODO: how the hell do I check this guy out? 
 			//also hands and beast feet?
 			addAttachNoSwap(AttachedParts.Part.Chest, pre + "skins" + nif);
+			addAttachNoSwap(AttachedParts.Part.Right_Hand, pre + "skins" + nif);
+			addAttachNoSwap(AttachedParts.Part.Left_Hand, pre + "skins" + nif);
+
+			// feet and tails part of skins for beast races		 
+			if (!npc_.RNAM.str.equals("Argonian") && !npc_.RNAM.str.equals("Khajiit"))
+			{
+				addAttachNoSwap(AttachedParts.Part.Right_Foot, pre + "foot" + nif);
+				addAttachNoSwap(AttachedParts.Part.Left_Foot, pre + "foot" + nif);
+			}
+			else
+			{
+				addAttachNoSwap(AttachedParts.Part.Right_Foot, pre + "skins" + nif);
+				addAttachNoSwap(AttachedParts.Part.Left_Foot, pre + "skins" + nif);
+				addAttachNoSwap(AttachedParts.Part.Tail, pre + "skins" + nif);
+			}
 		}
 	}
 
