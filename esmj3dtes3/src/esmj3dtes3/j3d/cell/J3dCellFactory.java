@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.zip.DataFormatException;
 
+import esmj3d.j3d.cell.AIActorLocator;
+import esmj3d.j3d.cell.AICellGeneral;
 import esmj3d.j3d.cell.J3dICellFactory;
 import esmj3d.j3d.cell.MorphingLandscape;
 import esmj3dtes3.data.records.REFR;
@@ -336,6 +338,69 @@ public class J3dCellFactory extends J3dICellFactory
 	public Record getParentWRLDLAND(int wrldFormId, int x, int y)
 	{
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public AICellGeneral makeAICell(int cellId, AIActorLocator aiActorLocator)
+	{
+		try
+		{
+			PluginRecord record = esmManager.getInteriorCELL(cellId);
+
+			if (record != null)
+			{
+				PluginGroup cellChildren = esmManager.getInteriorCELLChildren(cellId);
+
+				return new AICellTes3(this, record, ESMUtils.getChildren(cellChildren, PluginGroup.CELL_TEMPORARY), aiActorLocator);
+			}
+		}
+		catch (PluginException e1)
+		{
+			e1.printStackTrace();
+		}
+		catch (DataFormatException e1)
+		{
+			e1.printStackTrace();
+		}
+		catch (IOException e1)
+		{
+			e1.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public AICellGeneral makeAICell(int wrldFormId, int x, int y, AIActorLocator aiActorLocator)
+	{
+		try
+		{
+			PluginRecord record = esmManager.getWRLDExtBlockCELL(wrldFormId, x, y);
+
+			if (record != null)
+			{
+				PluginGroup cellChildren = esmManager.getWRLDExtBlockCELLChildren(wrldFormId, x, y);
+
+				if (cellChildren != null)
+				{
+					return new AICellTes3(this, record, wrldFormId, x, y, ESMUtils.getChildren(cellChildren, PluginGroup.CELL_TEMPORARY),
+							aiActorLocator);
+				}
+			}
+		}
+		catch (PluginException e1)
+		{
+			e1.printStackTrace();
+		}
+		catch (DataFormatException e1)
+		{
+			e1.printStackTrace();
+		}
+		catch (IOException e1)
+		{
+			e1.printStackTrace();
+		}
+
+		return null;
 	}
 
 }

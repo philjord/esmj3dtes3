@@ -7,6 +7,7 @@ import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Node;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 
 import com.frostwire.util.SparseArray;
@@ -107,6 +108,8 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 				else
 				{
 					// hide it
+					j3dPGRDbg.detach();
+					j3dPGRDbg = null;
 				}
 			}
 		}
@@ -137,7 +140,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 				if (!makePhys)
 				{
 					j3dLAND = new J3dLANDFar(new LAND(record, true), master, mediaSources.getTextureSource());
-					j3dLAND.setLocation(cellLocation);
+					j3dLAND.setLocation(cellLocation, new Quat4f(0, 0, 0, 1));
 					ret = j3dLAND;
 				}
 			}
@@ -248,7 +251,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 				{
 					j3dLAND = new J3dLAND(new LAND(record, true), master, mediaSources.getTextureSource());
 				}
-				j3dLAND.setLocation(cellLocation);
+				j3dLAND.setLocation(cellLocation, new Quat4f(0, 0, 0, 1));
 				ret = j3dLAND;
 			}
 			else

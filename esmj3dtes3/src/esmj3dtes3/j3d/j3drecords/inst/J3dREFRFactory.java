@@ -111,33 +111,30 @@ public class J3dREFRFactory
 		if (baseRecord.getRecordType().equals("NPC_"))
 		{
 			// it is in fact a pointer across to another leveled creature (LVLC)
-			if (!makePhys)
-			{
-				NPC_ npc_ = new NPC_(baseRecord);
-				J3dRECOChaInst j3dinst = new J3dRECOChaInst(refr);
-				j3dinst.setJ3dRECOType(new J3dNPC_(npc_, master, mediaSources));
-				return j3dinst;
-			}
+
+			NPC_ npc_ = new NPC_(baseRecord);
+			J3dRECOChaInst j3dinst = new J3dRECOChaInst(refr);
+			j3dinst.setJ3dRECOType(new J3dNPC_(npc_, master, makePhys, mediaSources));
+			return j3dinst;
+
 		}
 		else if (baseRecord.getRecordType().equals("CREA"))
 		{
-			if (!makePhys)
-			{
-				CREA crea = new CREA(baseRecord);
-				J3dRECOChaInst j3dinst = new J3dRECOChaInst(refr);
-				j3dinst.setJ3dRECOType(new J3dCREA(crea, master, mediaSources));
-				return j3dinst;
-			}
+
+			CREA crea = new CREA(baseRecord);
+			J3dRECOChaInst j3dinst = new J3dRECOChaInst(refr);
+			j3dinst.setJ3dRECOType(new J3dCREA(crea, master, makePhys, mediaSources));
+			return j3dinst;
+
 		}
 		else if (baseRecord.getRecordType().equals("LEVC"))
 		{
-			if (!makePhys)
-			{
-				LEVC lvlc = new LEVC(baseRecord);
-				J3dRECOChaInst j3dinst = new J3dRECOChaInst(refr);
-				j3dinst.setJ3dRECOType(makeLVLC(lvlc, master, mediaSources));
-				return j3dinst;
-			}
+
+			LEVC lvlc = new LEVC(baseRecord);
+			J3dRECOChaInst j3dinst = new J3dRECOChaInst(refr);
+			j3dinst.setJ3dRECOType(makeLVLC(lvlc, master, makePhys, mediaSources));
+			return j3dinst;
+
 		}
 		else if (baseRecord.getRecordType().equals("STAT"))
 		{
@@ -282,12 +279,13 @@ public class J3dREFRFactory
 	 * 
 	 * @param lvlc
 	 * @param master
+	 * @param makePhys 
 	 * @param meshSource
 	 * @param textureSource
 	 * @param soundSource
 	 * @return
 	 */
-	private static J3dRECOTypeCha makeLVLC(LEVC lvlc, IRecordStore master, MediaSources mediaSources)
+	private static J3dRECOTypeCha makeLVLC(LEVC lvlc, IRecordStore master, boolean makePhys, MediaSources mediaSources)
 	{
 		// TODO: randomly picked for now
 		ZString[] LVLOs = lvlc.charID;
@@ -304,17 +302,17 @@ public class J3dREFRFactory
 		{
 			// it is in fact a pointer across to another leveled creature (LVLC)
 			LEVC lvlc2 = new LEVC(baseRecord);
-			return makeLVLC(lvlc2, master, mediaSources);
+			return makeLVLC(lvlc2, master, makePhys, mediaSources);
 		}
 		else if (baseRecord.getRecordType().equals("CREA"))
 		{
 			CREA crea = new CREA(baseRecord);
-			return new J3dCREA(crea, master, mediaSources);
+			return new J3dCREA(crea, master, makePhys, mediaSources);
 		}
 		else if (baseRecord.getRecordType().equals("NPC_"))
 		{
 			NPC_ npc_ = new NPC_(baseRecord);
-			return new J3dNPC_(npc_, master, mediaSources);
+			return new J3dNPC_(npc_, master, makePhys, mediaSources);
 		}
 		else
 		{

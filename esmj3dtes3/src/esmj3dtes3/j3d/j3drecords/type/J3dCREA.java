@@ -50,51 +50,54 @@ public class J3dCREA extends J3dRECOTypeCha
 	 * 
 	 * @param crea
 	 * @param master
+	 * @param makePhys 
 	 * @param mediaSources
 	 */
 
-	public J3dCREA(CREA crea, IRecordStore master, MediaSources mediaSources)
+	public J3dCREA(CREA crea, IRecordStore master, boolean makePhys, MediaSources mediaSources)
 	{
-		super(crea);
-
-		if (crea.MODL != null)
+		super(crea, makePhys);
+		if (!makePhys)
 		{
-			String nifFileName = crea.MODL.model.str;// both skel and skin
-
-			// must insert x
-
-			nifFileName = "r\\x" + nifFileName.substring(2);
-
-			List<String> skinNifs = new ArrayList<String>();
-			skinNifs.add(nifFileName);
-
-			AttachedParts attachFileNames = new AttachedParts();
-			attachFileNames.addPart(AttachedParts.Part.Root, nifFileName);
-
-			nifCharacter = new NifCharacterTes3(nifFileName, attachFileNames, mediaSources);
-
-			if (crea.scale == 1)
+			if (crea.MODL != null)
 			{
-				addChild(nifCharacter);
+				String nifFileName = crea.MODL.model.str;// both skel and skin
+
+				// must insert x
+
+				nifFileName = "r\\x" + nifFileName.substring(2);
+
+				List<String> skinNifs = new ArrayList<String>();
+				skinNifs.add(nifFileName);
+
+				AttachedParts attachFileNames = new AttachedParts();
+				attachFileNames.addPart(AttachedParts.Part.Root, nifFileName);
+
+				nifCharacter = new NifCharacterTes3(nifFileName, attachFileNames, mediaSources);
+
+				if (crea.scale == 1)
+				{
+					addChild(nifCharacter);
+				}
+				else
+				{
+					TransformGroup scaler = new TransformGroup();
+					Transform3D t = new Transform3D();
+					t.setScale(crea.scale);
+					scaler.setTransform(t);
+					addChild(scaler);
+					scaler.addChild(nifCharacter);
+				}
+
+				setOutline(new Color3f(1.0f, 1.0f, 0f));
+				if (!BethRenderSettings.isOutlineChars())
+					((Fadable) nifCharacter).setOutline(null);
 			}
 			else
 			{
-				TransformGroup scaler = new TransformGroup();
-				Transform3D t = new Transform3D();
-				t.setScale(crea.scale);
-				scaler.setTransform(t);
-				addChild(scaler);
-				scaler.addChild(nifCharacter);
+				//CREA has no NIFs like the will o the wisp (but it has skeleton with particles effects)
+				// let's do these later shall we
 			}
-
-			setOutline(new Color3f(1.0f, 1.0f, 0f));
-			if (!BethRenderSettings.isOutlineChars())
-				((Fadable) nifCharacter).setOutline(null);
-		}
-		else
-		{
-			//CREA has no NIFs like the will o the wisp (but it has skeleton with particles effects)
-			// let's do these later shall we
 		}
 
 	}

@@ -52,81 +52,86 @@ public class J3dNPC_ extends J3dRECOTypeCha
 	 * @param npc_
 	 * @param makePhys 
 	 * @param master
+	 * @param makePhys 
 	 * @param mediaSources
 	 */
-	public J3dNPC_(NPC_ npc_, IRecordStore master, MediaSources mediaSources)
+	public J3dNPC_(NPC_ npc_, IRecordStore master, boolean makePhys, MediaSources mediaSources)
 	{
-		super(npc_);
-		this.npc_ = npc_;
-
-		female = ((npc_.FLAG & 0x1) != 0);
-		isBeast = npc_.RNAM.str.equals("Argonian") || npc_.RNAM.str.equals("Khajiit");
-
-		//Do the inventory items
-		recordStoreTes3 = (IRecordStoreTes3) master;
-
-		for (int i = 0; i < npc_.NPCOs.length; i++)
+		super(npc_, makePhys);
+		if (!makePhys)
 		{
-			NPCO npco = npc_.NPCOs[i];
-			//System.out.println("item " + npc_.NPCOs[i].count + " " + npc_.NPCOs[i].itemName);
-			Record rec = recordStoreTes3.getRecord(npco.itemName);
-			if (rec != null)
+			this.npc_ = npc_;
+
+			female = ((npc_.FLAG & 0x1) != 0);
+			isBeast = npc_.RNAM.str.equals("Argonian") || npc_.RNAM.str.equals("Khajiit");
+
+			//Do the inventory items
+			recordStoreTes3 = (IRecordStoreTes3) master;
+
+			for (int i = 0; i < npc_.NPCOs.length; i++)
 			{
-				if (rec.getRecordType().equals("ARMO"))
+				NPCO npco = npc_.NPCOs[i];
+				//System.out.println("item " + npc_.NPCOs[i].count + " " + npc_.NPCOs[i].itemName);
+				Record rec = recordStoreTes3.getRecord(npco.itemName);
+				if (rec != null)
 				{
-					addARMO(new ARMO(rec), attachFileNames, recordStoreTes3);
+					if (rec.getRecordType().equals("ARMO"))
+					{
+						addARMO(new ARMO(rec), attachFileNames, recordStoreTes3);
+					}
+					else if (rec.getRecordType().equals("CLOT"))
+					{
+						addCLOT(new CLOT(rec), attachFileNames, recordStoreTes3);
+					}
+					else if (rec.getRecordType().equals("WEAP"))
+					{
+						addWEAP(new WEAP(rec), attachFileNames, recordStoreTes3);
+					}
 				}
-				else if (rec.getRecordType().equals("CLOT"))
+				else
 				{
-					addCLOT(new CLOT(rec), attachFileNames, recordStoreTes3);
+					System.out.println("why is this item not found? <" + npco.itemName + ">");
 				}
-				else if (rec.getRecordType().equals("WEAP"))
-				{
-					addWEAP(new WEAP(rec), attachFileNames, recordStoreTes3);
-				}
+
 			}
-			else
+
+			//kna takes priority I wager
+			//TODO: why is the female base anim so tiny compared to the other 2?
+			String skeletonNifFile = ESConfig.TES_MESH_PATH + "xbase_anim" + (isBeast ? "kna.nif" : (female ? "_female.nif" : ".nif"));
+
+			addUndressedParts();
+
+			// hassle!
+			//if (npc_.MODL != null)
 			{
-				System.out.println("why is this item not found? <" + npco.itemName + ">");
+				//skeletonNifFile = npc_.MODL.model.str;
+				//skeletonNifFile = "r\\x" + skeletonNifFile.substring(2);
+				//System.out.println("MODL " + skeletonNifFile);
 			}
+
+			// interface only accepts an array for skins for now
+			//	ArrayList<String> skins = new ArrayList<String>();
+			//	for (String nif : skinFileNames.parts.values())
+			//		skins.add(nif);
+
+			nifCharacter = new NifCharacterTes3(skeletonNifFile, attachFileNames, mediaSources);
+
+			//TODO: fix up npcs so not in floor
+			TransformGroup tg = new TransformGroup();
+			Vector3f v = new Vector3f();
+			v.y += 1.15f;
+			Transform3D t = new Transform3D();
+			t.set(v);
+			tg.setTransform(t);
+			tg.addChild(nifCharacter);
+
+			addChild(tg);
+
+			setOutline(new Color3f(1.0f, 1.0f, 0f));
+			if (!BethRenderSettings.isOutlineChars())
+				((Fadable) nifCharacter).setOutline(null);
 
 		}
-
-		//kna takes priority I wager
-		//TODO: why is the female base anim so tiny compared to the other 2?
-		String skeletonNifFile = ESConfig.TES_MESH_PATH + "xbase_anim" + (isBeast ? "kna.nif" : (female ? "_female.nif" : ".nif"));
-
-		addUndressedParts();
-
-		// hassle!
-		//if (npc_.MODL != null)
-		{
-			//skeletonNifFile = npc_.MODL.model.str;
-			//skeletonNifFile = "r\\x" + skeletonNifFile.substring(2);
-			//System.out.println("MODL " + skeletonNifFile);
-		}
-
-		// interface only accepts an array for skins for now
-		//	ArrayList<String> skins = new ArrayList<String>();
-		//	for (String nif : skinFileNames.parts.values())
-		//		skins.add(nif);
-
-		nifCharacter = new NifCharacterTes3(skeletonNifFile, attachFileNames, mediaSources);
-
-		//TODO: fix up npcs so not in floor
-		TransformGroup tg = new TransformGroup();
-		Vector3f v = new Vector3f();
-		v.y += 1.15f;
-		Transform3D t = new Transform3D();
-		t.set(v);
-		tg.setTransform(t);
-		tg.addChild(nifCharacter);
-
-		addChild(tg);
-
-		setOutline(new Color3f(1.0f, 1.0f, 0f));
-		if (!BethRenderSettings.isOutlineChars())
-			((Fadable) nifCharacter).setOutline(null);
 	}
 
 	public static void addCLOT(CLOT clot, AttachedParts attachFileNames, IRecordStoreTes3 recordStoreTes3)
@@ -226,7 +231,7 @@ public class J3dNPC_ extends J3dRECOTypeCha
 					System.out.println("body part NOT found " + p.partName);
 				}
 			}
-
+			//System.out.println("p.partName "+p.partName   );
 			// some known names for nifs
 			if (p.partName.equals("imperial cuirass") || p.partName.equals("a_imperial_gauntlet"))
 				nifFileName = "a\\a_imperial_skins.nif";
@@ -250,6 +255,12 @@ public class J3dNPC_ extends J3dRECOTypeCha
 				nifFileName = "a\\a_m_chitin_skinned.nif";
 			else if (p.partName.equals("a_netch_m_chest"))
 				nifFileName = "a\\a_netch_m_cuirass2.nif";
+			else if (p.partName.equals("a_orcish_boot_f"))
+				nifFileName = "a\\a_orcish_boots_f.nif";
+			else if (p.partName.equals("a_orcish_boot_a"))
+				nifFileName = "a\\a_orcish_boots_a.nif";
+			else if (p.partName.equals("a_orcish_cuirass"))
+				nifFileName = "a\\a_orcish_cuirass_c.nif";
 			else if (p.partName.equals("c_slave_bracer"))
 				nifFileName = "c\\c_slave_bracer.nif";
 			else if (p.partName.equals("c_m_bracer_w_leather01"))
