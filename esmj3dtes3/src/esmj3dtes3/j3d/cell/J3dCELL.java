@@ -286,7 +286,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 		return ret;
 	}
 
-	private J3dRECOInst checkDump(J3dRECOInst ret)
+	private static J3dRECOInst checkDump(J3dRECOInst ret)
 	{
 		Transform3D t = new Transform3D();
 		ret.getLocation(t);
@@ -294,17 +294,35 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 		t.get(v);
 
 		Vector3f dist = new Vector3f();
-		
-		dist.sub(v, new Vector3f(10, 20, 30));
 
+		//sedya neen stuff
+		dist.sub(v, new Vector3f(-148, 3, 896));
+		if (dist.length() < 10)
+			return null;
+
+		dist.sub(v, new Vector3f(-160, 0, 901));
+		if (dist.length() < 10)
+			return null;
+
+		dist.sub(v, new Vector3f(-185, 1, 907));
+		if (dist.length() < 10)
+			return null;
+
+		dist.sub(v, new Vector3f(-177, 1, 894));
+		if (dist.length() < 10)
+			return null;
+
+		dist.sub(v, new Vector3f(-149, 5, 863));
+		if (dist.length() < 10)
+			return null;
+
+		dist.sub(v, new Vector3f(-140, 4, 861));
 		if (dist.length() < 10)
 			return null;
 		
-		dist.sub(v, new Vector3f(20, 10, 30));
-
+		dist.sub(v, new Vector3f(-141, 2, 911));
 		if (dist.length() < 10)
 			return null;
-		
 
 		return ret;
 	}
