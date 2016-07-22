@@ -227,6 +227,9 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 				{
 					ret = J3dREFRFactory.makeJ3DRefer(refr, makePhys, master, mediaSources);
 
+					// Place for dumping recos
+					ret = checkDump(ret);
+
 					// make some AI for CHA
 					if (ret instanceof J3dRECOChaInst)
 					{
@@ -280,6 +283,29 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 		{
 			j3dRECOs.put(ret.getRecordId(), ret);
 		}
+		return ret;
+	}
+
+	private J3dRECOInst checkDump(J3dRECOInst ret)
+	{
+		Transform3D t = new Transform3D();
+		ret.getLocation(t);
+		Vector3f v = new Vector3f();
+		t.get(v);
+
+		Vector3f dist = new Vector3f();
+		
+		dist.sub(v, new Vector3f(10, 20, 30));
+
+		if (dist.length() < 10)
+			return null;
+		
+		dist.sub(v, new Vector3f(20, 10, 30));
+
+		if (dist.length() < 10)
+			return null;
+		
+
 		return ret;
 	}
 }

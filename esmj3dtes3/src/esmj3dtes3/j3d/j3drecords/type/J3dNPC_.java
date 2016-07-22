@@ -119,7 +119,7 @@ public class J3dNPC_ extends J3dRECOTypeCha
 			//TODO: fix up npcs so not in floor
 			TransformGroup tg = new TransformGroup();
 			Vector3f v = new Vector3f();
-			v.y += 1.15f;
+			//v.y += 1.15f;
 			Transform3D t = new Transform3D();
 			t.set(v);
 			tg.setTransform(t);

@@ -91,7 +91,7 @@ public class AvatarFirstPerson extends BranchGroup
 		//TODO: do I need a pelvis adjustment?
 		TransformGroup tg = new TransformGroup();
 		Vector3f v = new Vector3f();
-		v.y += 1.15f;
+		//v.y += 1.15f;
 		Transform3D t = new Transform3D();
 		t.set(v);
 		tg.setTransform(t);
