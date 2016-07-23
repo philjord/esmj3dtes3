@@ -343,7 +343,7 @@ public class J3dNPC_ extends J3dRECOTypeCha
 			addAttachNoSwap(AttachedParts.Part.Right_Wrist, pre + "wrist" + nif);
 			addAttachNoSwap(AttachedParts.Part.Left_Wrist, pre + "wrist" + nif);
 
-			//TODO: how the hell do I check this guy out? 
+
 			//also hands and beast feet?
 			addAttachNoSwap(AttachedParts.Part.Chest, pre + "skins" + nif);
 			addAttachNoSwap(AttachedParts.Part.Right_Hand, pre + "skins" + nif);

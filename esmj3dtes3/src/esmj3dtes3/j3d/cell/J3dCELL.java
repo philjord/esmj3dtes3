@@ -32,6 +32,8 @@ import utils.source.MediaSources;
 public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 {
 
+	public static boolean DO_DUMP = false;
+
 	// Record all visuals that are made for characters
 	// these will be picked up by the AI system and it will link them to the 
 	// dynamics equivalent for moving and animating
@@ -228,7 +230,8 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 					ret = J3dREFRFactory.makeJ3DRefer(refr, makePhys, master, mediaSources);
 
 					// Place for dumping recos
-					ret = checkDump(ret);
+					if (DO_DUMP)
+						ret = checkDump(ret);
 
 					// make some AI for CHA
 					if (ret instanceof J3dRECOChaInst)
@@ -319,7 +322,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 		dist.sub(v, new Vector3f(-140, 4, 861));
 		if (dist.length() < 10)
 			return null;
-		
+
 		dist.sub(v, new Vector3f(-141, 2, 911));
 		if (dist.length() < 10)
 			return null;

@@ -20,7 +20,7 @@ import nif.character.NifCharacterTes3;
 import utils.ESConfig;
 import utils.source.MediaSources;
 
-public class AvatarFirstPerson extends BranchGroup
+public class CharacterAvatar extends BranchGroup
 {
 	private boolean firstPerson = true;
 
@@ -34,10 +34,12 @@ public class AvatarFirstPerson extends BranchGroup
 
 	private AttachedParts attachFileNames = new AttachedParts();
 
-	public AvatarFirstPerson(CharacterSheet characterSheet, IRecordStore master, MediaSources mediaSources)
+	public CharacterAvatar(CharacterSheet characterSheet, IRecordStore master, MediaSources mediaSources, boolean firstPerson)
 	{
 		this.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
 		this.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
+
+		this.firstPerson = firstPerson;
 		this.characterSheet = characterSheet;
 		this.recordStoreTes3 = (IRecordStoreTes3) master;
 
@@ -82,11 +84,11 @@ public class AvatarFirstPerson extends BranchGroup
 
 		}
 		String skeletonNifFile = ESConfig.TES_MESH_PATH + "xbase_anim"
-				+ (characterSheet.isBeast() ? "kna.nif" : (characterSheet.isFemale() ? "_female.nif" : ".1st.nif"));
+				+ (characterSheet.isBeast() ? "kna.nif" : firstPerson ? ".1st.nif" : (characterSheet.isFemale() ? "_female.nif" : ".nif"));
 
 		addUndressedParts();
 
-		nifCharacter = new NifCharacterTes3(skeletonNifFile, attachFileNames, mediaSources);		
+		nifCharacter = new NifCharacterTes3(skeletonNifFile, attachFileNames, mediaSources);
 
 		//TODO: do I need a pelvis adjustment?
 		TransformGroup tg = new TransformGroup();
@@ -103,17 +105,19 @@ public class AvatarFirstPerson extends BranchGroup
 
 	private void addUndressedParts()
 	{
-
-		if (characterSheet.getHeadNif() != null)
+		if (!firstPerson)
 		{
-			if (!firstPerson)
-				addAttachNoSwap(AttachedParts.Part.Head, "b\\" + characterSheet.getHeadNif() + nif);
-		}
+			if (characterSheet.getHeadNif() != null)
+			{
+				// if head has been replaced by a full helmet already don't add hair
+				if (!attachFileNames.hasPart(AttachedParts.Part.Head))
+					addAttachNoSwap(AttachedParts.Part.Head, "b\\" + characterSheet.getHeadNif() + nif);
+			}
 
-		if (characterSheet.getHairNif() != null)
-		{
-			if (!firstPerson)
+			if (characterSheet.getHairNif() != null)
+			{
 				addAttachNoSwap(AttachedParts.Part.Hair, "b\\" + characterSheet.getHairNif() + nif);
+			}
 		}
 
 		if (characterSheet.getRaceName() != null)
@@ -160,11 +164,27 @@ public class AvatarFirstPerson extends BranchGroup
 			addAttachNoSwap(AttachedParts.Part.Right_Wrist, pre + "wrist" + nif);
 			addAttachNoSwap(AttachedParts.Part.Left_Wrist, pre + "wrist" + nif);
 
-			//TODO: how the hell do I check this guy out? 
 			//also hands and beast feet?
 			if (!firstPerson)
 			{
+				//also hands and beast feet?
 				addAttachNoSwap(AttachedParts.Part.Chest, pre + "skins" + nif);
+				addAttachNoSwap(AttachedParts.Part.Right_Hand, pre + "skins" + nif);
+				addAttachNoSwap(AttachedParts.Part.Left_Hand, pre + "skins" + nif);
+
+				// feet and tails part of skins for beast races		 
+				if (!characterSheet.getRaceName().equals("Argonian") && !characterSheet.getRaceName().equals("Khajiit"))
+				{
+					addAttachNoSwap(AttachedParts.Part.Right_Foot, pre + "foot" + nif);
+					addAttachNoSwap(AttachedParts.Part.Left_Foot, pre + "foot" + nif);
+				}
+				else
+				{
+					addAttachNoSwap(AttachedParts.Part.Right_Foot, pre + "skins" + nif);
+					addAttachNoSwap(AttachedParts.Part.Left_Foot, pre + "skins" + nif);
+					addAttachNoSwap(AttachedParts.Part.Tail, pre + "skins" + nif);
+				}
+
 			}
 			else
 			{
@@ -176,6 +196,7 @@ public class AvatarFirstPerson extends BranchGroup
 			}
 
 		}
+
 	}
 
 	private void addAttachNoSwap(Part part, String nifFileName)
@@ -198,30 +219,30 @@ public class AvatarFirstPerson extends BranchGroup
 
 	public void playAnimation(String animationName, boolean looping)
 	{
-		System.out.println("animationName " +animationName);
+		System.out.println("animationName " + animationName);
 		nifCharacter.startAnimation(animationName, false);
-		
-	/*	
-		J3dNiSequenceStreamHelper j3dNiSequenceStreamHelper = nifCharacter.getJ3dNiSequenceStreamHelper();
-		J3dNiControllerSequenceTes3 seq = j3dNiSequenceStreamHelper.getSequence(animationName);
-		if (seq != null)
-		{
-			if (!seq.isLive())
+
+		/*	
+			J3dNiSequenceStreamHelper j3dNiSequenceStreamHelper = nifCharacter.getJ3dNiSequenceStreamHelper();
+			J3dNiControllerSequenceTes3 seq = j3dNiSequenceStreamHelper.getSequence(animationName);
+			if (seq != null)
 			{
-				BranchGroup newKfBg = seq.getBranchGroup();
-				addChild(newKfBg);
+				if (!seq.isLive())
+				{
+					BranchGroup newKfBg = seq.getBranchGroup();
+					addChild(newKfBg);
+				}
+		
+				seq.fireSequence(!looping, 0);
 			}
-
-			seq.fireSequence(!looping, 0);
-		}
-		else
-		{
-			System.out.println("Bad animation name " + animationName);
-		}
-
-		//for (String fireName : j3dNiSequenceStreamHelper.getAllSequences())
-		//	System.out.println("Seq: " + fireName);
-		 
-		 */
+			else
+			{
+				System.out.println("Bad animation name " + animationName);
+			}
+		
+			//for (String fireName : j3dNiSequenceStreamHelper.getAllSequences())
+			//	System.out.println("Seq: " + fireName);
+			 
+			 */
 	}
 }

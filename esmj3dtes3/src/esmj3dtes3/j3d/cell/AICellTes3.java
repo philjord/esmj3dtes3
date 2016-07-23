@@ -59,7 +59,7 @@ public class AICellTes3 extends AICellGeneral
 		this.wrldX = wrldX;
 		this.wrldY = wrldY;
 
-		System.out.println("cell loaded for AI " + wrldX + " " + wrldY);
+		//System.out.println("cell loaded for AI " + wrldX + " " + wrldY);
 
 	}
 
