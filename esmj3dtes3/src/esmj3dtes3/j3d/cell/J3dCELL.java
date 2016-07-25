@@ -291,42 +291,44 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 
 	private static J3dRECOInst checkDump(J3dRECOInst ret)
 	{
-		Transform3D t = new Transform3D();
-		ret.getLocation(t);
-		Vector3f v = new Vector3f();
-		t.get(v);
+		if (ret != null)
+		{
+			Transform3D t = new Transform3D();
+			ret.getLocation(t);
+			Vector3f v = new Vector3f();
+			t.get(v);
 
-		Vector3f dist = new Vector3f();
+			Vector3f dist = new Vector3f();
 
-		//sedya neen stuff
-		dist.sub(v, new Vector3f(-148, 3, 896));
-		if (dist.length() < 10)
-			return null;
+			//sedya neen stuff
+			dist.sub(v, new Vector3f(-148, 3, 896));
+			if (dist.length() < 10)
+				return null;
 
-		dist.sub(v, new Vector3f(-160, 0, 901));
-		if (dist.length() < 10)
-			return null;
+			dist.sub(v, new Vector3f(-160, 0, 901));
+			if (dist.length() < 10)
+				return null;
 
-		dist.sub(v, new Vector3f(-185, 1, 907));
-		if (dist.length() < 10)
-			return null;
+			dist.sub(v, new Vector3f(-185, 1, 907));
+			if (dist.length() < 10)
+				return null;
 
-		dist.sub(v, new Vector3f(-177, 1, 894));
-		if (dist.length() < 10)
-			return null;
+			dist.sub(v, new Vector3f(-177, 1, 894));
+			if (dist.length() < 10)
+				return null;
 
-		dist.sub(v, new Vector3f(-149, 5, 863));
-		if (dist.length() < 10)
-			return null;
+			dist.sub(v, new Vector3f(-149, 5, 863));
+			if (dist.length() < 10)
+				return null;
 
-		dist.sub(v, new Vector3f(-140, 4, 861));
-		if (dist.length() < 10)
-			return null;
+			dist.sub(v, new Vector3f(-140, 4, 861));
+			if (dist.length() < 10)
+				return null;
 
-		dist.sub(v, new Vector3f(-141, 2, 911));
-		if (dist.length() < 10)
-			return null;
-
+			dist.sub(v, new Vector3f(-141, 2, 911));
+			if (dist.length() < 9)
+				return null;
+		}
 		return ret;
 	}
 }
