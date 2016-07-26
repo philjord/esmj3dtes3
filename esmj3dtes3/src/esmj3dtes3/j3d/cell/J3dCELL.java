@@ -65,12 +65,15 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 	{
 		if (!makePhys)
 		{
-			for (J3dRECOInst j3dRECOInst : j3dRECOInsts)
+			synchronized (j3dRECOInsts)
 			{
-				j3dRECOInst.renderSettingsUpdated();
-			}
+				for (J3dRECOInst j3dRECOInst : j3dRECOInsts)
+				{
+					j3dRECOInst.renderSettingsUpdated();
+				}
 
-			updateShowPathGrid(BethRenderSettings.isShowPathGrid());
+				updateShowPathGrid(BethRenderSettings.isShowPathGrid());
+			}
 
 		}
 	}
@@ -122,7 +125,10 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 		if (j3dRECOInst != null)
 		{
 			addChild((Node) j3dRECOInst);
-			j3dRECOInsts.add(j3dRECOInst);
+			synchronized (j3dRECOInsts)
+			{
+				j3dRECOInsts.add(j3dRECOInst);
+			}
 		}
 	}
 

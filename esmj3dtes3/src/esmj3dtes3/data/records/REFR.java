@@ -44,8 +44,6 @@ public class REFR extends CommonREFR
 			else if (sr.getSubrecordType().equals("NAME"))
 			{
 				NAMEref = new ZString(bs);
-				//if(NAMEref.str.equals("ex_dae_claw_01") )
-				//	System.out.println("Other " + sr.getSubrecordType());
 			}
 			else if (sr.getSubrecordType().equals("DNAM"))
 			{
@@ -62,7 +60,7 @@ public class REFR extends CommonREFR
 			else if (sr.getSubrecordType().equals("DATA"))
 			{
 				this.extractInstData(bs);
-			}
+			}		
 
 		}
 

@@ -1,8 +1,14 @@
 package esmj3dtes3.j3d.j3drecords.type;
 
+import javax.media.j3d.BoundingSphere;
+import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Group;
+import javax.media.j3d.PointSound;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
+import javax.vecmath.Point3d;
+import javax.vecmath.Point3f;
 import javax.vecmath.Vector3f;
 
 import esmj3d.j3d.BethRenderSettings;
@@ -130,6 +136,11 @@ public class J3dNPC_ extends J3dRECOTypeCha
 			setOutline(new Color3f(1.0f, 1.0f, 0f));
 			if (!BethRenderSettings.isOutlineChars())
 				((Fadable) nifCharacter).setOutline(null);
+			
+			
+			
+			
+			playSound("Sound/Fx/envrn/chant.wav", mediaSources, tg);
 
 		}
 	}
@@ -369,5 +380,33 @@ public class J3dNPC_ extends J3dRECOTypeCha
 		if (!attachFileNames.hasPart(part))
 			attachFileNames.addPart(part, nifFileName);
 	}
+	
+	
+	
+	
+	public void playSound(String fileName, MediaSources mediaSources, Group botBg)
+	{
+		System.out.println("playing sound " + fileName);
 
+		PointSound ps = new PointSound();
+		ps.setSoundData(mediaSources.getSoundSource().getMediaContainer(fileName));
+		ps.setPosition(new Point3f(0, 0, 0));
+		float staticAttenuation = 10;
+		float maxGain = staticAttenuation / 100f;
+		ps.setInitialGain(1);
+		int minimumAttenuationDistance = 1;
+		int maximumAttenuationDistance = 10;
+		ps.setDistanceGain(new float[] { 0, minimumAttenuationDistance, maximumAttenuationDistance }, new float[] { maxGain, maxGain, 0 });
+		ps.setEnable(true);
+		ps.setPause(false);
+
+		ps.setSchedulingBounds(new BoundingSphere(new Point3d(), Double.POSITIVE_INFINITY));
+		ps.setLoop(-1);
+		ps.setContinuousEnable(true);
+
+		BranchGroup bg = new BranchGroup();
+		bg.addChild(ps);
+		botBg.addChild(bg);
+
+	}
 }

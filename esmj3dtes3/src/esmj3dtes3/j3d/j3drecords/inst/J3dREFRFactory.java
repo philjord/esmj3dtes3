@@ -110,8 +110,6 @@ public class J3dREFRFactory
 
 		if (baseRecord.getRecordType().equals("NPC_"))
 		{
-			// it is in fact a pointer across to another leveled creature (LVLC)
-
 			NPC_ npc_ = new NPC_(baseRecord);
 			J3dRECOChaInst j3dinst = new J3dRECOChaInst(refr);
 			j3dinst.setJ3dRECOType(new J3dNPC_(npc_, master, makePhys, mediaSources));
@@ -120,7 +118,6 @@ public class J3dREFRFactory
 		}
 		else if (baseRecord.getRecordType().equals("CREA"))
 		{
-
 			CREA crea = new CREA(baseRecord);
 			J3dRECOChaInst j3dinst = new J3dRECOChaInst(refr);
 			j3dinst.setJ3dRECOType(new J3dCREA(crea, master, makePhys, mediaSources));
@@ -129,7 +126,7 @@ public class J3dREFRFactory
 		}
 		else if (baseRecord.getRecordType().equals("LEVC"))
 		{
-
+			// it is in fact a pointer across to another leveled creature (LVLC)
 			LEVC lvlc = new LEVC(baseRecord);
 			J3dRECOChaInst j3dinst = new J3dRECOChaInst(refr);
 			j3dinst.setJ3dRECOType(makeLVLC(lvlc, master, makePhys, mediaSources));
@@ -236,10 +233,7 @@ public class J3dREFRFactory
 			PROB prob = new PROB(baseRecord);
 			return makeJ3dRECODynInst(refr, prob, prob.MODL, makePhys, mediaSources);
 		}
-		else if (baseRecord.getRecordType().equals("SNDG"))
-		{
-			//TODO:?
-		}
+
 		else if (baseRecord.getRecordType().equals("DOOR"))
 		{
 			//TODO: other markers
@@ -257,10 +251,16 @@ public class J3dREFRFactory
 		}
 		else if (baseRecord.getRecordType().equals("SOUN"))
 		{
+			System.out.println("sound?soundsoundsoundsoundsoundsoundsoundsoundsoundsound");
 			if (!makePhys)
 			{
 				return new J3dRECOStatInst(refr, new J3dSOUN(new SOUN(baseRecord), master, mediaSources.getSoundSource()), false, makePhys);
 			}
+		}
+		else if (baseRecord.getRecordType().equals("SNDG"))
+		{
+			//TODO: sound generator
+			System.out.println("SNDG?SNDGSNDGSNDGSNDGSNDGSNDGSNDGSNDG");
 		}
 		else if (baseRecord.getRecordType().equals("SBSP"))
 		{
