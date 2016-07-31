@@ -9,10 +9,12 @@ import javax.vecmath.Vector3f;
 
 import esmj3d.ai.AIActor;
 import esmj3d.ai.PathGridInterface;
+import esmj3d.data.shared.records.InstRECO;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.ZString;
-import esmj3d.j3d.cell.AIActorLocator;
+import esmj3d.j3d.cell.AIActorServices;
 import esmj3d.j3d.cell.AICellGeneral;
+import esmj3d.j3d.j3drecords.inst.J3dRECOChaInst;
 import esmj3d.physics.PhysicsSystemInterface;
 import esmj3dtes3.ai.Tes3AICREA;
 import esmj3dtes3.ai.Tes3AINPC_;
@@ -38,12 +40,12 @@ public class AICellTes3 extends AICellGeneral
 	private int wrldY = -999;
 	protected CELL cell;
 	private PathGridInterface pgi;
-	private AIActorLocator aiActorLocator;
+	private AIActorServices aiActorServices;
 
-	public AICellTes3(IRecordStore master, Record cellRecord, List<Record> children, AIActorLocator aiActorLocator)
+	public AICellTes3(IRecordStore master, Record cellRecord, List<Record> children, AIActorServices aiActorServices)
 	{
 		super(master, cellRecord.getFormID(), children);
-		this.aiActorLocator = aiActorLocator;
+		this.aiActorServices = aiActorServices;
 		cell = new CELL(cellRecord);
 		setCell(cell);
 		indexRecords();
@@ -51,7 +53,7 @@ public class AICellTes3 extends AICellGeneral
 	}
 
 	public AICellTes3(IRecordStore master, Record cellRecord, int wrldFormId, int wrldX, int wrldY, List<Record> children,
-			AIActorLocator aiActorLocator)
+			AIActorServices aiActorLocator)
 	{
 		this(master, cellRecord, children, aiActorLocator);
 
@@ -173,7 +175,7 @@ public class AICellTes3 extends AICellGeneral
 
 	@Override
 	public void doAllActions(Vector3f charLocation, PhysicsSystemInterface physics)
-	{ 
+	{
 		for (Tes3AICREA crea : creas)
 		{
 			crea.act(charLocation, pgi, physics);
@@ -187,6 +189,18 @@ public class AICellTes3 extends AICellGeneral
 	@Override
 	public void setLocationForActor(AIActor aiActor, Vector3f location, YawPitch yawPitch)
 	{
-		aiActorLocator.setLocationForActor(aiActor, location, yawPitch);
+		aiActorServices.setLocationForActor(aiActor, location, yawPitch);
+	}
+
+	@Override
+	public J3dRECOChaInst getVisualActor(AIActor aiActor)
+	{
+		return aiActorServices.getVisualActor(aiActor);
+	}
+
+	@Override
+	public J3dRECOChaInst getPhysicalActor(AIActor aiActor)
+	{
+		return aiActorServices.getPhysicalActor(aiActor);
 	}
 }

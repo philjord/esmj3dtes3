@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.zip.DataFormatException;
 
-import esmj3d.j3d.cell.AIActorLocator;
+import esmj3d.j3d.cell.AIActorServices;
 import esmj3d.j3d.cell.AICellGeneral;
 import esmj3d.j3d.cell.J3dICellFactory;
 import esmj3d.j3d.cell.MorphingLandscape;
@@ -341,7 +341,7 @@ public class J3dCellFactory extends J3dICellFactory
 	}
 
 	@Override
-	public AICellGeneral makeAICell(int cellId, AIActorLocator aiActorLocator)
+	public AICellGeneral makeAICell(int cellId, AIActorServices aiActorLocator)
 	{
 		try
 		{
@@ -370,7 +370,7 @@ public class J3dCellFactory extends J3dICellFactory
 	}
 
 	@Override
-	public AICellGeneral makeAICell(int wrldFormId, int x, int y, AIActorLocator aiActorLocator)
+	public AICellGeneral makeAICell(int wrldFormId, int x, int y, AIActorServices aiActorLocator)
 	{
 		try
 		{

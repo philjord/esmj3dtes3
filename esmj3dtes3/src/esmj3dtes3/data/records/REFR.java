@@ -60,10 +60,15 @@ public class REFR extends CommonREFR
 			else if (sr.getSubrecordType().equals("DATA"))
 			{
 				this.extractInstData(bs);
-			}		
+			}
 
 		}
 
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.getClass().getSimpleName() + " : " + (EDID != null ? EDID : NAMEref != null ? NAMEref.str : "");
+	}
 }
