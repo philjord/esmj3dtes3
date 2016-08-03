@@ -11,15 +11,20 @@ import esmj3d.j3d.cell.AICellGeneral;
 import esmj3d.j3d.j3drecords.inst.J3dRECOChaInst;
 import esmj3d.physics.PhysicsSystemInterface;
 import esmj3dtes3.data.records.NPC_;
+import nif.character.NifCharacter;
+import nif.j3d.animation.J3dNiControllerSequence;
 
 public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 {
 	private NPC_ npc_;
 
+	private long initTime = 0;
+
 	public Tes3AINPC_(InstRECO instRECO, NPC_ npc_, AICellGeneral aiCellGeneral)
 	{
 		super(instRECO, aiCellGeneral);
 		this.npc_ = npc_;
+		initTime = System.currentTimeMillis();
 
 		setLocation(instRECO);
 	}
@@ -27,8 +32,48 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 	@Override
 	public void act(Vector3f charLocation, PathGridInterface pgi, PhysicsSystemInterface clientPhysicsSystem)
 	{
-		settleOnGround(clientPhysicsSystem);
+		// keep me moving, turning and grounded
+		updateLocation(clientPhysicsSystem);
+
+		//if (instRECO.NAMEref.str.equals("teruise girvayne"))
+		if (instRECO.formId == 225743)
+		{
+			if (System.currentTimeMillis() - initTime > 5000)
+			{
+				J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
+				NifCharacter nc = visual.getJ3dRECOType().getNifCharacter();
+				if (nc != null)
+				{
+					J3dNiControllerSequence cs = nc.getCurrentControllerSequence();
+					if (step <20)
+					{
+						if (!cs.getFireName().equals("walkforward") && !cs.getFireName().equals("turnleft") || cs.isNotRunning())
+						{
+							//System.out.println("walkforward ai actor called " + instRECO.NAMEref);
+							nc.startAnimation("walkforward", true);
+							step++;
+						}
+					}
+					else if (step >=20)
+					{
+						if (!cs.getFireName().equals("walkforward") && !cs.getFireName().equals("turnleft") || cs.isNotRunning())
+						{
+							//System.out.println("turnleft ai actor called " + instRECO.NAMEref);
+							nc.startAnimation("turnleft", true);
+							step--;
+
+							turnStart = System.currentTimeMillis();
+							turnForMS = 1000;
+							turnPerMSRads = (float) (Math.PI / 2000f); //+- for direction
+						}
+					}
+
+				}
+			}
+		}
 	}
+
+	private int step = 0;
 
 	@Override
 	public void think(Vector3f charLocation, PathGridInterface pgi, PhysicsSystemInterface clientPhysicsSystem)

@@ -220,7 +220,7 @@ public class CharacterAvatar extends BranchGroup
 	public void playAnimation(String animationName, boolean looping)
 	{
 		System.out.println("animationName " + animationName);
-		nifCharacter.startAnimation(animationName, false);
+		nifCharacter.addToQueue(animationName, false);
 
 		/*	
 			J3dNiSequenceStreamHelper j3dNiSequenceStreamHelper = nifCharacter.getJ3dNiSequenceStreamHelper();

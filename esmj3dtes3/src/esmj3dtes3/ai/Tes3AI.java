@@ -1,11 +1,13 @@
 package esmj3dtes3.ai;
 
+import javax.media.j3d.Transform3D;
 import javax.vecmath.Vector3f;
 
 import esmj3d.ai.AIActor;
 import esmj3d.ai.AIThinker;
 import esmj3d.data.shared.records.InstRECO;
 import esmj3d.j3d.cell.AICellGeneral;
+import esmj3d.j3d.j3drecords.inst.J3dRECOChaInst;
 import esmj3d.physics.PhysicsSystemInterface;
 import esmj3d.physics.RayIntersectResult;
 import esmj3dtes3.data.records.REFR;
@@ -29,6 +31,19 @@ public abstract class Tes3AI implements AIActor, AIThinker
 		this.aiCellGeneral = aiCellGeneral;
 	}
 
+	// lets see if visual disagrees with ai and if so let's assume animations have translated us
+	protected void updateLocation(PhysicsSystemInterface clientPhysicsSystem)
+	{
+		// notice settle is after update from vis as it take proprity
+		boolean updated = updateFromVisualLocation(clientPhysicsSystem);
+		updated |= settleOnGround(clientPhysicsSystem);
+		updated |= doRotation(clientPhysicsSystem);
+		if (updated)
+		{
+			aiCellGeneral.setLocationForActor(this, location, yawPitch);
+		}
+	}
+
 	private static Vector3f zeroLoc = new Vector3f(0, 0, 0);
 
 	private Vector3f groundTestUpper = new Vector3f();
@@ -37,9 +52,9 @@ public abstract class Tes3AI implements AIActor, AIThinker
 
 	public int noGroundFoundCount = 0;
 
-	protected void settleOnGround(PhysicsSystemInterface clientPhysicsSystem)
+	private boolean settleOnGround(PhysicsSystemInterface clientPhysicsSystem)
 	{
-		if (!groundChecked || noGroundFoundCount > 10)
+		if (!groundChecked || noGroundFoundCount <= 10)
 		{
 
 			if (noGroundFoundCount == 10)
@@ -88,12 +103,61 @@ public abstract class Tes3AI implements AIActor, AIThinker
 				{
 
 					setLocation(adjustedHit.x, adjustedHit.y, adjustedHit.z, (float) yawPitch.getYaw(), (float) yawPitch.getPitch());
-					aiCellGeneral.setLocationForActor(this, location, yawPitch);
-
+					return true;
 					//note groundChecked not set true in case more adjustment required
 				}
 			}
 
 		}
+
+		return false;
+	}
+
+	// lets see if visual disagrees with ai and if so let's assume animations have translated us
+	private boolean updateFromVisualLocation(PhysicsSystemInterface clientPhysicsSystem)
+	{
+		J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
+		if (visual != null)
+		{
+			Transform3D t = new Transform3D();
+			visual.getLocation(t);
+			Vector3f v = new Vector3f();
+			t.get(v);
+			if (!location.epsilonEquals(v, 0.05f))
+			{
+				groundChecked = false;
+				location.set(v);
+				return true;
+			}
+		}
+		else
+		{
+			//System.out.println("Why you null visual??");
+		}
+		return false;
+
+	}
+
+	protected long turnStart = 0;
+	protected long turnForMS = 0;
+	protected float turnPerMSRads = 0; //+- for direction
+
+	private boolean doRotation(PhysicsSystemInterface clientPhysicsSystem)
+	{
+		// need to turn myself and then send that through to everyone!
+		if (turnStart > 0 && turnForMS > 0)
+		{
+			long turningTimeMS = System.currentTimeMillis() - turnStart;
+			if (turningTimeMS > turnForMS)
+				turningTimeMS = turnForMS;
+
+			float turnRads = turnPerMSRads * turningTimeMS;
+			yawPitch.setYaw(yawPitch.getYaw() + turnRads);
+
+			turnStart = System.currentTimeMillis();
+			turnForMS -= turningTimeMS;
+			return true;
+		}
+		return false;
 	}
 }
