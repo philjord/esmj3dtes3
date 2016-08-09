@@ -23,10 +23,14 @@ public class Tes3AICREA extends Tes3AI implements AIActor, AIThinker
 		setLocation(instRECO);
 	}
 
+	 
+
 	@Override
 	public void act(Vector3f charLocation, PathGridInterface pgi, PhysicsSystemInterface clientPhysicsSystem)
 	{
 		updateLocation(clientPhysicsSystem);
+ 
+		
 	}
 
 	@Override

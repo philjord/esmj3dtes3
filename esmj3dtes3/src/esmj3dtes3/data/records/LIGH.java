@@ -21,6 +21,8 @@ public class LIGH extends CommonLIGH
 
 	public ZString ICON;
 
+	public ZString SNAM;
+
 	public LIGH(Record recordData)
 	{
 		super(recordData);
@@ -63,7 +65,7 @@ public class LIGH extends CommonLIGH
 			}
 			else if (sr.getSubrecordType().equals("SNAM"))
 			{
-
+				SNAM = new ZString(bs);
 			}
 			else if (sr.getSubrecordType().equals("SCRI"))
 			{

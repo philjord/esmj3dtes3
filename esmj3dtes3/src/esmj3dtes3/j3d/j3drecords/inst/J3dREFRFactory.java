@@ -8,12 +8,10 @@ import esmj3d.j3d.j3drecords.inst.J3dRECODynInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECOStatInst;
 import esmj3d.j3d.j3drecords.type.J3dCONT;
-import esmj3d.j3d.j3drecords.type.J3dLIGH;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeActionable;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeDynamic;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeStatic;
-import esmj3d.j3d.j3drecords.type.J3dSOUN;
 import esmj3dtes3.data.records.ACTI;
 import esmj3dtes3.data.records.ALCH;
 import esmj3dtes3.data.records.APPA;
@@ -32,11 +30,11 @@ import esmj3dtes3.data.records.NPC_;
 import esmj3dtes3.data.records.PROB;
 import esmj3dtes3.data.records.REFR;
 import esmj3dtes3.data.records.REPA;
-import esmj3dtes3.data.records.SOUN;
 import esmj3dtes3.data.records.STAT;
 import esmj3dtes3.data.records.WEAP;
 import esmj3dtes3.j3d.cell.Tes3ModelSizes;
 import esmj3dtes3.j3d.j3drecords.type.J3dCREA;
+import esmj3dtes3.j3d.j3drecords.type.J3dLIGH;
 import esmj3dtes3.j3d.j3drecords.type.J3dNPC_;
 import esmj3dtes3.j3d.j3drecords.type.J3dPivotDOOR;
 import esmmanager.common.data.record.IRecordStore;
@@ -240,22 +238,16 @@ public class J3dREFRFactory
 			DOOR door = new DOOR(baseRecord);
 			if (door.MODL.model.str.startsWith("Marker_"))
 				return null;
-			return new J3dRECOStatInst(refr, new J3dPivotDOOR(door, makePhys, mediaSources), true, true, makePhys);
+			return new J3dRECOStatInst(refr, new J3dPivotDOOR(door, makePhys, mediaSources, (IRecordStoreTes3) master), true, true, makePhys);
 		}
 		else if (baseRecord.getRecordType().equals("LIGH"))
 		{
 			LIGH ligh = new LIGH(baseRecord);
-			//System.out.println("ligh " +ligh.MODL.model.str);
-			//FIXME: Morrowind is adding hundreds of lights, which is odd?
-			return new J3dRECOStatInst(refr, new J3dLIGH(ligh, makePhys, mediaSources), true, true, makePhys);
+			return new J3dRECOStatInst(refr, new J3dLIGH(ligh, makePhys, mediaSources, (IRecordStoreTes3) master), true, true, makePhys);
 		}
 		else if (baseRecord.getRecordType().equals("SOUN"))
 		{
-			System.out.println("sound?soundsoundsoundsoundsoundsoundsoundsoundsoundsound");
-			if (!makePhys)
-			{
-				return new J3dRECOStatInst(refr, new J3dSOUN(new SOUN(baseRecord), master, mediaSources.getSoundSource()), false, makePhys);
-			}
+			// looks like these never appear as refr, but as part of lights etc
 		}
 		else if (baseRecord.getRecordType().equals("SNDG"))
 		{
@@ -265,6 +257,7 @@ public class J3dREFRFactory
 		else if (baseRecord.getRecordType().equals("SBSP"))
 		{
 			//SBSP sbsp = new SBSP(baseRecord);
+			System.out.println("SBSP?SBSPSBSPSBSPSBSP does this ever happen??");
 		}
 
 		else

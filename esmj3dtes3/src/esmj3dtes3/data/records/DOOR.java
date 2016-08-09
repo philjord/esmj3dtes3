@@ -2,14 +2,22 @@ package esmj3dtes3.data.records;
 
 import java.util.List;
 
-import esmj3d.data.shared.records.GenericDOOR;
+import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.LString;
+import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
 import esmmanager.common.data.record.Record;
 import esmmanager.common.data.record.Subrecord;
 
-public class DOOR extends GenericDOOR
+// does not share generic door
+public class DOOR extends RECO
 {
+	public ZString EDID;
+	public LString FULL;
+	public MODL MODL;
+	public ZString SNAM;
+	public ZString ANAM;
+
 	public DOOR(Record recordData)
 	{
 		super(recordData);
@@ -28,11 +36,22 @@ public class DOOR extends GenericDOOR
 			{
 				FULL = new LString(bs);
 			}
+			else if (sr.getSubrecordType().equals("MODL"))
+			{
+				MODL = new MODL(bs);
+			}
 			else if (sr.getSubrecordType().equals("SCIP"))
 			{
 
 			}
-
+			else if (sr.getSubrecordType().equals("SNAM"))
+			{
+				SNAM = new ZString(bs);
+			}
+			else if (sr.getSubrecordType().equals("ANAM"))
+			{
+				ANAM = new ZString(bs);
+			}
 			else
 			{
 				//System.out.println("unhandled : " + sr.getSubrecordType() + " in record " + recordData + " in " + this);

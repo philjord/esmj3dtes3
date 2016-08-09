@@ -20,6 +20,8 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 
 	private long initTime = 0;
 
+
+
 	public Tes3AINPC_(InstRECO instRECO, NPC_ npc_, AICellGeneral aiCellGeneral)
 	{
 		super(instRECO, aiCellGeneral);
@@ -27,53 +29,102 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 		initTime = System.currentTimeMillis();
 
 		setLocation(instRECO);
+
 	}
 
 	@Override
 	public void act(Vector3f charLocation, PathGridInterface pgi, PhysicsSystemInterface clientPhysicsSystem)
 	{
+		
+			
+		
 		// keep me moving, turning and grounded
 		updateLocation(clientPhysicsSystem);
 
-		//if (instRECO.NAMEref.str.equals("teruise girvayne"))
-		if (instRECO.formId == 225743)
+		//fargoth instRECO.formId == 225743 ||instRECO.formId == 51640		
+		//chargen boat guard 1
+		//chargen dock guard
+
+		//System.out.println("I'm thinking " + instRECO.NAMEref.str + " " + location);
+		if (instRECO.NAMEref.str.equals("fargoth"))
 		{
-			if (System.currentTimeMillis() - initTime > 5000)
-			{
-				J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
-				NifCharacter nc = visual.getJ3dRECOType().getNifCharacter();
-				if (nc != null)
-				{
-					J3dNiControllerSequence cs = nc.getCurrentControllerSequence();
-					if (step <20)
-					{
-						if (!cs.getFireName().equals("walkforward") && !cs.getFireName().equals("turnleft") || cs.isNotRunning())
-						{
-							//System.out.println("walkforward ai actor called " + instRECO.NAMEref);
-							nc.startAnimation("walkforward", true);
-							step++;
-						}
-					}
-					else if (step >=20)
-					{
-						if (!cs.getFireName().equals("walkforward") && !cs.getFireName().equals("turnleft") || cs.isNotRunning())
-						{
-							//System.out.println("turnleft ai actor called " + instRECO.NAMEref);
-							nc.startAnimation("turnleft", true);
-							step--;
-
-							turnStart = System.currentTimeMillis();
-							turnForMS = 1000;
-							turnPerMSRads = (float) (Math.PI / 2000f); //+- for direction
-						}
-					}
-
-				}
-			}
+			fargothAct();
+		}
+		else if (instRECO.NAMEref.str.equals("chargen boat guard 1"))
+		{
+			chargenboatguard1Act();
+		}
+		else if (instRECO.NAMEref.str.equals("chargen dock guard"))
+		{
+			chargendockguardAct();
 		}
 	}
 
-	private int step = 0;
+	private int chargendockguardStep = 0;
+
+	private void chargendockguardAct()
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	private int chargenboatguard1Step = 0;
+
+	private void chargenboatguard1Act()
+	{
+		//Script: CharGenBoatNPC
+		//	System.out.println("I'm thinking " + instRECO.NAMEref.str + " " + location);
+		if (System.currentTimeMillis() - initTime > 10000)
+		{
+			J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
+			NifCharacter nc = visual.getJ3dRECOType().getNifCharacter();
+			if (nc != null && (chargenboatguard1Step == 0 || chargenboatguard1Step == 200))
+			{
+				nc.playSound("Sound" + "\\Vo\\Misc\\CharGenBoat1.mp3", 5, 1);
+			}
+			chargenboatguard1Step++;
+		}
+
+	}
+
+	private int fargothStep = 0;
+
+	private void fargothAct()
+	{
+		if (System.currentTimeMillis() - initTime > 5000)
+		{
+			J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
+			NifCharacter nc = visual.getJ3dRECOType().getNifCharacter();
+			if (nc != null)
+			{
+				J3dNiControllerSequence cs = nc.getCurrentControllerSequence();
+				if (fargothStep < 20)
+				{
+					if (!cs.getFireName().equals("walkforward") && !cs.getFireName().equals("turnleft") || cs.isNotRunning())
+					{
+						//System.out.println("walkforward ai actor called " + instRECO.NAMEref);
+						nc.startAnimation("walkforward", true);
+						fargothStep++;
+					}
+				}
+				else if (fargothStep >= 20)
+				{
+					if (!cs.getFireName().equals("walkforward") && !cs.getFireName().equals("turnleft") || cs.isNotRunning())
+					{
+						//System.out.println("turnleft ai actor called " + instRECO.NAMEref);
+						nc.startAnimation("turnleft", true);
+						fargothStep--;
+
+						turnStart = System.currentTimeMillis();
+						turnForMS = 1000;
+						turnPerMSRads = (float) (Math.PI / 2000f); //+- for direction
+					}
+				}
+
+			}
+		}
+
+	}
 
 	@Override
 	public void think(Vector3f charLocation, PathGridInterface pgi, PhysicsSystemInterface clientPhysicsSystem)

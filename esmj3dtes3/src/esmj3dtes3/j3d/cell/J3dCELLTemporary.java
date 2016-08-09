@@ -3,10 +3,14 @@ package esmj3dtes3.j3d.cell;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Group;
+
 import esmj3d.j3d.j3drecords.inst.J3dLAND;
 import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
 import esmmanager.common.data.record.IRecordStore;
 import esmmanager.common.data.record.Record;
+import tools3d.audio.SimpleSounds;
 import utils.source.MediaSources;
 
 public class J3dCELLTemporary extends J3dCELL
@@ -32,7 +36,12 @@ public class J3dCELLTemporary extends J3dCELL
 				float wl = getWaterLevel(cell.WHGT);
 				if (wl > l.getLowestHeight())
 				{
-					addChild(makeWater(wl, J3dCELLPersistent.waterApp));
+					Group water = makeWater(wl, J3dCELLPersistent.waterApp);
+					BranchGroup soundBG = SimpleSounds
+							.createPointSound(mediaSources.getSoundSource().getMediaContainer("Sound\\Fx\\envrn\\watr_wave.wav"), 10, -1);
+					water.addChild(soundBG);
+					addChild(water);
+
 				}
 			}
 		}

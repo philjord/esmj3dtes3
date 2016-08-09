@@ -298,7 +298,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 	private static J3dRECOInst checkDump(J3dRECOInst ret)
 	{
 		if (ret != null)
-		{
+		{				
 			Transform3D t = new Transform3D();
 			ret.getLocation(t);
 			Vector3f v = new Vector3f();
@@ -334,7 +334,9 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 			dist.sub(v, new Vector3f(-141, 2, 911));
 			if (dist.length() < 9)
 				return null;
-		}
+			
+			 
+		} 
 		return ret;
 	}
 }

@@ -3,14 +3,15 @@ package esmj3dtes3.data.records;
 import java.util.List;
 
 import esmj3d.data.shared.records.GenericSOUN;
-import esmj3dtes3.data.subrecords.DATA;
 import esmmanager.common.data.record.Record;
 import esmmanager.common.data.record.Subrecord;
 
 public class SOUN extends GenericSOUN
 {
 
-	public DATA DATA;
+	public byte Volume = 0;// (0=0.00, 255=1.00)
+	public byte MinRange = 0;
+	public byte MaxRange = 0;
 
 	public SOUN(Record recordData)
 	{
@@ -24,7 +25,9 @@ public class SOUN extends GenericSOUN
 
 			if (sr.getSubrecordType().equals("DATA"))
 			{
-				DATA = new DATA(bs);
+				Volume = bs[0];
+				MinRange = bs[1];
+				MaxRange = bs[2];
 			}
 
 		}
