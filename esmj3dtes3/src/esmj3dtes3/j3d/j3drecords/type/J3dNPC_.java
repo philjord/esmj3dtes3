@@ -24,6 +24,8 @@ import utils.source.MediaSources;
 
 public class J3dNPC_ extends J3dRECOTypeCha
 {
+	public static boolean WEAPONS_OUT = false;
+
 	private static String nif = ".nif";
 
 	private boolean female = false;
@@ -85,7 +87,8 @@ public class J3dNPC_ extends J3dRECOTypeCha
 					}
 					else if (rec.getRecordType().equals("WEAP"))
 					{
-						addWEAP(new WEAP(rec), attachFileNames, recordStoreTes3);
+						if (WEAPONS_OUT)
+							addWEAP(new WEAP(rec), attachFileNames, recordStoreTes3);
 					}
 				}
 				else
