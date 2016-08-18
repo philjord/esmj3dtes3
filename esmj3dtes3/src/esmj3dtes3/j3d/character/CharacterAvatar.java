@@ -199,6 +199,16 @@ public class CharacterAvatar extends BranchGroup
 
 	}
 
+	public void removePart(Part part)
+	{
+		nifCharacter.removePart(part);
+	}
+
+	public void addPart(Part part, String nifFileName)
+	{
+		nifCharacter.addPart(part, nifFileName);
+	}
+
 	private void addAttachNoSwap(Part part, String nifFileName)
 	{
 		if (!attachFileNames.hasPart(part))

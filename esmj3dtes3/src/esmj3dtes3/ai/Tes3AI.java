@@ -114,7 +114,7 @@ public abstract class Tes3AI implements AIActor, AIThinker
 	}
 
 	// lets see if visual disagrees with ai and if so let's assume animations have translated us
-	private boolean updateFromVisualLocation(PhysicsSystemInterface clientPhysicsSystem)
+	protected boolean updateFromVisualLocation(PhysicsSystemInterface clientPhysicsSystem)
 	{
 		J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
 		if (visual != null)
@@ -142,7 +142,7 @@ public abstract class Tes3AI implements AIActor, AIThinker
 	protected long turnForMS = 0;
 	protected float turnPerMSRads = 0; //+- for direction
 
-	private boolean doRotation(PhysicsSystemInterface clientPhysicsSystem)
+	protected boolean doRotation(PhysicsSystemInterface clientPhysicsSystem)
 	{
 		// need to turn myself and then send that through to everyone!
 		if (turnStart > 0 && turnForMS > 0)
@@ -152,6 +152,7 @@ public abstract class Tes3AI implements AIActor, AIThinker
 				turningTimeMS = turnForMS;
 
 			float turnRads = turnPerMSRads * turningTimeMS;
+			
 			yawPitch.setYaw(yawPitch.getYaw() + turnRads);
 
 			turnStart = System.currentTimeMillis();
@@ -159,5 +160,15 @@ public abstract class Tes3AI implements AIActor, AIThinker
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * returned in radians
+	 * @param target
+	 * @return
+	 */
+	public float getAngle(Vector3f target)
+	{
+		return (float) (((float) Math.atan2(target.x - location.x, target.z - location.z))+Math.PI);
 	}
 }

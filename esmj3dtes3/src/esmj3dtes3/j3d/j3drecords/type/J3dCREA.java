@@ -3,16 +3,22 @@ package esmj3dtes3.j3d.j3drecords.type;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
+import javax.vecmath.Vector3f;
 
 import esmj3d.j3d.BethRenderSettings;
+import esmj3d.j3d.J3dEffectNode;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
 import esmj3dtes3.data.records.CREA;
 import esmmanager.common.data.record.IRecordStore;
 import nif.character.AttachedParts;
 import nif.character.NifCharacterTes3;
+import nif.j3d.J3dNiAVObject;
+import nif.j3d.animation.J3dNiGeomMorpherController;
+import tools3d.audio.SimpleSounds;
 import tools3d.utils.scenegraph.Fadable;
 import utils.source.MediaSources;
 
@@ -74,7 +80,13 @@ public class J3dCREA extends J3dRECOTypeCha
 				attachFileNames.addPart(AttachedParts.Part.Root, nifFileName);
 
 				nifCharacter = new NifCharacterTes3(nifFileName, attachFileNames, mediaSources);
-
+			
+				// for the effects below
+				nifCharacter.setCapability(BranchGroup.ALLOW_DETACH);
+				nifCharacter.setCapability(BranchGroup.ALLOW_CHILDREN_EXTEND);
+				nifCharacter.setCapability(BranchGroup.ALLOW_CHILDREN_WRITE);
+				
+				
 				if (crea.scale == 1)
 				{
 					addChild(nifCharacter);
@@ -101,5 +113,56 @@ public class J3dCREA extends J3dRECOTypeCha
 		}
 
 	}
+	
+	
+	public void makeEffect(String nif, String wav, final String animation)
+	{
+		J3dEffectNode jen = new J3dEffectNode(nif, mediaSources);
 
+		for (J3dNiAVObject j3dNiAVObject : jen.nvr.getNiToJ3dData().j3dNiAVObjectValues())
+		{
+			if (j3dNiAVObject.getJ3dNiTimeController() != null
+					&& j3dNiAVObject.getJ3dNiTimeController() instanceof J3dNiGeomMorpherController)
+			{
+				((J3dNiGeomMorpherController) j3dNiAVObject.getJ3dNiTimeController()).fireFrameName("Frame_1", false);
+			}
+		}
+
+		TransformGroup tg = new TransformGroup();
+		Transform3D t = new Transform3D();
+	//	t.setTranslation(new Vector3f(0, -0.9f, -0.0f));
+		tg.setTransform(t);
+		tg.addChild(jen);
+
+		final BranchGroup bg = new BranchGroup();
+		bg.setCapability(BranchGroup.ALLOW_DETACH);
+		bg.addChild(tg);
+
+		BranchGroup soundBG = SimpleSounds.createPointSound(mediaSources.getSoundSource().getMediaContainer(wav), 10, 1);
+		bg.addChild(soundBG);
+
+		Thread t2 = new Thread() {
+			@Override
+			public void run()
+			{
+				try
+				{
+					nifCharacter.startAnimation(animation, true);
+					Thread.sleep(800);
+					nifCharacter.addChild(bg);
+					Thread.sleep(2000);
+					nifCharacter.removeChild(bg);
+					nifCharacter.startAnimation("idle", true);
+				}
+				catch (InterruptedException e)
+				{
+
+					e.printStackTrace();
+				}
+			}
+		};
+		t2.start();
+
+	}
+	
 }

@@ -79,10 +79,12 @@ public class J3dNPC_ extends J3dRECOTypeCha
 				{
 					if (rec.getRecordType().equals("ARMO"))
 					{
+						//System.out.println("armor " + npco.itemName);
 						addARMO(new ARMO(rec), attachFileNames, recordStoreTes3);
 					}
 					else if (rec.getRecordType().equals("CLOT"))
 					{
+						//System.out.println("CLOT " + npco.itemName);
 						addCLOT(new CLOT(rec), attachFileNames, recordStoreTes3);
 					}
 					else if (rec.getRecordType().equals("WEAP"))
@@ -176,6 +178,10 @@ public class J3dNPC_ extends J3dRECOTypeCha
 				if (p.partName.equals("imperial skirt"))
 					nifFileName = "a\\a_imperial_skirt.nif";
 
+				// TODO: odd extra transform in the keyframe data must be merged
+				if (nifFileName.equals("c\\c_m_shirt_expens_3_ua.nif"))
+					nifFileName = "c\\c_m_shirt_expensive_2_ua.nif";
+
 				if (!firstPerson || AttachedParts.isFirstPersonVisible(AttachedParts.getPartForLoc(p.index)))
 					attachFileNames.addPart(AttachedParts.getPartForLoc(p.index), nifFileName);
 
@@ -264,6 +270,8 @@ public class J3dNPC_ extends J3dRECOTypeCha
 				nifFileName = "a\\a_m_chitin_skinned.nif";
 			else if (p.partName.equals("a_netch_m_chest"))
 				nifFileName = "a\\a_netch_m_cuirass2.nif";
+			else if (p.partName.equals("a_netch_m_gauntlet"))
+				nifFileName = "a\\a_netch_m_skinned.nif";
 			else if (p.partName.equals("a_orcish_boot_f"))
 				nifFileName = "a\\a_orcish_boots_f.nif";
 			else if (p.partName.equals("a_orcish_boot_a"))
@@ -276,6 +284,12 @@ public class J3dNPC_ extends J3dRECOTypeCha
 				nifFileName = "c\\c_m_bracer_w_leather01.nif";
 			else if (p.partName.equals("c_m_bracer_w_clothwrap02"))
 				nifFileName = "c\\c_m_bracer_w_clothwrap02.nif";
+			else if (p.partName.equals("indoril hlelmet"))
+				nifFileName = "a\\a_indoril_m_helmet.nif";
+			else if (p.partName.equals("a_indoril_m_gauntlet"))
+				nifFileName = "a\\a_indoril_m_skins.nif";
+			else if (p.partName.equals("a_indoril_m_chest"))
+				nifFileName = "a\\a_indoril_m_skins.nif";
 
 			//a_nordicfur_hands.1st.nif needs to be considered above
 
