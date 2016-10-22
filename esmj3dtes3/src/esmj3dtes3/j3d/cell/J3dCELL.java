@@ -92,7 +92,6 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 					j3dPGRDbg.setCapability(ALLOW_DETACH);
 
 					TransformGroup transformGroup = new TransformGroup();
-					transformGroup.clearCapabilities();
 					Transform3D transform = new Transform3D();
 
 					float landSize = J3dLAND.LAND_SIZE;

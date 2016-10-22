@@ -33,7 +33,6 @@ public class J3dPGRD extends Group
 			Vector3f p = pp.node;
 
 			TransformGroup transformGroup = new TransformGroup();
-			transformGroup.clearCapabilities();
 			Transform3D transform = new Transform3D();
 			transform.set(p);// note p already nif'ed
 			transformGroup.setTransform(transform);

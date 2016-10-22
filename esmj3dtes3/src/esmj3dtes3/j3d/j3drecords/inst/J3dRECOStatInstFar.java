@@ -37,7 +37,6 @@ public class J3dRECOStatInstFar extends J3dRECOStatInst
 	public void setJ3dRECOType(J3dRECOType j3dRECOType)
 	{
 		BranchGroup blank = new BranchGroup();
-		blank.clearCapabilities();
 		super.setJ3dRECOType(j3dRECOType, blank);
 		if (dl != null)
 		{
