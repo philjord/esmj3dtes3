@@ -1,6 +1,6 @@
 package esmj3dtes3.ai;
 
-import javax.vecmath.Vector3f;
+import org.jogamp.vecmath.Vector3f;
 
 import esmj3d.ai.PathGridInterface;
 import esmj3d.ai.PathGridPathway;

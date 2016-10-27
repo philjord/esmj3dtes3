@@ -3,7 +3,7 @@ package esmj3dtes3.data.records;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.vecmath.Vector3f;
+import org.jogamp.vecmath.Vector3f;
 
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.ZString;

@@ -1,10 +1,9 @@
 package esmj3dtes3.j3d.j3drecords.type;
 
-import javax.vecmath.Color3f;
-import javax.vecmath.Vector3f;
-
 import org.jogamp.java3d.Transform3D;
 import org.jogamp.java3d.TransformGroup;
+import org.jogamp.vecmath.Color3f;
+import org.jogamp.vecmath.Vector3f;
 
 import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
