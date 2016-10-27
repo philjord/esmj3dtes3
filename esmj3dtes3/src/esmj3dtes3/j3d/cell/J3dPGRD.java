@@ -1,13 +1,14 @@
 package esmj3dtes3.j3d.cell;
 
-import javax.media.j3d.GeometryArray;
-import javax.media.j3d.Group;
-import javax.media.j3d.J3DBuffer;
-import javax.media.j3d.LineArray;
-import javax.media.j3d.Shape3D;
-import javax.media.j3d.Transform3D;
-import javax.media.j3d.TransformGroup;
 import javax.vecmath.Vector3f;
+
+import org.jogamp.java3d.GeometryArray;
+import org.jogamp.java3d.Group;
+import org.jogamp.java3d.J3DBuffer;
+import org.jogamp.java3d.LineArray;
+import org.jogamp.java3d.Shape3D;
+import org.jogamp.java3d.Transform3D;
+import org.jogamp.java3d.TransformGroup;
 
 import esmj3dtes3.data.records.PGRD;
 import esmj3dtes3.data.records.PGRD.PathPoint;

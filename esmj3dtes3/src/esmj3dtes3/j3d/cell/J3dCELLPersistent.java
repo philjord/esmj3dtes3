@@ -3,7 +3,7 @@ package esmj3dtes3.j3d.cell;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.media.j3d.Group;
+import org.jogamp.java3d.Group;
 
 import esmj3d.data.shared.records.CommonWRLD;
 import esmj3d.j3d.cell.GridSpaces;

@@ -1,10 +1,11 @@
 package esmj3dtes3.j3d.j3drecords.type;
 
-import javax.media.j3d.Alpha;
-import javax.media.j3d.Group;
-import javax.media.j3d.Transform3D;
-import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
+
+import org.jogamp.java3d.Alpha;
+import org.jogamp.java3d.Group;
+import org.jogamp.java3d.Transform3D;
+import org.jogamp.java3d.TransformGroup;
 
 import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.j3drecords.Doorable;

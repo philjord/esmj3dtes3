@@ -1,6 +1,6 @@
 package esmj3dtes3.j3d.j3drecords.inst;
 
-import javax.media.j3d.BranchGroup;
+import org.jogamp.java3d.BranchGroup;
 
 import esmj3d.data.shared.records.InstRECO;
 import esmj3d.j3d.BethRenderSettings;

@@ -3,8 +3,8 @@ package esmj3dtes3.j3d.cell;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.media.j3d.BranchGroup;
-import javax.media.j3d.Group;
+import org.jogamp.java3d.BranchGroup;
+import org.jogamp.java3d.Group;
 
 import esmj3d.j3d.j3drecords.inst.J3dLAND;
 import esmj3d.j3d.j3drecords.inst.J3dRECOInst;

@@ -3,12 +3,13 @@ package esmj3dtes3.j3d.cell;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.media.j3d.BranchGroup;
-import javax.media.j3d.Node;
-import javax.media.j3d.Transform3D;
-import javax.media.j3d.TransformGroup;
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
+
+import org.jogamp.java3d.BranchGroup;
+import org.jogamp.java3d.Node;
+import org.jogamp.java3d.Transform3D;
+import org.jogamp.java3d.TransformGroup;
 
 import com.frostwire.util.SparseArray;
 

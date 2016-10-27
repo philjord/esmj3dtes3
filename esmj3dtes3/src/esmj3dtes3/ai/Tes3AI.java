@@ -1,7 +1,8 @@
 package esmj3dtes3.ai;
 
-import javax.media.j3d.Transform3D;
 import javax.vecmath.Vector3f;
+
+import org.jogamp.java3d.Transform3D;
 
 import esmj3d.ai.AIActor;
 import esmj3d.ai.AIThinker;
