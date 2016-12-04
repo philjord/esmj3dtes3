@@ -7,13 +7,13 @@ import org.jogamp.java3d.LineArray;
 import org.jogamp.java3d.Shape3D;
 import org.jogamp.java3d.Transform3D;
 import org.jogamp.java3d.TransformGroup;
+import org.jogamp.java3d.utils.shader.Cube;
 import org.jogamp.vecmath.Vector3f;
 
 import esmj3dtes3.data.records.PGRD;
 import esmj3dtes3.data.records.PGRD.PathPoint;
 import tools3d.utils.PhysAppearance;
 import tools3d.utils.Utils3D;
-import tools3d.utils.leafnode.Cube;
 
 public class J3dPGRD extends Group
 {
