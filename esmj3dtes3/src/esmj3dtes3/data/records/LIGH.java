@@ -62,6 +62,14 @@ public class LIGH extends CommonLIGH
 				//0x0040 = Flicker Slow
 				//0x0080 = Pulse
 				//0x0100 = Pulse Slow
+				
+				
+				// wait intensity at distance is related to starting strength! so the below only works for 255,255,255
+				// using 0.05 as the desired light level at radius
+				//https://www.wolframalpha.com/input/?i=1%2F+(1%2B(q+r%5E2))+%3D+0.05+solve+for+q
+				//this.falloffExponent = ((1f / 0.05f) - 1f) / (radius * radius);
+				
+			
 			}
 			else if (sr.getSubrecordType().equals("SCPT"))
 			{
