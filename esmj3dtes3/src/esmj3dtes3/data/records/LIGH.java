@@ -43,13 +43,25 @@ public class LIGH extends CommonLIGH
 			else if (sr.getSubrecordType().equals("LHDT"))
 			{
 				//System.out.println("" + ESMByteConvert.extractFloat(bs, 0)); weight
-				fade = ESMByteConvert.extractInt(bs, 4);// value fade?
+				//value = ESMByteConvert.extractInt(bs, 4);// value  
 				//System.out.println("" + ESMByteConvert.extractInt(bs, 8)); time
 
 				radius = ESMByteConvert.extractInt(bs, 12);
 				color.x = ESMByteConvert.extractUnsignedByte(bs, 16);
 				color.y = ESMByteConvert.extractUnsignedByte(bs, 17);
 				color.z = ESMByteConvert.extractUnsignedByte(bs, 18);
+				
+				//color.a = ESMByteConvert.extractUnsignedByte(bs, 19);
+				//long  flags = ESMByteConvert.extractInt(bs, 20);
+				//0x0001 = Dynamic
+				//0x0002 = Can Carry
+				//0x0004 = Negative
+				//0x0008 = Flicker
+				//0x0010 = Fire
+				//0x0020 = Off Default
+				//0x0040 = Flicker Slow
+				//0x0080 = Pulse
+				//0x0100 = Pulse Slow
 			}
 			else if (sr.getSubrecordType().equals("SCPT"))
 			{
@@ -66,11 +78,7 @@ public class LIGH extends CommonLIGH
 			else if (sr.getSubrecordType().equals("SNAM"))
 			{
 				SNAM = new ZString(bs);
-			}
-			else if (sr.getSubrecordType().equals("SCRI"))
-			{
-
-			}
+			}			
 			else
 			{
 				System.out.println("unhandled : " + sr.getSubrecordType() + " in record " + recordData + " in " + this);
