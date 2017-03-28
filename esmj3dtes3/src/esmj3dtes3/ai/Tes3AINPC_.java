@@ -73,22 +73,25 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 	private void chargennameAct(Vector3f charLocation, PathGridInterface pgi, PhysicsSystemInterface clientPhysicsSystem)
 	{
 		J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
-		NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
-		if (System.currentTimeMillis() - initTime > 2000 && chargennameStep == 0)
+		if (visual != null)
 		{
-			//nc.playSound("Sound" + "\\Vo\\Misc\\chargenname1.mp3", 5, 1);
-			SimpleSounds.playMp3("Sound" + "\\Vo\\Misc\\chargenname1.mp3", 0.15f);
+			NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
+			if (System.currentTimeMillis() - initTime > 2000 && chargennameStep == 0)
+			{
+				//nc.playSound("Sound" + "\\Vo\\Misc\\chargenname1.mp3", 5, 1);
+				SimpleSounds.playMp3("Sound" + "\\Vo\\Misc\\chargenname1.mp3", 0.15f);
 
-			chargennameLastSpoke = System.currentTimeMillis();
-			chargennameStep++;
-		}
-		else if (System.currentTimeMillis() - chargennameLastSpoke > 6000 && chargennameStep == 1)
-		{
-			//nc.playSound("Sound" + "\\Vo\\Misc\\chargenname2.mp3", 5, 1);
-			SimpleSounds.playMp3("Sound" + "\\Vo\\Misc\\chargenname2.mp3", 0.15f);
+				chargennameLastSpoke = System.currentTimeMillis();
+				chargennameStep++;
+			}
+			else if (System.currentTimeMillis() - chargennameLastSpoke > 6000 && chargennameStep == 1)
+			{
+				//nc.playSound("Sound" + "\\Vo\\Misc\\chargenname2.mp3", 5, 1);
+				SimpleSounds.playMp3("Sound" + "\\Vo\\Misc\\chargenname2.mp3", 0.15f);
 
-			chargennameLastSpoke = System.currentTimeMillis();
-			chargennameStep++;
+				chargennameLastSpoke = System.currentTimeMillis();
+				chargennameStep++;
+			}
 		}
 
 	}
@@ -118,103 +121,105 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 		//only start after first chat by name guy
 		if (chargennameStep >= 2)
 		{
-			 
+
 			J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
-			final NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
-			if (nc != null)
+			if (visual != null)
 			{
-
-				J3dNiControllerSequence cs = nc.getCurrentControllerSequence();
-				if (chargenboatguard2Step == 0)
-				{
-					if (!cs.getFireName().equals("walkforward") || cs.isNotRunning())
-					{
-						//System.out.println("walkforward ai actor called " + instRECO.NAMEref);
-						nc.startAnimation("walkforward", true);
-					}
-					Vector3f target = new Vector3f(1, -0.1f, -0);
-					Vector3f dist = new Vector3f();
-					dist.sub(target, location);
-
-					if (dist.length() < 2f)
-					{
-						chargenboatguard2Step = 1;
-						nc.startAnimation("idle2", true);
-					}
-				}
-				else if (chargenboatguard2Step == 1)
+				final NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
+				if (nc != null)
 				{
 
-					final J3dNiGeomMorpherController morph = nc.getAllMorphs().get(0);
-
-					morph.fireFrameName(morph.getAllMorphFrameNames()[1], true);
-
-					//nc.playSound("Sound" + "\\Vo\\Misc\\chargenwalk1.mp3", 5, 1);
-					SimpleSounds.playMp3("Sound" + "\\Vo\\Misc\\chargenwalk1.mp3", 0.15f);
-
-					Thread t = new Thread() {
-						@Override
-						public void run()
-						{
-							try
-							{
-								Thread.sleep(4000);
-							}
-							catch (InterruptedException e)
-							{
-								e.printStackTrace();
-							}
-							morph.fireFrameName(morph.getAllMorphFrameNames()[0], false);
-							chargenboatguard2Step = 3;
-						}
-					};
-					t.start();
-					chargenboatguard2Step = 2;
-
-				}
-				else if (chargenboatguard2Step == 3)
-				{
-					if (turnForMS == 0)
-					{
-						//System.out.println("turnleft ai actor called " + instRECO.NAMEref);
-						nc.startAnimation("turnleft", true);
-
-						turnStart = System.currentTimeMillis();
-						turnForMS = 2000;
-						turnPerMSRads = (float) (Math.PI / 2000f); //+- for direction
-						chargenboatguard2Step = 4;
-					}
-				}
-				else if (chargenboatguard2Step == 4)
-				{
-					if (turnForMS == 0)
+					J3dNiControllerSequence cs = nc.getCurrentControllerSequence();
+					if (chargenboatguard2Step == 0)
 					{
 						if (!cs.getFireName().equals("walkforward") || cs.isNotRunning())
 						{
 							//System.out.println("walkforward ai actor called " + instRECO.NAMEref);
 							nc.startAnimation("walkforward", true);
 						}
+						Vector3f target = new Vector3f(1, -0.1f, -0);
+						Vector3f dist = new Vector3f();
+						dist.sub(target, location);
+
+						if (dist.length() < 2f)
+						{
+							chargenboatguard2Step = 1;
+							nc.startAnimation("idle2", true);
+						}
+					}
+					else if (chargenboatguard2Step == 1)
+					{
+
+						final J3dNiGeomMorpherController morph = nc.getAllMorphs().get(0);
+
+						morph.fireFrameName(morph.getAllMorphFrameNames()[1], true);
+
+						//nc.playSound("Sound" + "\\Vo\\Misc\\chargenwalk1.mp3", 5, 1);
+						SimpleSounds.playMp3("Sound" + "\\Vo\\Misc\\chargenwalk1.mp3", 0.15f);
+
 						Thread t = new Thread() {
 							@Override
 							public void run()
 							{
 								try
 								{
-									Thread.sleep(6000);
+									Thread.sleep(4000);
 								}
 								catch (InterruptedException e)
 								{
 									e.printStackTrace();
 								}
-								nc.startAnimation("idle3", true);
-								chargenboatguard2Step = 5;
+								morph.fireFrameName(morph.getAllMorphFrameNames()[0], false);
+								chargenboatguard2Step = 3;
 							}
 						};
 						t.start();
+						chargenboatguard2Step = 2;
 
 					}
-				}
+					else if (chargenboatguard2Step == 3)
+					{
+						if (turnForMS == 0)
+						{
+							//System.out.println("turnleft ai actor called " + instRECO.NAMEref);
+							nc.startAnimation("turnleft", true);
 
+							turnStart = System.currentTimeMillis();
+							turnForMS = 2000;
+							turnPerMSRads = (float) (Math.PI / 2000f); //+- for direction
+							chargenboatguard2Step = 4;
+						}
+					}
+					else if (chargenboatguard2Step == 4)
+					{
+						if (turnForMS == 0)
+						{
+							if (!cs.getFireName().equals("walkforward") || cs.isNotRunning())
+							{
+								//System.out.println("walkforward ai actor called " + instRECO.NAMEref);
+								nc.startAnimation("walkforward", true);
+							}
+							Thread t = new Thread() {
+								@Override
+								public void run()
+								{
+									try
+									{
+										Thread.sleep(6000);
+									}
+									catch (InterruptedException e)
+									{
+										e.printStackTrace();
+									}
+									nc.startAnimation("idle3", true);
+									chargenboatguard2Step = 5;
+								}
+							};
+							t.start();
+
+						}
+					}
+				}
 			}
 		}
 
@@ -239,8 +244,11 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 		{
 			updateLocation(clientPhysicsSystem);
 			J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
-			NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
-			nc.setNoMorphs();
+			if (visual != null)
+			{
+				NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
+				nc.setNoMorphs();
+			}
 			chargendockguardInit = true;
 		}
 
@@ -254,32 +262,35 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 				// 1.4 till 2.0 of frame 1 (0,1,2) seems about right
 				// but it's super slow, so maybe a speed factor??
 				J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
-				NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
+				if (visual != null)
+				{
+					NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
 
-				final J3dNiGeomMorpherController morph = nc.getAllMorphs().get(0);
+					final J3dNiGeomMorpherController morph = nc.getAllMorphs().get(0);
 
-				morph.fireFrameName(morph.getAllMorphFrameNames()[1], true);
+					morph.fireFrameName(morph.getAllMorphFrameNames()[1], true);
 
-				//nc.playSound("Sound" + "\\Vo\\Misc\\CharGenDock1.mp3", 5, 0);
-				SimpleSounds.playMp3("Sound" + "\\Vo\\Misc\\CharGenDock1.mp3", 0.15f);
+					//nc.playSound("Sound" + "\\Vo\\Misc\\CharGenDock1.mp3", 5, 0);
+					SimpleSounds.playMp3("Sound" + "\\Vo\\Misc\\CharGenDock1.mp3", 0.15f);
 
-				chargenboatguard1LastSpoke = System.currentTimeMillis();
-				Thread t = new Thread() {
-					@Override
-					public void run()
-					{
-						try
+					chargenboatguard1LastSpoke = System.currentTimeMillis();
+					Thread t = new Thread() {
+						@Override
+						public void run()
 						{
-							Thread.sleep(4000);
+							try
+							{
+								Thread.sleep(4000);
+							}
+							catch (InterruptedException e)
+							{
+								e.printStackTrace();
+							}
+							morph.fireFrameName(morph.getAllMorphFrameNames()[0], false);
 						}
-						catch (InterruptedException e)
-						{
-							e.printStackTrace();
-						}
-						morph.fireFrameName(morph.getAllMorphFrameNames()[0], false);
-					}
-				};
-				t.start();
+					};
+					t.start();
+				}
 				chargendockguardStep = 1;
 				chargendockguard1LastSpoke = System.currentTimeMillis();
 			}
@@ -289,32 +300,36 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 				// 1.4 till 2.0 of frame 1 (0,1,2) seems about right
 				// but it's super slow, so maybe a speed factor??
 				J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
-				NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
 
-				final J3dNiGeomMorpherController morph = nc.getAllMorphs().get(0);
+				if (visual != null)
+				{
+					NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
 
-				morph.fireFrameName(morph.getAllMorphFrameNames()[1], true);
+					final J3dNiGeomMorpherController morph = nc.getAllMorphs().get(0);
 
-				//nc.playSound("Sound" + "\\Vo\\Misc\\CharGenDock2.mp3", 5, 1);
-				SimpleSounds.playMp3("Sound" + "\\Vo\\Misc\\CharGenDock2.mp3", 0.15f);
+					morph.fireFrameName(morph.getAllMorphFrameNames()[1], true);
 
-				chargendockguardStep = 2;
-				Thread t = new Thread() {
-					@Override
-					public void run()
-					{
-						try
+					//nc.playSound("Sound" + "\\Vo\\Misc\\CharGenDock2.mp3", 5, 1);
+					SimpleSounds.playMp3("Sound" + "\\Vo\\Misc\\CharGenDock2.mp3", 0.15f);
+
+					chargendockguardStep = 2;
+					Thread t = new Thread() {
+						@Override
+						public void run()
 						{
-							Thread.sleep(4000);
+							try
+							{
+								Thread.sleep(4000);
+							}
+							catch (InterruptedException e)
+							{
+								e.printStackTrace();
+							}
+							morph.fireFrameName(morph.getAllMorphFrameNames()[0], false);
 						}
-						catch (InterruptedException e)
-						{
-							e.printStackTrace();
-						}
-						morph.fireFrameName(morph.getAllMorphFrameNames()[0], false);
-					}
-				};
-				t.start();
+					};
+					t.start();
+				}
 			}
 		}
 
@@ -329,8 +344,11 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 		{
 			updateLocation(clientPhysicsSystem);
 			J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
-			NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
-			nc.setNoMorphs();
+			if (visual != null)
+			{
+				NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
+				nc.setNoMorphs();
+			}
 			chargenboatguard1Init = true;
 		}
 
@@ -348,33 +366,36 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 				// 1.4 till 2.0 of frame 1 (0,1,2) seems about right
 				// but it's super slow, so maybe a speed factor??
 				J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
-				NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
+				if (visual != null)
+				{
+					NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
 
-				final J3dNiGeomMorpherController morph = nc.getAllMorphs().get(0);
+					final J3dNiGeomMorpherController morph = nc.getAllMorphs().get(0);
 
-				morph.fireFrameName(morph.getAllMorphFrameNames()[1], true);
+					morph.fireFrameName(morph.getAllMorphFrameNames()[1], true);
 
-				//nc.playSound("Sound" + "\\Vo\\Misc\\CharGenBoat1.mp3", 5, 1);
+					//nc.playSound("Sound" + "\\Vo\\Misc\\CharGenBoat1.mp3", 5, 1);
 
-				SimpleSounds.playMp3("Sound" + "\\Vo\\Misc\\CharGenBoat1.mp3", 0.15f);
+					SimpleSounds.playMp3("Sound" + "\\Vo\\Misc\\CharGenBoat1.mp3", 0.15f);
 
-				chargenboatguard1LastSpoke = System.currentTimeMillis();
-				Thread t = new Thread() {
-					@Override
-					public void run()
-					{
-						try
+					chargenboatguard1LastSpoke = System.currentTimeMillis();
+					Thread t = new Thread() {
+						@Override
+						public void run()
 						{
-							Thread.sleep(4000);
+							try
+							{
+								Thread.sleep(4000);
+							}
+							catch (InterruptedException e)
+							{
+								e.printStackTrace();
+							}
+							morph.fireFrameName(morph.getAllMorphFrameNames()[0], false);
 						}
-						catch (InterruptedException e)
-						{
-							e.printStackTrace();
-						}
-						morph.fireFrameName(morph.getAllMorphFrameNames()[0], false);
-					}
-				};
-				t.start();
+					};
+					t.start();
+				}
 			}
 			else if (System.currentTimeMillis() - chargenboatguard1LastSpoke > 6000)
 			{
@@ -382,34 +403,36 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 				// 1.4 till 2.0 of frame 1 (0,1,2) seems about right
 				// but it's super slow, so maybe a speed factor??
 				J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
-				NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
+				if (visual != null)
+				{
+					NifCharacterTes3 nc = (NifCharacterTes3) visual.getJ3dRECOType().getNifCharacter();
 
-				final J3dNiGeomMorpherController morph = nc.getAllMorphs().get(0);
+					final J3dNiGeomMorpherController morph = nc.getAllMorphs().get(0);
 
-				morph.fireFrameName(morph.getAllMorphFrameNames()[1], true);
+					morph.fireFrameName(morph.getAllMorphFrameNames()[1], true);
 
-				//nc.playSound("Sound" + "\\Vo\\Misc\\CharGenBoat2.mp3", 5, 1);
-				SimpleSounds.playMp3("Sound" + "\\Vo\\Misc\\CharGenBoat2.mp3", 0.15f);
+					//nc.playSound("Sound" + "\\Vo\\Misc\\CharGenBoat2.mp3", 5, 1);
+					SimpleSounds.playMp3("Sound" + "\\Vo\\Misc\\CharGenBoat2.mp3", 0.15f);
 
-				chargenboatguard1LastSpoke = System.currentTimeMillis();
-				Thread t = new Thread() {
-					@Override
-					public void run()
-					{
-						try
+					chargenboatguard1LastSpoke = System.currentTimeMillis();
+					Thread t = new Thread() {
+						@Override
+						public void run()
 						{
-							Thread.sleep(4000);
+							try
+							{
+								Thread.sleep(4000);
+							}
+							catch (InterruptedException e)
+							{
+								e.printStackTrace();
+							}
+							morph.fireFrameName(morph.getAllMorphFrameNames()[0], false);
 						}
-						catch (InterruptedException e)
-						{
-							e.printStackTrace();
-						}
-						morph.fireFrameName(morph.getAllMorphFrameNames()[0], false);
-					}
-				};
-				t.start();
+					};
+					t.start();
+				}
 			}
-
 		}
 
 	}
@@ -432,33 +455,35 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 		if (System.currentTimeMillis() - initTime > 5000)
 		{
 			J3dRECOChaInst visual = aiCellGeneral.getVisualActor(this);
-			NifCharacter nc = visual.getJ3dRECOType().getNifCharacter();
-			if (nc != null)
+			if (visual != null)
 			{
-				J3dNiControllerSequence cs = nc.getCurrentControllerSequence();
-				if (fargothStep < 2)
+				NifCharacter nc = visual.getJ3dRECOType().getNifCharacter();
+				if (nc != null)
 				{
-					if (!cs.getFireName().equals("walkforward") && !cs.getFireName().equals("turnleft") || cs.isNotRunning())
+					J3dNiControllerSequence cs = nc.getCurrentControllerSequence();
+					if (fargothStep < 2)
 					{
-						//System.out.println("walkforward ai actor called " + instRECO.NAMEref);
-						nc.startAnimation("walkforward", true);
-						fargothStep++;
+						if (!cs.getFireName().equals("walkforward") && !cs.getFireName().equals("turnleft") || cs.isNotRunning())
+						{
+							//System.out.println("walkforward ai actor called " + instRECO.NAMEref);
+							nc.startAnimation("walkforward", true);
+							fargothStep++;
+						}
+					}
+					else if (fargothStep >= 2)
+					{
+						if (!cs.getFireName().equals("walkforward") && !cs.getFireName().equals("turnleft") || cs.isNotRunning())
+						{
+							//System.out.println("turnleft ai actor called " + instRECO.NAMEref);
+							nc.startAnimation("turnleft", true);
+							fargothStep--;
+
+							turnStart = System.currentTimeMillis();
+							turnForMS = 1000;
+							turnPerMSRads = (float) (Math.PI / 2000f); //+- for direction
+						}
 					}
 				}
-				else if (fargothStep >= 2)
-				{
-					if (!cs.getFireName().equals("walkforward") && !cs.getFireName().equals("turnleft") || cs.isNotRunning())
-					{
-						//System.out.println("turnleft ai actor called " + instRECO.NAMEref);
-						nc.startAnimation("turnleft", true);
-						fargothStep--;
-
-						turnStart = System.currentTimeMillis();
-						turnForMS = 1000;
-						turnPerMSRads = (float) (Math.PI / 2000f); //+- for direction
-					}
-				}
-
 			}
 		}
 
