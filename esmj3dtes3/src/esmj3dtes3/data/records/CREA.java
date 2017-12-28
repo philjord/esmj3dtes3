@@ -2,12 +2,12 @@ package esmj3dtes3.data.records;
 
 import java.util.List;
 
+import esmio.common.data.record.Record;
+import esmio.common.data.record.Subrecord;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.LString;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
-import esmmanager.common.data.record.Record;
-import esmmanager.common.data.record.Subrecord;
 import tools.io.ESMByteConvert;
 
 public class CREA extends RECO

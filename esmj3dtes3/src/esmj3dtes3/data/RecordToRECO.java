@@ -3,6 +3,9 @@ package esmj3dtes3.data;
 import java.util.HashSet;
 import java.util.List;
 
+import esmio.common.data.record.IRecordStore;
+import esmio.common.data.record.Record;
+import esmio.tes3.IRecordStoreTes3;
 import esmj3d.data.shared.records.LAND;
 import esmj3d.data.shared.records.LTEX;
 import esmj3d.data.shared.records.RECO;
@@ -40,9 +43,6 @@ import esmj3dtes3.data.records.SOUN;
 import esmj3dtes3.data.records.SPEL;
 import esmj3dtes3.data.records.STAT;
 import esmj3dtes3.data.records.WEAP;
-import esmmanager.common.data.record.IRecordStore;
-import esmmanager.common.data.record.Record;
-import esmmanager.tes3.IRecordStoreTes3;
 
 public class RecordToRECO
 {

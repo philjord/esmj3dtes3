@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.jogamp.java3d.Group;
 
+import esmio.common.data.record.IRecordStore;
+import esmio.common.data.record.Record;
 import esmj3d.data.shared.records.CommonWRLD;
 import esmj3d.j3d.cell.GridSpaces;
 import esmj3d.j3d.cell.J3dICELLPersistent;
 import esmj3d.j3d.water.WaterApp;
 import esmj3dtes3.data.records.REFR;
-import esmmanager.common.data.record.IRecordStore;
-import esmmanager.common.data.record.Record;
 import utils.source.MediaSources;
 
 public class J3dCELLPersistent extends J3dCELL implements J3dICELLPersistent

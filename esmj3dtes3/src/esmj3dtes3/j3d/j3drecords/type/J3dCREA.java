@@ -9,11 +9,11 @@ import org.jogamp.java3d.TransformGroup;
 import org.jogamp.vecmath.Color3f;
 import org.jogamp.vecmath.Vector3f;
 
+import esmio.common.data.record.IRecordStore;
 import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.J3dEffectNode;
 import esmj3d.j3d.j3drecords.type.J3dRECOTypeCha;
 import esmj3dtes3.data.records.CREA;
-import esmmanager.common.data.record.IRecordStore;
 import nif.character.AttachedParts;
 import nif.character.NifCharacterTes3;
 import nif.j3d.J3dNiAVObject;

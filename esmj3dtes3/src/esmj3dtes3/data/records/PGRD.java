@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.jogamp.vecmath.Vector3f;
 
+import esmio.common.data.record.Record;
+import esmio.common.data.record.Subrecord;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.ZString;
-import esmmanager.common.data.record.Record;
-import esmmanager.common.data.record.Subrecord;
 import tools.io.ESMByteConvert;
 import utils.convert.ConvertFromNif;
 

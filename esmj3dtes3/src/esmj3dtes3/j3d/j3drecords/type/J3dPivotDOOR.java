@@ -6,13 +6,13 @@ import org.jogamp.java3d.Transform3D;
 import org.jogamp.java3d.TransformGroup;
 import org.jogamp.vecmath.Color3f;
 
+import esmio.common.data.record.Record;
+import esmio.tes3.IRecordStoreTes3;
 import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.j3drecords.Doorable;
 import esmj3d.j3d.j3drecords.type.J3dRECOType;
 import esmj3dtes3.data.records.DOOR;
 import esmj3dtes3.data.records.SOUN;
-import esmmanager.common.data.record.Record;
-import esmmanager.tes3.IRecordStoreTes3;
 import nif.NifToJ3d;
 import tools3d.utils.TimedRunnableBehavior;
 import tools3d.utils.scenegraph.Fadable;

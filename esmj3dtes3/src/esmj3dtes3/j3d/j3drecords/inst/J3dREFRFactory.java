@@ -1,5 +1,8 @@
 package esmj3dtes3.j3d.j3drecords.inst;
 
+import esmio.common.data.record.IRecordStore;
+import esmio.common.data.record.Record;
+import esmio.tes3.IRecordStoreTes3;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
@@ -37,9 +40,6 @@ import esmj3dtes3.j3d.j3drecords.type.J3dCREA;
 import esmj3dtes3.j3d.j3drecords.type.J3dLIGH;
 import esmj3dtes3.j3d.j3drecords.type.J3dNPC_;
 import esmj3dtes3.j3d.j3drecords.type.J3dPivotDOOR;
-import esmmanager.common.data.record.IRecordStore;
-import esmmanager.common.data.record.Record;
-import esmmanager.tes3.IRecordStoreTes3;
 import utils.source.MediaSources;
 
 public class J3dREFRFactory

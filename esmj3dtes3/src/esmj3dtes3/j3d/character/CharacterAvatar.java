@@ -5,15 +5,15 @@ import org.jogamp.java3d.Transform3D;
 import org.jogamp.java3d.TransformGroup;
 import org.jogamp.vecmath.Vector3f;
 
+import esmio.common.data.record.IRecordStore;
+import esmio.common.data.record.Record;
+import esmio.tes3.IRecordStoreTes3;
 import esmj3dtes3.character.CharacterSheet;
 import esmj3dtes3.data.records.ARMO;
 import esmj3dtes3.data.records.CLOT;
 import esmj3dtes3.data.records.NPCO;
 import esmj3dtes3.data.records.WEAP;
 import esmj3dtes3.j3d.j3drecords.type.J3dNPC_;
-import esmmanager.common.data.record.IRecordStore;
-import esmmanager.common.data.record.Record;
-import esmmanager.tes3.IRecordStoreTes3;
 import nif.character.AttachedParts;
 import nif.character.AttachedParts.Part;
 import nif.character.NifCharacterTes3;

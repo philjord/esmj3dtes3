@@ -1,10 +1,10 @@
 package esmj3dtes3.j3d.j3drecords.type;
 
+import esmio.common.data.record.Record;
+import esmio.tes3.IRecordStoreTes3;
 import esmj3d.j3d.j3drecords.type.J3dGeneralLIGH;
 import esmj3dtes3.data.records.LIGH;
 import esmj3dtes3.data.records.SOUN;
-import esmmanager.common.data.record.Record;
-import esmmanager.tes3.IRecordStoreTes3;
 import utils.source.MediaSources;
 
 public class J3dLIGH extends J3dGeneralLIGH

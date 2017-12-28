@@ -12,6 +12,9 @@ import org.jogamp.vecmath.Vector3f;
 
 import com.frostwire.util.SparseArray;
 
+import esmio.common.data.record.IRecordStore;
+import esmio.common.data.record.Record;
+import esmio.tes3.IRecordStoreTes3;
 import esmj3d.data.shared.records.LAND;
 import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.BethRenderSettings.UpdateListener;
@@ -24,9 +27,6 @@ import esmj3dtes3.data.records.CELL;
 import esmj3dtes3.data.records.PGRD;
 import esmj3dtes3.data.records.REFR;
 import esmj3dtes3.j3d.j3drecords.inst.J3dREFRFactory;
-import esmmanager.common.data.record.IRecordStore;
-import esmmanager.common.data.record.Record;
-import esmmanager.tes3.IRecordStoreTes3;
 import utils.source.MediaSources;
 
 public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener

@@ -7,6 +7,9 @@ import java.util.List;
 import org.jogamp.vecmath.Quat4f;
 import org.jogamp.vecmath.Vector3f;
 
+import esmio.common.data.record.IRecordStore;
+import esmio.common.data.record.Record;
+import esmio.tes3.IRecordStoreTes3;
 import esmj3d.ai.AIActor;
 import esmj3d.ai.PathGridInterface;
 import esmj3d.data.shared.records.InstRECO;
@@ -25,9 +28,6 @@ import esmj3dtes3.data.records.LEVC;
 import esmj3dtes3.data.records.NPC_;
 import esmj3dtes3.data.records.PGRD;
 import esmj3dtes3.data.records.REFR;
-import esmmanager.common.data.record.IRecordStore;
-import esmmanager.common.data.record.Record;
-import esmmanager.tes3.IRecordStoreTes3;
 import tools3d.utils.YawPitch;
 
 public class AICellTes3 extends AICellGeneral

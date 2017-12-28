@@ -3,10 +3,10 @@ package esmj3dtes3.j3d.cell;
 import java.util.Iterator;
 import java.util.List;
 
+import esmio.common.data.record.IRecordStore;
+import esmio.common.data.record.Record;
 import esmj3d.j3d.j3drecords.inst.J3dLANDFar;
 import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
-import esmmanager.common.data.record.IRecordStore;
-import esmmanager.common.data.record.Record;
 import utils.source.MediaSources;
 
 public class J3dCELLDistant extends J3dCELL

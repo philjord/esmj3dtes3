@@ -7,6 +7,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.zip.DataFormatException;
 
+import esmio.common.PluginException;
+import esmio.common.data.plugin.PluginGroup;
+import esmio.common.data.plugin.PluginRecord;
+import esmio.common.data.record.Record;
+import esmio.loader.IESMManager;
+import esmio.utils.ESMUtils;
 import esmj3d.j3d.cell.AIActorServices;
 import esmj3d.j3d.cell.AICellGeneral;
 import esmj3d.j3d.cell.J3dICellFactory;
@@ -14,12 +20,6 @@ import esmj3d.j3d.cell.MorphingLandscape;
 import esmj3dtes3.data.records.REFR;
 import esmj3dtes3.data.records.STAT;
 import esmj3dtes3.data.records.WRLD;
-import esmmanager.common.PluginException;
-import esmmanager.common.data.plugin.PluginGroup;
-import esmmanager.common.data.plugin.PluginRecord;
-import esmmanager.common.data.record.Record;
-import esmmanager.loader.IESMManager;
-import utils.ESMUtils;
 import utils.source.MediaSources;
 
 public class J3dCellFactory extends J3dICellFactory
