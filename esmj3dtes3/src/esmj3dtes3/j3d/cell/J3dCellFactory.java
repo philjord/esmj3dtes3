@@ -22,11 +22,9 @@ import esmj3dtes3.data.records.STAT;
 import esmj3dtes3.data.records.WRLD;
 import utils.source.MediaSources;
 
-public class J3dCellFactory extends J3dICellFactory
-{
+public class J3dCellFactory extends J3dICellFactory {
 
-	public J3dCellFactory()
-	{
+	public J3dCellFactory() {
 
 	}
 
@@ -34,86 +32,62 @@ public class J3dCellFactory extends J3dICellFactory
 	 * Note no persistent records loaded for now
 	 */
 	@Override
-	public void setSources(IESMManager esmManager2, MediaSources mediaSources)
-	{
+	public void setSources(IESMManager esmManager2, MediaSources mediaSources) {
 		this.esmManager = esmManager2;
 		this.mediaSources = mediaSources;
 	}
 
 	@Override
-	public String getLODWorldName(int worldFormId)
-	{
+	public String getLODWorldName(int worldFormId) {
 		int formId = -1;
 		WRLD wrld = getWRLD(worldFormId);
 		// use parent first
-		if (wrld.WNAM != null && wrld.WNAM.formId != -1)
-		{
+		if (wrld.WNAM != null && wrld.WNAM.formId != -1) {
 			formId = wrld.WNAM.formId;
-		}
-		else
-		{
+		} else {
 			formId = worldFormId;
 		}
 		return "" + formId;
 	}
 
 	@Override
-	public MorphingLandscape makeLODLandscape(int lodX, int lodY, int scale, String lodWorldFormId)
-	{
+	public MorphingLandscape makeLODLandscape(int lodX, int lodY, int scale, String lodWorldFormId) {
 		throw new UnsupportedOperationException();
 	}
 
-	private WRLD getWRLD(int formId)
-	{
-		try
-		{
+	private WRLD getWRLD(int formId) {
+		try {
 			PluginRecord record = esmManager.getWRLD(formId);
 			WRLD wrld = new WRLD(record);
 			return wrld;
-		}
-		catch (DataFormatException e)
-		{
+		} catch (DataFormatException e) {
 			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		catch (PluginException e)
-		{
+		} catch (PluginException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
 	@Override
-	public boolean isWRLD(int formId)
-	{
+	public boolean isWRLD(int formId) {
 		return getWRLD(formId) != null;
 	}
 
 	@Override
-	public J3dCELLPersistent makeBGWRLDPersistent(int formId, boolean makePhys)
-	{
+	public J3dCELLPersistent makeBGWRLDPersistent(int formId, boolean makePhys) {
 		WRLD wrld = getWRLD(formId);
-		if (wrld != null)
-		{
-			try
-			{
+		if (wrld != null) {
+			try {
 				PluginRecord cell = esmManager.getWRLD(formId);
 				// no persistents I'm aware of, so just a new arraylist
 				return new J3dCELLPersistent(wrld, this, cell, new ArrayList<Record>(), makePhys, mediaSources);
-			}
-			catch (DataFormatException e)
-			{
+			} catch (DataFormatException e) {
 				e.printStackTrace();
-			}
-			catch (IOException e)
-			{
+			} catch (IOException e) {
 				e.printStackTrace();
-			}
-			catch (PluginException e)
-			{
+			} catch (PluginException e) {
 				e.printStackTrace();
 			}
 
@@ -130,45 +104,33 @@ public class J3dCellFactory extends J3dICellFactory
 				}
 			}*/
 
-		}
-		else
-		{
+		} else {
 			System.out.println("makeBGWRLDPersistent bad formId not wrld " + formId);
 		}
 		return null;
 	}
 
 	@Override
-	public J3dCELLTemporary makeBGWRLDTemporary(int wrldFormId, int x, int y, boolean makePhys)
-	{
+	public J3dCELLTemporary makeBGWRLDTemporary(int wrldFormId, int x, int y, boolean makePhys) {
 
-		try
-		{
+		try {
 
 			PluginRecord record = esmManager.getWRLDExtBlockCELL(wrldFormId, x, y);
 
-			if (record != null)
-			{
+			if (record != null) {
 				PluginGroup cellChildren = esmManager.getWRLDExtBlockCELLChildren(wrldFormId, x, y);
 
-				if (cellChildren != null)
-				{
-					return new J3dCELLTemporary(this, record, ESMUtils.getChildren(cellChildren, PluginGroup.CELL_TEMPORARY), makePhys,
-							mediaSources);
+				if (cellChildren != null) {
+					return new J3dCELLTemporary(this, record,
+							ESMUtils.getChildren(cellChildren, PluginGroup.CELL_TEMPORARY), makePhys, mediaSources);
 				}
 			}
 
-		}
-		catch (PluginException e1)
-		{
+		} catch (PluginException e1) {
 			e1.printStackTrace();
-		}
-		catch (DataFormatException e1)
-		{
+		} catch (DataFormatException e1) {
 			e1.printStackTrace();
-		}
-		catch (IOException e1)
-		{
+		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 
@@ -176,147 +138,105 @@ public class J3dCellFactory extends J3dICellFactory
 	}
 
 	@Override
-	public J3dCELLDistant makeBGWRLDDistant(int wrldFormId, int x, int y, boolean makePhys)
-	{
+	public J3dCELLDistant makeBGWRLDDistant(int wrldFormId, int x, int y, boolean makePhys) {
 
-		try
-		{
+		try {
 			PluginRecord record = esmManager.getWRLDExtBlockCELL(wrldFormId, x, y);
-			if (record != null)
-			{
+			if (record != null) {
 				PluginGroup cellChildren = esmManager.getWRLDExtBlockCELLChildren(wrldFormId, x, y);
-				if (cellChildren != null)
-				{
+				if (cellChildren != null) {
 					List<Record> records = ESMUtils.getChildren(cellChildren, PluginGroup.CELL_DISTANT);
 					records.addAll(getDistantTemps(ESMUtils.getChildren(cellChildren, PluginGroup.CELL_TEMPORARY)));
 					return new J3dCELLDistant(this, record, records, makePhys, mediaSources);
 				}
 			}
-		}
-		catch (PluginException e1)
-		{
+		} catch (PluginException e1) {
 			e1.printStackTrace();
-		}
-		catch (DataFormatException e1)
-		{
+		} catch (DataFormatException e1) {
 			e1.printStackTrace();
-		}
-		catch (IOException e1)
-		{
+		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		return null;
 	}
 
 	@Override
-	public J3dCELLPersistent makeBGInteriorCELLPersistent(int cellId, boolean makePhys)
-	{
-		try
-		{
+	public J3dCELLPersistent makeBGInteriorCELLPersistent(int cellId, boolean makePhys) {
+		try {
 			PluginRecord record = esmManager.getInteriorCELL(cellId);
 
-			if (record != null)
-			{
+			if (record != null) {
 				PluginGroup cellChildren = esmManager.getInteriorCELLChildren(cellId);
 
-				return new J3dCELLPersistent(null, this, record, ESMUtils.getChildren(cellChildren, PluginGroup.CELL_PERSISTENT), makePhys,
-						mediaSources);
+				return new J3dCELLPersistent(null, this, record,
+						ESMUtils.getChildren(cellChildren, PluginGroup.CELL_PERSISTENT), makePhys, mediaSources);
 			}
-		}
-		catch (PluginException e1)
-		{
+		} catch (PluginException e1) {
 			e1.printStackTrace();
-		}
-		catch (DataFormatException e1)
-		{
+		} catch (DataFormatException e1) {
 			e1.printStackTrace();
-		}
-		catch (IOException e1)
-		{
+		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		return null;
 	}
 
 	@Override
-	public J3dCELLTemporary makeBGInteriorCELLTemporary(int cellId, boolean makePhys)
-	{
+	public J3dCELLTemporary makeBGInteriorCELLTemporary(int cellId, boolean makePhys) {
 
-		try
-		{
+		try {
 			PluginRecord record = esmManager.getInteriorCELL(cellId);
 
-			if (record != null)
-			{
+			if (record != null) {
 				PluginGroup cellChildren = esmManager.getInteriorCELLChildren(cellId);
 
-				return new J3dCELLTemporary(this, record, ESMUtils.getChildren(cellChildren, PluginGroup.CELL_TEMPORARY), makePhys,
-						mediaSources);
+				return new J3dCELLTemporary(this, record,
+						ESMUtils.getChildren(cellChildren, PluginGroup.CELL_TEMPORARY), makePhys, mediaSources);
 			}
-		}
-		catch (PluginException e1)
-		{
+		} catch (PluginException e1) {
 			e1.printStackTrace();
-		}
-		catch (DataFormatException e1)
-		{
+		} catch (DataFormatException e1) {
 			e1.printStackTrace();
-		}
-		catch (IOException e1)
-		{
+		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		return null;
 	}
 
 	@Override
-	public J3dCELLDistant makeBGInteriorCELLDistant(int cellId, boolean makePhys)
-	{
+	public J3dCELLDistant makeBGInteriorCELLDistant(int cellId, boolean makePhys) {
 
-		try
-		{
+		try {
 			PluginRecord record = esmManager.getInteriorCELL(cellId);
 
-			if (record != null)
-			{
+			if (record != null) {
 				PluginGroup cellChildren = esmManager.getInteriorCELLChildren(cellId);
 
-				return new J3dCELLDistant(this, record, ESMUtils.getChildren(cellChildren, PluginGroup.CELL_DISTANT), makePhys,
-						mediaSources);
+				return new J3dCELLDistant(this, record, ESMUtils.getChildren(cellChildren, PluginGroup.CELL_DISTANT),
+						makePhys, mediaSources);
 			}
-		}
-		catch (PluginException e1)
-		{
+		} catch (PluginException e1) {
 			e1.printStackTrace();
-		}
-		catch (DataFormatException e1)
-		{
+		} catch (DataFormatException e1) {
 			e1.printStackTrace();
-		}
-		catch (IOException e1)
-		{
+		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		return null;
 	}
 
-	private Collection<Record> getDistantTemps(List<Record> children)
-	{
+	private Collection<Record> getDistantTemps(List<Record> children) {
 		ArrayList<Record> ret = new ArrayList<Record>();
 
-		for (Iterator<Record> i = children.iterator(); i.hasNext();)
-		{
+		for (Iterator<Record> i = children.iterator(); i.hasNext();) {
 			Record record = i.next();
-			if (record.getRecordType().equals("REFR"))
-			{
+			if (record.getRecordType().equals("REFR")) {
 				REFR refr = new REFR(record);
 				Record baseRecord = getRecord(refr.NAMEref.str);
-				if (baseRecord.getRecordType().equals("STAT"))
-				{
+				if (baseRecord.getRecordType().equals("STAT")) {
 					STAT stat = new STAT(baseRecord);
 
-					if (stat.MODL != null)
-					{
+					if (stat.MODL != null) {
 						if (Tes3ModelSizes.distant(stat.MODL.model.str, refr.getScale()))
 							ret.add(record);
 
@@ -329,78 +249,88 @@ public class J3dCellFactory extends J3dICellFactory
 	}
 
 	@Override
-	public String getMainESMFileName()
-	{
+	public String getMainESMFileName() {
 		return esmManager.getName();
 	}
 
 	@Override
-	public Record getParentWRLDLAND(int wrldFormId, int x, int y)
-	{
+	public Record getParentWRLDLAND(int wrldFormId, int x, int y) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public AICellGeneral makeAICell(int cellId, AIActorServices aiActorLocator)
-	{
-		try
-		{
+	public AICellGeneral makeAICell(int cellId, AIActorServices aiActorLocator) {
+		try {
 			PluginRecord record = esmManager.getInteriorCELL(cellId);
 
-			if (record != null)
-			{
+			if (record != null) {
 				PluginGroup cellChildren = esmManager.getInteriorCELLChildren(cellId);
 
-				return new AICellTes3(this, record, ESMUtils.getChildren(cellChildren, PluginGroup.CELL_TEMPORARY), aiActorLocator);
+				return new AICellTes3(this, record, ESMUtils.getChildren(cellChildren, PluginGroup.CELL_TEMPORARY),
+						aiActorLocator);
 			}
-		}
-		catch (PluginException e1)
-		{
+		} catch (PluginException e1) {
 			e1.printStackTrace();
-		}
-		catch (DataFormatException e1)
-		{
+		} catch (DataFormatException e1) {
 			e1.printStackTrace();
-		}
-		catch (IOException e1)
-		{
+		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		return null;
 	}
 
 	@Override
-	public AICellGeneral makeAICell(int wrldFormId, int x, int y, AIActorServices aiActorLocator)
-	{
-		try
-		{
+	public AICellGeneral makeAICell(int wrldFormId, int x, int y, AIActorServices aiActorLocator) {
+		try {
 			PluginRecord record = esmManager.getWRLDExtBlockCELL(wrldFormId, x, y);
 
-			if (record != null)
-			{
+			if (record != null) {
 				PluginGroup cellChildren = esmManager.getWRLDExtBlockCELLChildren(wrldFormId, x, y);
 
-				if (cellChildren != null)
-				{
-					return new AICellTes3(this, record, wrldFormId, x, y, ESMUtils.getChildren(cellChildren, PluginGroup.CELL_TEMPORARY),
-							aiActorLocator);
+				if (cellChildren != null) {
+					return new AICellTes3(this, record, wrldFormId, x, y,
+							ESMUtils.getChildren(cellChildren, PluginGroup.CELL_TEMPORARY), aiActorLocator);
 				}
 			}
-		}
-		catch (PluginException e1)
-		{
+		} catch (PluginException e1) {
 			e1.printStackTrace();
-		}
-		catch (DataFormatException e1)
-		{
+		} catch (DataFormatException e1) {
 			e1.printStackTrace();
-		}
-		catch (IOException e1)
-		{
+		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 
 		return null;
+	}
+
+	//TESIII has no persisstent children, so if someone wants it tehy ahve to dig throug all children instead
+	@Override
+	public PluginGroup getPersistentChildrenOfCell(int formId) {
+		try {
+			if (formId == 0) {
+				PluginRecord record = esmManager.getWRLD(0);
+
+				if (record != null) {
+					return esmManager.getWRLDChildren(formId);
+				}
+			} else {
+				PluginRecord record = esmManager.getInteriorCELL(formId);
+				if (record != null) {
+					return esmManager.getInteriorCELLChildren(formId);
+				}
+			}
+		} catch (DataFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PluginException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 
 }
