@@ -6,6 +6,7 @@ import esmio.common.data.record.Record;
 import esmio.common.data.record.Subrecord;
 import esmj3d.data.shared.records.CommonLIGH;
 import esmj3d.data.shared.records.LAND.DATA;
+import esmj3d.data.shared.subrecords.FormID;
 import esmj3d.data.shared.subrecords.LString;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
@@ -23,6 +24,8 @@ public class LIGH extends CommonLIGH
 	public ZString ICON;
 
 	public ZString SNAM;
+	
+	public ZString SCRI;
 
 	public LIGH(Record recordData)
 	{
@@ -75,6 +78,10 @@ public class LIGH extends CommonLIGH
 			else if (sr.getSubrecordType().equals("SCPT"))
 			{
 
+			}
+			else if (sr.getSubrecordType().equals("SCRI"))
+			{
+				SCRI = new ZString(bs);
 			}
 			else if (sr.getSubrecordType().equals("ITEX"))
 			{
