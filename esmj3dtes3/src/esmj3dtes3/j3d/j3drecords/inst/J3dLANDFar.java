@@ -26,7 +26,6 @@ import com.frostwire.util.SparseArray;
 
 import esmio.common.data.record.IRecordStore;
 import esmj3d.data.shared.records.LAND;
-import esmj3d.data.shared.records.LAND.BTXT;
 import esmj3d.j3d.TESLANDGen;
 import esmj3d.j3d.j3drecords.inst.J3dLAND;
 import nif.shader.ShaderSourceIO;
@@ -36,8 +35,7 @@ import utils.source.TextureSource;
 public class J3dLANDFar extends J3dLAND
 {
 
-	private int reduceFactor = 4; // 2 or 4 only (2 for non tes3) 2 for far 4 for lod 
-
+	private int reduceFactor = 4;  
 	private float lowestHeight = Float.MAX_VALUE;
 
 	private static ShaderProgram shaderProgram = null;
@@ -59,129 +57,12 @@ public class J3dLANDFar extends J3dLAND
 		super(land, false, false);
 		this.reduceFactor = reduceFactor2;
 
-		if (land.tes3)
-			tes3LAND(land, master, textureSource);
-		else
-			LAND(land, master, textureSource);
+		tes3LAND(land, master, textureSource);
 	}
 
-	private void LAND(LAND land, IRecordStore master, TextureSource textureSource)
-	{
-		int quadrantsPerSide = 2;
-		int totalQuadrants = quadrantsPerSide * quadrantsPerSide;
+	
 
-		loadShaderProgram();
-
-		Group baseGroup = new Group();
-		addNodeChild(baseGroup);
-
-		if (land.VHGT != null)
-		{
-			// extract the heights
-			byte[] heightBytes = land.VHGT;
-			float[][] heights = extractHeights(heightBytes);
-
-			// extract the normals
-			byte[] normalBytes = land.VNML;
-			Vector3f[][] normals = J3dLAND.extractNormals(normalBytes);
-
-			// extract the colors
-			byte[] colorBytes = land.VCLR;
-			Color4f[][] colors = J3dLAND.extractColors(colorBytes);
-
-			for (int quadrant = 0; quadrant < totalQuadrants; quadrant++)
-			{
-
-				ShaderAppearance app = new ShaderAppearance();
-				app.setMaterial(createMat());
-				//app.setRenderingAttributes(J3dLAND.createRA());
-
-				app.setShaderProgram(shaderProgram);
-				app.setShaderAttributeSet(shaderAttributeSet);
-
-				TextureUnitState tus = null;
-
-				if (!land.tes3)
-				{
-					//oddly btxt are optional
-					BTXT btxt = land.BTXTs[quadrant];
-
-					if (btxt != null)
-					{
-						tus = J3dLAND.getTexture(btxt.textureFormID, master, textureSource);
-					}
-					else
-					{
-						tus = J3dLAND.getDefaultTexture(textureSource);
-					}
-				}
-				else
-				{
-					if (land.VTEXshorts != null)
-					{
-						int texFormId = land.VTEXshorts[quadrant];
-						tus = J3dLAND.getTextureTes3(texFormId, master, textureSource);
-					}
-				}
-
-				Shape3D baseQuadShape = new Shape3D();
-				baseQuadShape.setAppearance(app);
-				GeometryArray ga = makeQuadrantBaseSubGeom(heights, normals, colors, quadrantsPerSide, quadrant, 0, null, reduceFactor);
-				ga.setName("LANDfar geo");
-				baseQuadShape.setGeometry(ga);
-
-				app.setTextureUnitState(new TextureUnitState[] { tus });
-
-				baseGroup.addChild(baseQuadShape);
-
-			}
-		}
-	}
-
-	private static void loadShaderProgram()
-	{
-		// in case 2 threads come in trying to lazy create
-		synchronized (shaderAttributeSet)
-		{
-			if (shaderProgram == null)
-			{
-
-				String vertexProgram = ShaderSourceIO.getTextFileAsString("shaders/landfar.vert");
-				String fragmentProgram = ShaderSourceIO.getTextFileAsString("shaders/landfar.frag");
-
-				Shader[] shaders = new Shader[2];
-				shaders[0] = new SourceCodeShader(Shader.SHADING_LANGUAGE_GLSL, Shader.SHADER_TYPE_VERTEX, vertexProgram) {
-					@Override
-					public String toString()
-					{
-						return "vertexProgram";
-					}
-				};
-				shaders[1] = new SourceCodeShader(Shader.SHADING_LANGUAGE_GLSL, Shader.SHADER_TYPE_FRAGMENT, fragmentProgram) {
-					@Override
-					public String toString()
-					{
-						return "fragmentProgram";
-					}
-				};
-
-				shaderProgram = new GLSLShaderProgram() {
-					@Override
-					public String toString()
-					{
-						return "Land (far) Shader Program";
-					}
-				};
-				shaderProgram.setShaders(shaders);
-				shaderProgram.setShaderAttrNames(new String[] { "baseMap" });
-
-				shaderAttributeSet.put(new ShaderAttributeValue("baseMap", new Integer(0)));
-
-			}
-		}
-	}
-
-	protected static GeometryArray makeQuadrantBaseSubGeom(float[][] heights, Vector3f[][] normals, Color4f[][] colors,
+	private static GeometryArray makeQuadrantBaseSubGeom(float[][] heights, Vector3f[][] normals, Color4f[][] colors,
 			int quadrantsPerSide, int quadrant, int vertexAttrCount, int[] vertexAttrSizes, int reduceFactor)
 	{
 		int quadrantSquareCount = ((J3dLAND.GRID_COUNT / reduceFactor) / quadrantsPerSide) + 1;
@@ -216,8 +97,7 @@ public class J3dLANDFar extends J3dLAND
 
 	}
 
-	/**NOT a copy of J3dLAND as wew skip each second
-	 * Note colors might have the alpha adjusted so they are copies not references
+	/**NOT a copy of J3dLAND as we skip some according to reduceFactor
 	 * 
 	 * @param quadrant Specifies the quadrant this BTXT record applies to. 0 = bottom left. 1 = bottom right. 2 = upper-left. 3 = upper-right.
 	 * @param quadrant2 
@@ -248,7 +128,7 @@ public class J3dLANDFar extends J3dLAND
 				baseCol *= reduceFactor;
 				quadrantHeights[row][col] = baseHeights[baseRow][baseCol];
 				quadrantNormals[row][col] = baseNormals[baseRow][baseCol];
-				quadrantColors[row][col] = new Color4f(baseColors[baseRow][baseCol]);//copy to allow modification
+				quadrantColors[row][col] = baseColors[baseRow][baseCol];
 				quadrantTexCoords[row][col] = new TexCoord2f((row * (J3dLAND.TEX_REPEAT * reduceFactor)),
 						(col * (J3dLAND.TEX_REPEAT * reduceFactor)));
 			}
@@ -301,14 +181,13 @@ public class J3dLANDFar extends J3dLAND
 	@Override
 	public void tes3LAND(LAND land, IRecordStore master, TextureSource textureSource)
 	{
-
 		int quadrantsPerSide = 16;
 
 		Group baseGroup = new Group();
 		addNodeChild(baseGroup);
 
 		//ensure shader ready
-		createShaderProgramTes3();
+		createShaderProgram();
 
 		if (land.VHGT != null)
 		{
@@ -443,7 +322,7 @@ public class J3dLANDFar extends J3dLAND
 
 	}
 
-	private static void createShaderProgramTes3()
+	private static void createShaderProgram()
 	{
 		// in case 2 threads come in trying to lazy create
 		synchronized (shaderAttributeSet)
