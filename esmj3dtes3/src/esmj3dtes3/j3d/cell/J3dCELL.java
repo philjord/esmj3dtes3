@@ -20,12 +20,12 @@ import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.BethRenderSettings.UpdateListener;
 import esmj3d.j3d.cell.J3dCELLGeneral;
 import esmj3d.j3d.j3drecords.inst.J3dLAND;
-import esmj3d.j3d.j3drecords.inst.J3dLANDFar;
 import esmj3d.j3d.j3drecords.inst.J3dRECOChaInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
 import esmj3dtes3.data.records.CELL;
 import esmj3dtes3.data.records.PGRD;
 import esmj3dtes3.data.records.REFR;
+import esmj3dtes3.j3d.j3drecords.inst.J3dLANDFar;
 import esmj3dtes3.j3d.j3drecords.inst.J3dREFRFactory;
 import utils.source.MediaSources;
 
