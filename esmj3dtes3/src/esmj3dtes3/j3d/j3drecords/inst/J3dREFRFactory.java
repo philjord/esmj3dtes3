@@ -1,8 +1,8 @@
 package esmj3dtes3.j3d.j3drecords.inst;
 
-import esmio.common.data.record.IRecordStore;
-import esmio.common.data.record.Record;
-import esmio.tes3.IRecordStoreTes3;
+import esfilemanager.common.data.record.IRecordStore;
+import esfilemanager.common.data.record.Record;
+import esfilemanager.tes3.IRecordStoreTes3;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;

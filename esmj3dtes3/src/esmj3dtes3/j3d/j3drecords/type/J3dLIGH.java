@@ -1,7 +1,7 @@
 package esmj3dtes3.j3d.j3drecords.type;
 
-import esmio.common.data.record.Record;
-import esmio.tes3.IRecordStoreTes3;
+import esfilemanager.common.data.record.Record;
+import esfilemanager.tes3.IRecordStoreTes3;
 import esmj3d.j3d.j3drecords.type.J3dGeneralLIGH;
 import esmj3dtes3.data.records.LIGH;
 import esmj3dtes3.data.records.SOUN;

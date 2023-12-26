@@ -3,8 +3,8 @@ package esmj3dtes3.j3d.cell;
 import java.util.Iterator;
 import java.util.List;
 
-import esmio.common.data.record.IRecordStore;
-import esmio.common.data.record.Record;
+import esfilemanager.common.data.record.IRecordStore;
+import esfilemanager.common.data.record.Record;
 import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
 import esmj3dtes3.j3d.j3drecords.inst.J3dLANDFar;
 import utils.source.MediaSources;

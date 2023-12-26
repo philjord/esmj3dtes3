@@ -3,9 +3,9 @@ package esmj3dtes3.data;
 import java.util.HashSet;
 import java.util.List;
 
-import esmio.common.data.record.IRecordStore;
-import esmio.common.data.record.Record;
-import esmio.tes3.IRecordStoreTes3;
+import esfilemanager.common.data.record.IRecordStore;
+import esfilemanager.common.data.record.Record;
+import esfilemanager.tes3.IRecordStoreTes3;
 import esmj3d.data.shared.records.LAND;
 import esmj3d.data.shared.records.LTEX;
 import esmj3d.data.shared.records.RECO;

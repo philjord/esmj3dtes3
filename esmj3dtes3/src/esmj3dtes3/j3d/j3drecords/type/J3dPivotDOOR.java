@@ -6,8 +6,8 @@ import org.jogamp.java3d.Transform3D;
 import org.jogamp.java3d.TransformGroup;
 import org.jogamp.vecmath.Color3f;
 
-import esmio.common.data.record.Record;
-import esmio.tes3.IRecordStoreTes3;
+import esfilemanager.common.data.record.Record;
+import esfilemanager.tes3.IRecordStoreTes3;
 import esmj3d.j3d.BethRenderSettings;
 import esmj3d.j3d.j3drecords.Doorable;
 import esmj3d.j3d.j3drecords.type.J3dRECOType;

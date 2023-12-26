@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.jogamp.vecmath.Vector3f;
 
-import esmio.common.data.record.Record;
-import esmio.common.data.record.Subrecord;
+import esfilemanager.common.data.record.Record;
+import esfilemanager.common.data.record.Subrecord;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.ZString;
 import tools.io.ESMByteConvert;

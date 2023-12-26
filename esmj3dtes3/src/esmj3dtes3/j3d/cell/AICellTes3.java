@@ -7,9 +7,9 @@ import java.util.List;
 import org.jogamp.vecmath.Quat4f;
 import org.jogamp.vecmath.Vector3f;
 
-import esmio.common.data.record.IRecordStore;
-import esmio.common.data.record.Record;
-import esmio.tes3.IRecordStoreTes3;
+import esfilemanager.common.data.record.IRecordStore;
+import esfilemanager.common.data.record.Record;
+import esfilemanager.tes3.IRecordStoreTes3;
 import esmj3d.ai.AIActor;
 import esmj3d.ai.PathGridInterface;
 import esmj3d.data.shared.records.InstRECO;

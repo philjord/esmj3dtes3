@@ -7,12 +7,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.zip.DataFormatException;
 
-import esmio.common.PluginException;
-import esmio.common.data.plugin.PluginGroup;
-import esmio.common.data.plugin.PluginRecord;
-import esmio.common.data.record.Record;
-import esmio.loader.IESMManager;
-import esmio.utils.ESMUtils;
+import esfilemanager.common.PluginException;
+import esfilemanager.common.data.plugin.PluginGroup;
+import esfilemanager.common.data.plugin.PluginRecord;
+import esfilemanager.common.data.record.Record;
+import esfilemanager.loader.IESMManager;
+import esfilemanager.utils.ESMUtils;
 import esmj3d.j3d.cell.AIActorServices;
 import esmj3d.j3d.cell.AICellGeneral;
 import esmj3d.j3d.cell.J3dICellFactory;

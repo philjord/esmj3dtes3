@@ -24,7 +24,7 @@ import org.jogamp.vecmath.Vector3f;
 
 import com.frostwire.util.SparseArray;
 
-import esmio.common.data.record.IRecordStore;
+import esfilemanager.common.data.record.IRecordStore;
 import esmj3d.data.shared.records.LAND;
 import esmj3d.j3d.TESLANDGen;
 import esmj3d.j3d.j3drecords.inst.J3dLAND;
