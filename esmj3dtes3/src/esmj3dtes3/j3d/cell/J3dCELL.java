@@ -338,4 +338,9 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 		} 
 		return ret;
 	}
+	
+	@Override
+	public J3dLAND getJ3dLAND() {
+		return null;// tes3 is different
+	}
 }
