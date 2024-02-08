@@ -51,7 +51,7 @@ public class J3dCellFactory extends J3dICellFactory {
 	}
 
 	@Override
-	public MorphingLandscape makeLODLandscape(int lodX, int lodY, int scale, String lodWorldFormId) {
+	public MorphingLandscape makeLODLandscape(int worldFormId, int lodX, int lodY, int scale, String lodWorldName) {
 		throw new UnsupportedOperationException();
 	}
 
