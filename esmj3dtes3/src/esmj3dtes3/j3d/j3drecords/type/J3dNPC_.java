@@ -181,6 +181,9 @@ public class J3dNPC_ extends J3dRECOTypeCha
 				// TODO: odd extra transform in the keyframe data must be merged
 				if (nifFileName.equals("c\\c_m_shirt_expens_3_ua.nif"))
 					nifFileName = "c\\c_m_shirt_expensive_2_ua.nif";
+				
+				if (nifFileName.equals("a\\a_m_chitin_gauntlet.nif"))
+					nifFileName = "a\\a_m_chitin_forearm.nif";
 
 				if (!firstPerson || AttachedParts.isFirstPersonVisible(AttachedParts.getPartForLoc(p.index)))
 					attachFileNames.addPart(AttachedParts.getPartForLoc(p.index), nifFileName);

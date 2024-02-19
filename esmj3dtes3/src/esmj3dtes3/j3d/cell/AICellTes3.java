@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jogamp.vecmath.Quat4f;
 import org.jogamp.vecmath.Vector3f;
 
 import esfilemanager.common.data.record.IRecordStore;
@@ -12,7 +11,6 @@ import esfilemanager.common.data.record.Record;
 import esfilemanager.tes3.IRecordStoreTes3;
 import esmj3d.ai.AIActor;
 import esmj3d.ai.PathGridInterface;
-import esmj3d.data.shared.records.InstRECO;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.ZString;
 import esmj3d.j3d.cell.AIActorServices;

@@ -72,6 +72,10 @@ public class J3dCREA extends J3dRECOTypeCha
 				// must insert x
 
 				nifFileName = "r\\x" + nifFileName.substring(2);
+				
+				//TODO: can't find this model
+				if(	nifFileName.equals("r\\xGolden Saint.NIF"))
+						nifFileName = "r\\Golden Saint.NIF";
 
 				List<String> skinNifs = new ArrayList<String>();
 				skinNifs.add(nifFileName);

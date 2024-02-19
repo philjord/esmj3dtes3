@@ -82,15 +82,17 @@ public class J3dPivotDOOR extends J3dRECOType implements Doorable
 			fireIdle();
 		}
 
-		Record openSoundRecord = master.getRecord(door.SNAM.str);
-		if (openSoundRecord != null)
-		{
-			openSOUN = new SOUN(openSoundRecord);
-		}
-		Record closeSoundRecord = master.getRecord(door.ANAM.str);
-		if (closeSoundRecord != null)
-		{
-			closeSOUN = new SOUN(closeSoundRecord);
+		if(door.SNAM != null) {
+			Record openSoundRecord = master.getRecord(door.SNAM.str);
+			if (openSoundRecord != null)
+			{
+				openSOUN = new SOUN(openSoundRecord);
+			}
+			Record closeSoundRecord = master.getRecord(door.ANAM.str);
+			if (closeSoundRecord != null)
+			{
+				closeSOUN = new SOUN(closeSoundRecord);
+			}
 		}
 
 	}
