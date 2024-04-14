@@ -226,10 +226,10 @@ public class J3dLANDFar extends J3dLAND
 			for (int t = 0; t < land.VTEXshorts.length; t++)
 			{
 				int texFormId = land.VTEXshorts[t];
-				//ensure the TUS exiosts and we have a map to it's sampler id
+				//ensure the TUS exists and we have a map to it's sampler id
 				if (texIdToTUS.get(texFormId) == null)
 				{
-					TextureUnitState tus = J3dLAND.getTextureTes3(texFormId, master, textureSource);
+					TextureUnitState tus = J3dLAND.getTextureTes3(texFormId, master, textureSource, false);
 					allTextureUnitStates.add(tus);
 					allShaderAttributeValues.add(new ShaderAttributeValue("sampler" + tusCount, new Integer(tusCount)));
 					texIdToTUS.put(texFormId, new Integer(tusCount));
@@ -238,6 +238,12 @@ public class J3dLANDFar extends J3dLAND
 				}
 			}
 
+			
+			//TODO: the outer most points need to match up to the double detail close LAND
+			// this needs one extra stripe somehow?
+			// possibly this vertex dropping isn't worth bothering with? 4 time reduce is 32x32 down to 8x8 so it's goodness
+			// the oouter most edges of teh near LAND need to have all 4  made the same as the first to make it even steven,
+			//but that means morphing the land as it beceoms an edge or not
 			int vertsPerSide = ((J3dLAND.GRID_COUNT / reduceFactor) + 1);
 			int vertexCount = vertsPerSide * vertsPerSide;
 			ByteBuffer bb = ByteBuffer.allocateDirect(vertexCount * 4 * 4);
