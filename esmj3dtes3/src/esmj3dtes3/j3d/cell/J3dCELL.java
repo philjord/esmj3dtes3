@@ -1,7 +1,6 @@
 package esmj3dtes3.j3d.cell;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.jogamp.java3d.BranchGroup;
 import org.jogamp.java3d.Node;
@@ -49,9 +48,9 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 	private PGRD pgrd;
 	private BranchGroup j3dPGRDbg;
 
-	public J3dCELL(IRecordStore master, Record cellRecord, List<Record> children, boolean makePhys, MediaSources mediaSources)
+	public J3dCELL(IRecordStore master, Record cellRecord, boolean makePhys, MediaSources mediaSources)
 	{
-		super(master, 0, children, makePhys, mediaSources);
+		super(master, 0, makePhys, mediaSources);
 		cell = new CELL(cellRecord);
 		setCell(cell);
 
