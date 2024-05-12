@@ -14,7 +14,7 @@ import tools.io.ESMByteConvert;
 
 public class NPC_ extends RECO
 {
-	public ZString EDID = null;
+	
 
 	public LString FULL = null;
 
@@ -26,7 +26,7 @@ public class NPC_ extends RECO
 
 	public MODL KNAM;
 
-	public ZString RNAM;
+	public String RNAM;
 
 	public int FLAG;
 
@@ -46,7 +46,7 @@ public class NPC_ extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("FNAM"))
 			{
@@ -58,7 +58,7 @@ public class NPC_ extends RECO
 			}
 			else if (sr.getSubrecordType().equals("RNAM"))
 			{
-				RNAM = new ZString(bs);
+				RNAM = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("ANAM"))
 			{

@@ -12,7 +12,6 @@ import esfilemanager.tes3.IRecordStoreTes3;
 import esmj3d.ai.AIActor;
 import esmj3d.ai.PathGridInterface;
 import esmj3d.data.shared.records.RECO;
-import esmj3d.data.shared.subrecords.ZString;
 import esmj3d.j3d.cell.AIActorServices;
 import esmj3d.j3d.cell.AICellGeneral;
 import esmj3d.j3d.j3drecords.inst.J3dRECOChaInst;
@@ -71,7 +70,7 @@ public class AICellTes3 extends AICellGeneral
 			if (record.getRecordType().equals("REFR"))
 			{
 				REFR refr = new REFR(record);
-				Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref.str);
+				Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref);
 
 				if (baseRecord.getRecordType().equals("NPC_"))
 				{
@@ -119,12 +118,12 @@ public class AICellTes3 extends AICellGeneral
 	private static RECO makeLVLC(LEVC lvlc, IRecordStore master)
 	{
 		// TODO: randomly picked for now
-		ZString[] LVLOs = lvlc.charID;
+		String[] LVLOs = lvlc.charID;
 
 		int idx = (int) (Math.random() * LVLOs.length);
 		idx = idx == LVLOs.length ? 0 : idx;
 
-		Record baseRecord = ((IRecordStoreTes3) master).getRecord(LVLOs[idx].str);
+		Record baseRecord = ((IRecordStoreTes3) master).getRecord(LVLOs[idx]);
 
 		if (baseRecord.getRecordType().equals("LEVC"))
 		{

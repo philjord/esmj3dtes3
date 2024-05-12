@@ -12,15 +12,15 @@ import esmj3dtes3.data.subrecords.DATA;
 public class MGEF extends RECO
 {
 
-	public ZString EDID = null;
+	
 
 	public MODL MODL = null;
 
 	public DATA DATA;
 
-	public ZString ICON;
+	public String ICON;
 	
-	public ZString DESC = null;
+	public String DESC = null;
 
 	public MGEF(Record recordData)
 	{
@@ -33,7 +33,7 @@ public class MGEF extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("MEDT"))
 			{
@@ -41,7 +41,7 @@ public class MGEF extends RECO
 			}
 			else if (sr.getSubrecordType().equals("ITEX"))
 			{
-				ICON = new ZString(bs);
+				ICON = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("PTEX"))
 			{
@@ -65,7 +65,7 @@ public class MGEF extends RECO
 			}
 			else if (sr.getSubrecordType().equals("DESC"))
 			{
-				DESC = new ZString(bs);
+				DESC = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("CSND"))
 			{

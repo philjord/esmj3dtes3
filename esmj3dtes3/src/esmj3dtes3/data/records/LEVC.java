@@ -11,13 +11,13 @@ import tools.io.ESMByteConvert;
 
 public class LEVC extends RECO
 {
-	public ZString EDID = null;
+	
 
 	public DATA DATA = null;
 
 	public int numChars = 0;
 
-	public ZString[] charID;
+	public String[] charID;
 
 	public int[] charLevel;
 
@@ -32,7 +32,7 @@ public class LEVC extends RECO
 
 		if (sr.getSubrecordType().equals("NAME"))
 		{
-			EDID = new ZString(bs);
+			setEDID(bs);
 		}
 		sr = subrecords.get(1);
 		bs = sr.getSubrecordData();
@@ -53,7 +53,7 @@ public class LEVC extends RECO
 		{
 			numChars = ESMByteConvert.extractInt(bs, 0);
 		}
-		charID = new ZString[numChars];
+		charID = new String[numChars];
 		charLevel = new int[numChars];
 		for (int i = 0; i < numChars; i++)
 		{
@@ -62,7 +62,7 @@ public class LEVC extends RECO
 
 			if (sr.getSubrecordType().equals("CNAM"))
 			{
-				charID[i] = new ZString(bs);
+				charID[i] = ZString.toString(bs);
 			}
 			sr = subrecords.get(4 + (i * 2) + 1);
 			bs = sr.getSubrecordData();

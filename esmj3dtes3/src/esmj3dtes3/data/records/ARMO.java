@@ -13,7 +13,7 @@ import tools.io.ESMByteConvert;
 
 public class ARMO extends RECO
 {
-	public ZString EDID;
+	
 
 	public LString FULL = null;
 
@@ -21,13 +21,13 @@ public class ARMO extends RECO
 
 	public DATA DATA;
 
-	public ZString ICON;
+	public String ICON;
 
 	public PART[] parts;
 
-	public ZString SCRI;
+	public String SCRI;
 
-	public ZString ENAM;
+	public String ENAM;
 
 	public ARMO(Record recordData)
 	{
@@ -44,7 +44,7 @@ public class ARMO extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("MODL"))
 			{
@@ -60,7 +60,7 @@ public class ARMO extends RECO
 			}
 			else if (sr.getSubrecordType().equals("ITEX"))
 			{
-				ICON = new ZString(bs);
+				ICON = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("INDX"))
 			{
@@ -84,11 +84,11 @@ public class ARMO extends RECO
 			}
 			else if (sr.getSubrecordType().equals("SCRI"))
 			{
-				SCRI = new ZString(bs);
+				SCRI = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("ENAM"))
 			{
-				ENAM = new ZString(bs);
+				ENAM = ZString.toString(bs);
 			}
 
 			else

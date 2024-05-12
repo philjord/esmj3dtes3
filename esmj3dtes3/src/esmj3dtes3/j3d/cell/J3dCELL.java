@@ -221,7 +221,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 			{
 
 				REFR refr = new REFR(record);
-				Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref.str);
+				Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref);
 
 				// it might be in the cache still used by AI system
 				if (baseRecord.getRecordType().equals("NPC_") || baseRecord.getRecordType().equals("CREA")
@@ -282,7 +282,7 @@ public abstract class J3dCELL extends J3dCELLGeneral implements UpdateListener
 			if (record.getRecordType().equals("REFR"))
 			{
 				REFR refr = new REFR(record);
-				Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref.str);
+				Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref);
 				System.out.println("And it's a REFR with base of " + baseRecord.getRecordType());
 				//e.printStackTrace();
 			}

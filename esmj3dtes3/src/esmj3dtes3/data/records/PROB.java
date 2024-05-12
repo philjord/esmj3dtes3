@@ -12,7 +12,7 @@ import esmj3dtes3.data.subrecords.DATA;
 
 public class PROB extends RECO
 {
-	public ZString EDID;
+	
 
 	public LString FULL;
 
@@ -20,7 +20,7 @@ public class PROB extends RECO
 
 	public MODL MODL;
 
-	public ZString ICON;
+	public String ICON;
 
 	public PROB(Record recordData)
 	{
@@ -34,7 +34,7 @@ public class PROB extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("MODL"))
 			{
@@ -50,7 +50,7 @@ public class PROB extends RECO
 			}
 			else if (sr.getSubrecordType().equals("ITEX"))
 			{
-				ICON = new ZString(bs);
+				ICON = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("SCRI"))
 			{
@@ -63,10 +63,10 @@ public class PROB extends RECO
 		}
 	}
 
+	@Override
 	public String showDetails()
 	{
-		return "APPA : (" + formId + "|" + Integer.toHexString(formId) + ") " + EDID.str + " : " + MODL.model;
+		return super.showDetails() + " : " + MODL.model;
 	}
 
-	 
 }

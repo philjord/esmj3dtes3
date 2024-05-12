@@ -6,13 +6,13 @@ import esfilemanager.common.data.record.Record;
 import esfilemanager.common.data.record.Subrecord;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.LString;
-import esmj3d.data.shared.subrecords.ZString;
+
 import esmj3dtes3.data.subrecords.DATA;
 
 public class FACT extends RECO
 {
 
-	public ZString EDID = null;
+	
 
 	public LString FULL;
 
@@ -29,7 +29,7 @@ public class FACT extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("FNAM"))
 			{

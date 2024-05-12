@@ -7,11 +7,11 @@ import esfilemanager.common.data.record.Subrecord;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.LString;
 import esmj3d.data.shared.subrecords.MODL;
-import esmj3d.data.shared.subrecords.ZString;
+
 
 public class ACTI extends RECO
 {
-	public ZString EDID;
+	
 
 	public LString FULL;
 
@@ -28,7 +28,7 @@ public class ACTI extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("MODL"))
 			{

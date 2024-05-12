@@ -11,11 +11,11 @@ import esmj3dtes3.data.subrecords.DATA;
 public class SKIL extends RECO
 {
 
-	public ZString EDID = null;
+	
 
 	public DATA DATA;
 
-	public ZString DESC = null;
+	public String DESC = null;
 
 	public SKIL(Record recordData)
 	{
@@ -28,7 +28,7 @@ public class SKIL extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("SKDT"))
 			{
@@ -36,7 +36,7 @@ public class SKIL extends RECO
 			}
 			else if (sr.getSubrecordType().equals("DESC"))
 			{
-				DESC = new ZString(bs);
+				DESC = ZString.toString(bs);
 			}
 
 			else

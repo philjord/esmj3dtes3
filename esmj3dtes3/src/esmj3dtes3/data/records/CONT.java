@@ -7,7 +7,7 @@ import esfilemanager.common.data.record.Subrecord;
 import esmj3d.data.shared.records.GenericCONT;
 import esmj3d.data.shared.subrecords.FormID;
 import esmj3d.data.shared.subrecords.LString;
-import esmj3d.data.shared.subrecords.ZString;
+
 import esmj3dtes3.data.subrecords.DATA;
 
 public class CONT extends GenericCONT
@@ -31,7 +31,7 @@ public class CONT extends GenericCONT
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("FNAM"))
 			{

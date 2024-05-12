@@ -11,13 +11,13 @@ import esmj3dtes3.data.subrecords.DATA;
 
 public class CLAS extends RECO
 {
-	public ZString EDID = null;
+	
 
 	public LString FULL;
 
 	public DATA DATA;
 	
-	public ZString DESC = null;
+	public String DESC = null;
 
 	public CLAS(Record recordData)
 	{
@@ -31,7 +31,7 @@ public class CLAS extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("FNAM"))
 			{
@@ -43,7 +43,7 @@ public class CLAS extends RECO
 			}
 			else if (sr.getSubrecordType().equals("DESC"))
 			{
-				DESC = new ZString(bs);
+				DESC = ZString.toString(bs);
 			}
 			else
 			{

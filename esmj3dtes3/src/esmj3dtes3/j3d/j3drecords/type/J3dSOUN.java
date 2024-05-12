@@ -18,7 +18,7 @@ public class J3dSOUN extends J3dRECOType
 		if (soun.FNAM != null)
 		{
 			//TODO: min range as well
-			playSound("Sound\\" + soun.FNAM.str, soun.MaxRange * ESConfig.ES_TO_METERS_SCALE, -1, soun.Volume / 255f);
+			playSound("Sound\\" + soun.FNAM, soun.MaxRange * ESConfig.ES_TO_METERS_SCALE, -1, soun.Volume / 255f);
 		}
 	}
 

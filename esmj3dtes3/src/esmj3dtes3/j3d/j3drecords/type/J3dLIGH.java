@@ -17,7 +17,7 @@ public class J3dLIGH extends J3dGeneralLIGH
 		{
 			if (ligh.SNAM != null)
 			{
-				Record soundRecord = master.getRecord(ligh.SNAM.str);
+				Record soundRecord = master.getRecord(ligh.SNAM);
 				if (soundRecord != null)
 				{
 					SOUN soun = new SOUN(soundRecord);

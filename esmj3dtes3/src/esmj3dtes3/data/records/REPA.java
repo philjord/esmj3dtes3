@@ -12,13 +12,13 @@ import esmj3dtes3.data.subrecords.DATA;
 
 public class REPA extends RECO
 {
-	public ZString EDID;
+	
 
 	public LString FULL;
 
 	public MODL MODL; // male worn (or if no sex)
 
-	public ZString ICON; //male icon
+	public String ICON; //male icon
 
 	public DATA DATA;
 
@@ -35,7 +35,7 @@ public class REPA extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("MODL"))
 			{
@@ -51,7 +51,7 @@ public class REPA extends RECO
 			}
 			else if (sr.getSubrecordType().equals("ITEX"))
 			{
-				ICON = new ZString(bs);
+				ICON = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("SCRI"))
 			{

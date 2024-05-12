@@ -9,7 +9,6 @@ import esfilemanager.tes3.IRecordStoreTes3;
 import esmj3d.data.shared.records.LAND;
 import esmj3d.data.shared.records.LTEX;
 import esmj3d.data.shared.records.RECO;
-import esmj3d.data.shared.subrecords.ZString;
 import esmj3dtes3.data.records.ACTI;
 import esmj3dtes3.data.records.ALCH;
 import esmj3dtes3.data.records.APPA;
@@ -106,13 +105,13 @@ public class RecordToRECO
 	private static RECO makeLVLC(LEVC lvlc, IRecordStore master)
 	{
 		// TODO: randomly picked for now
-		ZString[] LVLOs = lvlc.charID;
+		String[] LVLOs = lvlc.charID;
 		if (LVLOs.length > 0)
 		{
 			int idx = (int) (Math.random() * LVLOs.length);
 			idx = idx == LVLOs.length ? 0 : idx;
 
-			Record baseRecord = ((IRecordStoreTes3) master).getRecord(LVLOs[idx].str);
+			Record baseRecord = ((IRecordStoreTes3) master).getRecord(LVLOs[idx]);
 
 			if (baseRecord.getRecordType().equals("CREA"))
 			{
@@ -140,12 +139,12 @@ public class RecordToRECO
 	public static RECO makeLVLI(LEVI lvli, IRecordStore master)
 	{
 		// TODO: randomly picked for now
-		ZString[] LVLOs = lvli.itemID;
+		String[] LVLOs = lvli.itemID;
 
 		int idx = (int) (Math.random() * LVLOs.length);
 		idx = idx == LVLOs.length ? 0 : idx;
 
-		Record baseRecord = ((IRecordStoreTes3) master).getRecord(LVLOs[idx].str);
+		Record baseRecord = ((IRecordStoreTes3) master).getRecord(LVLOs[idx]);
 
 		if (baseRecord.getRecordType().equals("NPC_"))
 		{

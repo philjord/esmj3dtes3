@@ -5,12 +5,12 @@ import java.util.List;
 import esfilemanager.common.data.record.Record;
 import esfilemanager.common.data.record.Subrecord;
 import esmj3d.data.shared.records.RECO;
-import esmj3d.data.shared.subrecords.ZString;
+
 
 public class ENCH extends RECO
 {
 
-	public ZString EDID = null;
+	
 
 	public ENCH(Record recordData)
 	{
@@ -23,7 +23,7 @@ public class ENCH extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("ENDT"))
 			{

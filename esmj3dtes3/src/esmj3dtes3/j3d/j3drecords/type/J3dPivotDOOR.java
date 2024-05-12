@@ -40,7 +40,7 @@ public class J3dPivotDOOR extends J3dRECOType implements Doorable
 
 	public J3dPivotDOOR(DOOR door, boolean makePhys, MediaSources mediaSources, IRecordStoreTes3 master)
 	{
-		super(door, door.MODL.model.str, mediaSources);
+		super(door, door.MODL.model, mediaSources);
 		this.door = door;
 
 		this.setCapability(Group.ALLOW_CHILDREN_WRITE);
@@ -48,11 +48,11 @@ public class J3dPivotDOOR extends J3dRECOType implements Doorable
 
 		if (makePhys)
 		{
-			j3dNiAVObject = NifToJ3d.loadHavok(door.MODL.model.str, mediaSources.getMeshSource()).getHavokRoot();
+			j3dNiAVObject = NifToJ3d.loadHavok(door.MODL.model, mediaSources.getMeshSource()).getHavokRoot();
 		}
 		else
 		{
-			j3dNiAVObject = NifToJ3d.loadShapes(door.MODL.model.str, mediaSources.getMeshSource(), mediaSources.getTextureSource())
+			j3dNiAVObject = NifToJ3d.loadShapes(door.MODL.model, mediaSources.getMeshSource(), mediaSources.getTextureSource())
 					.getVisualRoot();
 		}
 
@@ -83,12 +83,12 @@ public class J3dPivotDOOR extends J3dRECOType implements Doorable
 		}
 
 		if(door.SNAM != null) {
-			Record openSoundRecord = master.getRecord(door.SNAM.str);
+			Record openSoundRecord = master.getRecord(door.SNAM);
 			if (openSoundRecord != null)
 			{
 				openSOUN = new SOUN(openSoundRecord);
 			}
-			Record closeSoundRecord = master.getRecord(door.ANAM.str);
+			Record closeSoundRecord = master.getRecord(door.ANAM);
 			if (closeSoundRecord != null)
 			{
 				closeSOUN = new SOUN(closeSoundRecord);
@@ -180,7 +180,7 @@ public class J3dPivotDOOR extends J3dRECOType implements Doorable
 				if (openSOUN != null)
 				{
 					if (openSOUN.Volume == -1)
-						playBackgroundSound("Sound\\" + openSOUN.FNAM.str, 1, 1.0f);
+						playBackgroundSound("Sound\\" + openSOUN.FNAM, 1, 1.0f);
 					else
 						System.err.println("Pivot door sound volume not -1!! " + openSOUN);
 				}
@@ -195,7 +195,7 @@ public class J3dPivotDOOR extends J3dRECOType implements Doorable
 				if (closeSOUN != null)
 				{
 					if (closeSOUN.Volume == -1)
-						playBackgroundSound("Sound\\" + closeSOUN.FNAM.str, 1, 1.0f);
+						playBackgroundSound("Sound\\" + closeSOUN.FNAM, 1, 1.0f);
 					else
 						System.err.println("Pivot door sound volume not -1!! " + closeSOUN);
 				}
@@ -213,7 +213,7 @@ public class J3dPivotDOOR extends J3dRECOType implements Doorable
 			if (closeSOUN != null)
 			{
 				if (closeSOUN.Volume == -1)
-					playBackgroundSound("Sound\\" + closeSOUN.FNAM.str, 1, 1.0f);
+					playBackgroundSound("Sound\\" + closeSOUN.FNAM, 1, 1.0f);
 				else
 					System.err.println("Pivot door sound volume not -1!! " + closeSOUN);
 			}
@@ -223,7 +223,7 @@ public class J3dPivotDOOR extends J3dRECOType implements Doorable
 			if (openSOUN != null)
 			{
 				if (openSOUN.Volume == -1)
-					playBackgroundSound("Sound\\" + openSOUN.FNAM.str, 1, 1.0f);
+					playBackgroundSound("Sound\\" + openSOUN.FNAM, 1, 1.0f);
 				else
 					System.err.println("Pivot door sound volume not -1!! " + openSOUN);
 			}

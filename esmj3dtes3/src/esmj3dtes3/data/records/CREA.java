@@ -7,12 +7,12 @@ import esfilemanager.common.data.record.Subrecord;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.LString;
 import esmj3d.data.shared.subrecords.MODL;
-import esmj3d.data.shared.subrecords.ZString;
+
 import tools.io.ESMByteConvert;
 
 public class CREA extends RECO
 {
-	public ZString EDID = null;
+	
 
 	public LString FULL = null;
 
@@ -65,7 +65,7 @@ public class CREA extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("FNAM"))
 			{

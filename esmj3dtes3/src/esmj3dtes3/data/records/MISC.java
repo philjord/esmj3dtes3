@@ -9,15 +9,16 @@ import esmj3d.data.shared.subrecords.LString;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
 
+
 public class MISC extends RECO
 {
-	public ZString EDID;
+	
 
 	public LString FULL;
 
 	public MODL MODL;
 
-	public ZString ICON;
+	public String ICON;
 
 	public MISC(Record recordData)
 	{
@@ -31,7 +32,7 @@ public class MISC extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("MODL"))
 			{
@@ -43,7 +44,7 @@ public class MISC extends RECO
 			}
 			else if (sr.getSubrecordType().equals("ITEX"))
 			{
-				ICON = new ZString(bs);
+				ICON = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("MCDT"))
 			{
@@ -65,9 +66,11 @@ public class MISC extends RECO
 		}
 	}
 
+	@Override
 	public String showDetails()
 	{
-		return "MISC : (" + formId + "|" + Integer.toHexString(formId) + ") " + EDID.str + " : " + MODL.model;
+		return super.showDetails() + " : " + MODL.model;
 	}
+
 
 }

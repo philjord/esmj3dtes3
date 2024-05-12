@@ -43,23 +43,23 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 		//chargen dock guard
 
 		//System.out.println("I'm thinking " + instRECO.NAMEref.str + " " + location);
-		if (instRECO.NAMEref.str.equals("fargoth"))
+		if (instRECO.NAMEref.equals("fargoth"))
 		{
 			fargothAct(charLocation, pgi, clientPhysicsSystem);
 		}
-		else if (instRECO.NAMEref.str.equals("chargen boat guard 1"))
+		else if (instRECO.NAMEref.equals("chargen boat guard 1"))
 		{
 			chargenboatguard1Act(charLocation, pgi, clientPhysicsSystem);
 		}
-		else if (instRECO.NAMEref.str.equals("chargen dock guard"))
+		else if (instRECO.NAMEref.equals("chargen dock guard"))
 		{
 			chargendockguardAct(charLocation, pgi, clientPhysicsSystem);
 		}
-		else if (instRECO.NAMEref.str.equals("chargen boat guard 2"))
+		else if (instRECO.NAMEref.equals("chargen boat guard 2"))
 		{
 			chargenboatguard2Act(charLocation, pgi, clientPhysicsSystem);
 		}
-		else if (instRECO.NAMEref.str.equals("chargen name"))
+		else if (instRECO.NAMEref.equals("chargen name"))
 		{
 			chargennameAct(charLocation, pgi, clientPhysicsSystem);
 		}

@@ -65,7 +65,7 @@ public class J3dNPC_ extends J3dRECOTypeCha
 			this.npc_ = npc_;
 
 			female = ((npc_.FLAG & 0x1) != 0);
-			isBeast = npc_.RNAM.str.equals("Argonian") || npc_.RNAM.str.equals("Khajiit");
+			isBeast = npc_.RNAM.equals("Argonian") || npc_.RNAM.equals("Khajiit");
 
 			//Do the inventory items
 			recordStoreTes3 = (IRecordStoreTes3) master;
@@ -113,7 +113,7 @@ public class J3dNPC_ extends J3dRECOTypeCha
 			// hassle!
 			//if (npc_.MODL != null)
 			{
-				//skeletonNifFile = npc_.MODL.model.str;
+				//skeletonNifFile = npc_.MODL.model;
 				//skeletonNifFile = "r\\x" + skeletonNifFile.substring(2);
 				//System.out.println("MODL " + skeletonNifFile);
 			}
@@ -152,8 +152,8 @@ public class J3dNPC_ extends J3dRECOTypeCha
 
 	public static void addCLOT(CLOT clot, AttachedParts attachFileNames, IRecordStoreTes3 recordStoreTes3, boolean firstPerson)
 	{
-		//	System.out.println("It's an clot " + " " + clot.EDID.str);
-		//	System.out.println("clot.MODL.model.str " + clot.MODL.model.str);//MODL is ground
+		//	System.out.println("It's an clot " + " " + clot.EDID);
+		//	System.out.println("clot.MODL.model " + clot.MODL.model);//MODL is ground
 		//	System.out.println(" " + clot.DATA.Type);
 
 		// belts rings and amulets are not shown
@@ -191,8 +191,8 @@ public class J3dNPC_ extends J3dRECOTypeCha
 			}
 			if (!hasOneNif)
 			{
-				System.out.println("Arrgh no nif for clot clot.EDID.str=" + clot.EDID.str);
-				System.out.println("clot.MODL.model.str " + clot.MODL.model.str);//MODL is ground
+				System.out.println("Arrgh no nif for clot clot.EDID=" + clot.getEDID());
+				System.out.println("clot.MODL.model " + clot.MODL.model);//MODL is ground
 				System.out.println("type = " + clot.DATA.Type);
 			}
 
@@ -212,13 +212,13 @@ public class J3dNPC_ extends J3dRECOTypeCha
 
 	public static void addARMO(ARMO armo, AttachedParts attachFileNames, IRecordStoreTes3 recordStoreTes3, boolean firstPerson)
 	{
-		//	System.out.println("It's an armo " + " " + armo.EDID.str);
-		//	System.out.println("armo.MODL.model.str " + armo.MODL.model.str);//MODL is ground
+		//	System.out.println("It's an armo " + " " + armo.EDID);
+		//	System.out.println("armo.MODL.model " + armo.MODL.model);//MODL is ground
 		//	System.out.println(" " + armo.DATA.Type);
 		//	System.out.println("ITEX = Icon Filename, required " + armo.ICON.str);
 		//	System.out.println("FULL " + armo.FULL.str);
 
-		//armo.MODL.model.str a\A_Imperial_A_Gauntlet_GND.nif
+		//armo.MODL.model a\A_Imperial_A_Gauntlet_GND.nif
 		// appears in a file called  a_imperial_skins.nif
 		// along with each hand and the curaiss
 		// a_imperial_skirt is also in a boned and animated file
@@ -304,8 +304,8 @@ public class J3dNPC_ extends J3dRECOTypeCha
 		}
 		if (!hasOneNif)
 		{
-			System.out.println("Arrgh no nif for armo.EDID.str=" + armo.EDID.str);
-			System.out.println("armo.MODL.model.str " + armo.MODL.model.str);//MODL is ground
+			System.out.println("Arrgh no nif for armo.EDID=" + armo.getEDID());
+			System.out.println("armo.MODL.model " + armo.MODL.model);//MODL is ground
 			System.out.println("type = " + armo.DATA.Type);
 		}
 
@@ -313,7 +313,7 @@ public class J3dNPC_ extends J3dRECOTypeCha
 
 	public static void addWEAP(WEAP weap, AttachedParts attachFileNames, IRecordStoreTes3 recordStoreTes3)
 	{
-		String weapStr = weap.MODL.model.str;
+		String weapStr = weap.MODL.model;
 		attachFileNames.addPart(AttachedParts.Part.Weapon, weapStr);
 
 		// right hand has a bone called "Weapon Bone"
@@ -327,17 +327,17 @@ public class J3dNPC_ extends J3dRECOTypeCha
 		{
 			// if head has been replaced by a full helmet already don't add hair
 			if (!attachFileNames.hasPart(AttachedParts.Part.Head))
-				addAttachNoSwap(AttachedParts.Part.Hair, "b\\" + npc_.KNAM.model.str + nif);
+				addAttachNoSwap(AttachedParts.Part.Hair, "b\\" + npc_.KNAM.model + nif);
 		}
 
 		if (npc_.BNAM != null)
 		{
-			addAttachNoSwap(AttachedParts.Part.Head, "b\\" + npc_.BNAM.model.str + nif);
+			addAttachNoSwap(AttachedParts.Part.Head, "b\\" + npc_.BNAM.model + nif);
 		}
 
 		if (npc_.RNAM != null)
 		{
-			String pre = "b\\b_n_" + npc_.RNAM.str + "_" + (female ? "f" : "m") + "_";
+			String pre = "b\\b_n_" + npc_.RNAM + "_" + (female ? "f" : "m") + "_";
 
 			addAttachNoSwap(AttachedParts.Part.Right_Ankle, pre + "ankle" + nif);
 			addAttachNoSwap(AttachedParts.Part.Left_Ankle, pre + "ankle" + nif);
@@ -360,7 +360,7 @@ public class J3dNPC_ extends J3dRECOTypeCha
 
 			String fa = pre + "forearm" + nif;
 			// argonian female forearms missing, odd?
-			if (npc_.RNAM.str.equals("Argonian") && female)
+			if (npc_.RNAM.equals("Argonian") && female)
 				fa = "b\\b_n_Argonian_m_forearm" + nif;
 
 			addAttachNoSwap(AttachedParts.Part.Right_Forearm, fa);
@@ -375,7 +375,7 @@ public class J3dNPC_ extends J3dRECOTypeCha
 			addAttachNoSwap(AttachedParts.Part.Left_Hand, pre + "skins" + nif);
 
 			// feet and tails part of skins for beast races		 
-			if (!npc_.RNAM.str.equals("Argonian") && !npc_.RNAM.str.equals("Khajiit"))
+			if (!npc_.RNAM.equals("Argonian") && !npc_.RNAM.equals("Khajiit"))
 			{
 				addAttachNoSwap(AttachedParts.Part.Right_Foot, pre + "foot" + nif);
 				addAttachNoSwap(AttachedParts.Part.Left_Foot, pre + "foot" + nif);

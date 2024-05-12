@@ -6,7 +6,6 @@ import esfilemanager.common.data.record.Record;
 import esfilemanager.common.data.record.Subrecord;
 import esmj3d.data.shared.records.CommonLIGH;
 import esmj3d.data.shared.records.LAND.DATA;
-import esmj3d.data.shared.subrecords.FormID;
 import esmj3d.data.shared.subrecords.LString;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
@@ -15,17 +14,17 @@ import utils.ESConfig;
 
 public class LIGH extends CommonLIGH
 {
-	public ZString EDID;
+	
 
 	public LString FULL;
 
 	public DATA DATA;
 
-	public ZString ICON;
+	public String ICON;
 
-	public ZString SNAM;
+	public String SNAM;
 	
-	public ZString SCRI;
+	public String SCRI;
 
 	public LIGH(Record recordData)
 	{
@@ -38,7 +37,7 @@ public class LIGH extends CommonLIGH
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("FNAM"))
 			{
@@ -81,11 +80,11 @@ public class LIGH extends CommonLIGH
 			}
 			else if (sr.getSubrecordType().equals("SCRI"))
 			{
-				SCRI = new ZString(bs);
+				SCRI = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("ITEX"))
 			{
-				ICON = new ZString(bs);
+				ICON = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("MODL"))
 			{
@@ -93,7 +92,7 @@ public class LIGH extends CommonLIGH
 			}
 			else if (sr.getSubrecordType().equals("SNAM"))
 			{
-				SNAM = new ZString(bs);
+				SNAM = ZString.toString(bs);
 			}
 			else
 			{

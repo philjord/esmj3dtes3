@@ -7,12 +7,13 @@ import esfilemanager.common.data.record.Subrecord;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.ZString;
 
+
 public class BSGN extends RECO
 {
-	public ZString EDID = null;
-	public ZString FULL = null;
-	public ZString ICON = null;
-	public ZString DESC = null;
+	
+	public String FULL = null;
+	public String ICON = null;
+	public String DESC = null;
 
 	public BSGN(Record recordData)
 	{
@@ -25,19 +26,19 @@ public class BSGN extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("FNAM"))
 			{
-				FULL = new ZString(bs);
+				FULL = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("TNAM"))
 			{
-				ICON = new ZString(bs);
+				ICON = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("DESC"))
 			{
-				DESC = new ZString(bs);
+				DESC = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("NPCS"))
 			{

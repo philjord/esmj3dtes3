@@ -13,7 +13,7 @@ import esmj3dtes3.data.subrecords.DATA;
 public class INGR extends RECO
 {
 
-	public ZString EDID;
+	
 
 	public LString FULL;
 
@@ -21,7 +21,7 @@ public class INGR extends RECO
 
 	public MODL MODL;
 
-	public ZString ICON;
+	public String ICON;
 
 	public INGR(Record recordData)
 	{
@@ -35,7 +35,7 @@ public class INGR extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("MODL"))
 			{
@@ -51,7 +51,7 @@ public class INGR extends RECO
 			}
 			else if (sr.getSubrecordType().equals("ITEX"))
 			{
-				ICON = new ZString(bs);
+				ICON = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("SCRI"))
 			{
@@ -64,9 +64,11 @@ public class INGR extends RECO
 		}
 	}
 
+	@Override
 	public String showDetails()
 	{
-		return "STAT : (" + formId + "|" + Integer.toHexString(formId) + ") " + EDID.str + " : " + MODL.model;
+		return super.showDetails() + " : " + MODL.model;
 	}
+
 
 }

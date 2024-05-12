@@ -11,13 +11,13 @@ import tools.io.ESMByteConvert;
 
 public class LEVI extends RECO
 {
-	public ZString EDID = null;
+	
 
 	public DATA DATA = null;
 
 	public int numItems = 0;
 
-	public ZString[] itemID;
+	public String[] itemID;
 
 	public int[] itemLevel;
 
@@ -31,7 +31,7 @@ public class LEVI extends RECO
 
 		if (sr.getSubrecordType().equals("NAME"))
 		{
-			EDID = new ZString(bs);
+			setEDID(bs);
 		}
 		sr = subrecords.get(1);
 		bs = sr.getSubrecordData();
@@ -52,7 +52,7 @@ public class LEVI extends RECO
 		{
 			numItems = ESMByteConvert.extractInt(bs, 0);
 		}
-		itemID = new ZString[numItems];
+		itemID = new String[numItems];
 		itemLevel = new int[numItems];
 		for (int i = 0; i < numItems; i++)
 		{
@@ -61,7 +61,7 @@ public class LEVI extends RECO
 
 			if (sr.getSubrecordType().equals("INAM"))
 			{
-				itemID[i] = new ZString(bs);
+				itemID[i] = ZString.toString(bs);
 			}
 			sr = subrecords.get(4 + (i * 2) + 1);
 			bs = sr.getSubrecordData();

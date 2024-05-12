@@ -8,14 +8,14 @@ import org.jogamp.vecmath.Vector3f;
 import esfilemanager.common.data.record.Record;
 import esfilemanager.common.data.record.Subrecord;
 import esmj3d.data.shared.records.RECO;
-import esmj3d.data.shared.subrecords.ZString;
+
 import tools.io.ESMByteConvert;
 import utils.convert.ConvertFromNif;
 
 public class PGRD extends RECO
 {
 	// NOTe this is the name of teh CELL so we can't use it as an editorId
-	public ZString EDID = null;
+	
 
 	public DATA DATA;
 
@@ -34,7 +34,7 @@ public class PGRD extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("DATA"))
 			{

@@ -9,14 +9,15 @@ import esmj3d.data.shared.subrecords.LString;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
 
+
 // does not share generic door
 public class DOOR extends RECO
 {
-	public ZString EDID;
+	
 	public LString FULL;
 	public MODL MODL;
-	public ZString SNAM;
-	public ZString ANAM;
+	public String SNAM;
+	public String ANAM;
 
 	public DOOR(Record recordData)
 	{
@@ -30,7 +31,7 @@ public class DOOR extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("FNAM"))
 			{
@@ -46,11 +47,11 @@ public class DOOR extends RECO
 			}
 			else if (sr.getSubrecordType().equals("SNAM"))
 			{
-				SNAM = new ZString(bs);
+				SNAM = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("ANAM"))
 			{
-				ANAM = new ZString(bs);
+				ANAM = ZString.toString(bs);
 			}
 			else
 			{

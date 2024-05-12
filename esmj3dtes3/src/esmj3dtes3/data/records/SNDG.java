@@ -5,12 +5,11 @@ import java.util.List;
 import esfilemanager.common.data.record.Record;
 import esfilemanager.common.data.record.Subrecord;
 import esmj3d.data.shared.records.RECO;
-import esmj3d.data.shared.subrecords.ZString;
 import esmj3dtes3.data.subrecords.DATA;
 
 public class SNDG extends RECO
 {
-	public ZString EDID;
+	
 
 	public DATA DATA;
 
@@ -26,7 +25,7 @@ public class SNDG extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("DATA"))
 			{
@@ -47,9 +46,5 @@ public class SNDG extends RECO
 		}
 	}
 
-	public String showDetails()
-	{
-		return "SNDG : (" + formId + "|" + Integer.toHexString(formId) + ") " + EDID.str;
-	}
 
 }

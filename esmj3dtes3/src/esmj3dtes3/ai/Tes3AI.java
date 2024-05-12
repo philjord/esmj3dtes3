@@ -60,7 +60,7 @@ public abstract class Tes3AI implements AIActor, AIThinker
 			if (noGroundFoundCount == 10)
 			{
 				System.out.println(
-						"noGroundFoundCount for  " + instRECO.NAMEref.str + " at " + location + " cell " + aiCellGeneral.getCellLocation());
+						"noGroundFoundCount for  " + instRECO.NAMEref + " at " + location + " cell " + aiCellGeneral.getCellLocation());
 			}
 
 			// first check no overhead(in case of floors etc

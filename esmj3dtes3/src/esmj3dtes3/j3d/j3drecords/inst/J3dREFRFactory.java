@@ -5,7 +5,6 @@ import esfilemanager.common.data.record.Record;
 import esfilemanager.tes3.IRecordStoreTes3;
 import esmj3d.data.shared.records.RECO;
 import esmj3d.data.shared.subrecords.MODL;
-import esmj3d.data.shared.subrecords.ZString;
 import esmj3d.j3d.j3drecords.inst.J3dRECOChaInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECODynInst;
 import esmj3d.j3d.j3drecords.inst.J3dRECOInst;
@@ -51,7 +50,7 @@ public class J3dREFRFactory
 		if (modl != null)
 		{
 			J3dRECODynInst j3dinst = new J3dRECODynInst(refr, true, true, makePhys);
-			j3dinst.setJ3dRECOType(new J3dRECOTypeDynamic(reco, modl.model.str, makePhys, mediaSources));
+			j3dinst.setJ3dRECOType(new J3dRECOTypeDynamic(reco, modl.model, makePhys, mediaSources));
 			return j3dinst;
 		}
 		else
@@ -66,7 +65,7 @@ public class J3dREFRFactory
 		if (modl != null)
 		{
 			J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, true, true, makePhys);
-			j3dinst.setJ3dRECOType(new J3dRECOTypeActionable(reco, modl.model.str, makePhys, mediaSources));
+			j3dinst.setJ3dRECOType(new J3dRECOTypeActionable(reco, modl.model, makePhys, mediaSources));
 			return j3dinst;
 		}
 		else
@@ -79,7 +78,7 @@ public class J3dREFRFactory
 	public static J3dRECOStatInst makeJ3DReferFar(REFR refr, IRecordStore master, MediaSources mediaSources)
 	{
 
-		Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref.str);
+		Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref);
 
 		if (baseRecord.getRecordType().equals("STAT"))
 		{
@@ -87,9 +86,9 @@ public class J3dREFRFactory
 
 			if (stat.MODL != null)
 			{
-				float size = Tes3ModelSizes.getSize(stat.MODL.model.str, refr.getScale());
+				float size = Tes3ModelSizes.getSize(stat.MODL.model, refr.getScale());
 				J3dRECOStatInst j3dinst = new J3dRECOStatInstFar(refr, size);
-				j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model.str, false, mediaSources));
+				j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model, false, mediaSources));
 				return j3dinst;
 			}
 		}
@@ -104,7 +103,7 @@ public class J3dREFRFactory
 	public static J3dRECOInst makeJ3DRefer(REFR refr, boolean makePhys, IRecordStore master, MediaSources mediaSources)
 	{
 
-		Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref.str);
+		Record baseRecord = ((IRecordStoreTes3) master).getRecord(refr.NAMEref);
 
 		if (baseRecord.getRecordType().equals("NPC_"))
 		{
@@ -138,25 +137,25 @@ public class J3dREFRFactory
 			if (stat.MODL != null)
 			{
 
-				/*	if (stat.MODL.model.str.toLowerCase().contains("ex_dae_claw_01.nif"))
+				/*	if (stat.MODL.model.toLowerCase().contains("ex_dae_claw_01.nif"))
 					{
 						System.out.println("Howdy howdy!");
 					}*/
 
-				if (Tes3ModelSizes.distant(stat.MODL.model.str, refr.getScale()))
+				if (Tes3ModelSizes.distant(stat.MODL.model, refr.getScale()))
 				{
 					//J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, false, makePhys);
-					//j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model.str, makePhys, mediaSources));
+					//j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model, makePhys, mediaSources));
 					//return j3dinst;
-					float size = Tes3ModelSizes.getSize(stat.MODL.model.str, refr.getScale());
+					float size = Tes3ModelSizes.getSize(stat.MODL.model, refr.getScale());
 					J3dRECOStatInst j3dinst = new J3dRECOStatInstFar(refr, size);
-					j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model.str, false, mediaSources));
+					j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model, false, mediaSources));
 					return j3dinst;
 				}
 				else
 				{
 					J3dRECOStatInst j3dinst = new J3dRECOStatInst(refr, true, true, makePhys);
-					j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model.str, makePhys, mediaSources));
+					j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model, makePhys, mediaSources));
 					return j3dinst;
 				}
 			}
@@ -236,7 +235,7 @@ public class J3dREFRFactory
 		{
 			//TODO: other markers
 			DOOR door = new DOOR(baseRecord);
-			if (door.MODL.model.str.startsWith("Marker_"))
+			if (door.MODL.model.startsWith("Marker_"))
 				return null;
 			return new J3dRECOStatInst(refr, new J3dPivotDOOR(door, makePhys, mediaSources, (IRecordStoreTes3) master), true, true, makePhys);
 		}
@@ -281,7 +280,7 @@ public class J3dREFRFactory
 	private static J3dRECOTypeCha makeLVLC(LEVC lvlc, IRecordStore master, boolean makePhys, MediaSources mediaSources)
 	{
 		// TODO: randomly picked for now
-		ZString[] LVLOs = lvlc.charID;
+		String[] LVLOs = lvlc.charID;
 
 		int idx = (int) (Math.random() * LVLOs.length);
 		idx = idx == LVLOs.length ? 0 : idx;
@@ -289,7 +288,7 @@ public class J3dREFRFactory
 		if (DEBUG_FIRST_LIST_ITEM_ONLY)
 			idx = 0;
 
-		Record baseRecord = ((IRecordStoreTes3) master).getRecord(LVLOs[idx].str);
+		Record baseRecord = ((IRecordStoreTes3) master).getRecord(LVLOs[idx]);
 
 		if (baseRecord.getRecordType().equals("LEVC"))
 		{

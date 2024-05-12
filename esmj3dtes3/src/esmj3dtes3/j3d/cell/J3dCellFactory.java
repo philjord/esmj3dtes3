@@ -232,12 +232,12 @@ public class J3dCellFactory extends J3dICellFactory {
 			Record record = i.next();
 			if (record.getRecordType().equals("REFR")) {
 				REFR refr = new REFR(record);
-				Record baseRecord = getRecord(refr.NAMEref.str);
+				Record baseRecord = getRecord(refr.NAMEref);
 				if (baseRecord.getRecordType().equals("STAT")) {
 					STAT stat = new STAT(baseRecord);
 
 					if (stat.MODL != null) {
-						if (Tes3ModelSizes.distant(stat.MODL.model.str, refr.getScale()))
+						if (Tes3ModelSizes.distant(stat.MODL.model, refr.getScale()))
 							ret.add(record);
 
 					}

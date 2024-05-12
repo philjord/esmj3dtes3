@@ -13,9 +13,9 @@ public class REFR extends CommonREFR
 {
 	public int FRMR = 0;
 
-	public ZString NAMEref;
+	public String NAMEref;
 
-	public ZString DNAM;
+	public String DNAM;
 
 	//loaded by commonREFR for us into xtel
 	/*DODT = XYZ Pos, XYZ Rotation of exit (24 bytes, Door objects)
@@ -43,11 +43,11 @@ public class REFR extends CommonREFR
 			}
 			else if (sr.getSubrecordType().equals("NAME"))
 			{
-				NAMEref = new ZString(bs);
+				NAMEref = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("DNAM"))
 			{
-				DNAM = new ZString(bs);
+				DNAM = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("DODT"))
 			{//noe load data into xtel
@@ -69,6 +69,6 @@ public class REFR extends CommonREFR
 	@Override
 	public String toString()
 	{
-		return this.getClass().getSimpleName() + " : " + (EDID != null ? EDID : NAMEref != null ? NAMEref.str : "");
+		return super.showDetails() +  " : " + (NAMEref != null ? NAMEref : "");
 	}
 }

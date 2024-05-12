@@ -5,12 +5,11 @@ import java.util.List;
 import esfilemanager.common.data.record.Record;
 import esfilemanager.common.data.record.Subrecord;
 import esmj3d.data.shared.records.InstRECO;
-import esmj3d.data.shared.subrecords.ZString;
 import tools.io.ESMByteConvert;
 
 public class CELL extends InstRECO// note not from CommonCELL
 {
-	public ZString EDID;
+	
 
 	public int flags = 0;
 
@@ -29,7 +28,7 @@ public class CELL extends InstRECO// note not from CommonCELL
 		byte[] bs = sr.getSubrecordData();
 		if (sr.getSubrecordType().equals("NAME"))
 		{
-			EDID = new ZString(bs);
+			setEDID(bs);
 		}
 		sr = subrecords.get(1);
 		bs = sr.getSubrecordData();
@@ -72,11 +71,6 @@ public class CELL extends InstRECO// note not from CommonCELL
 
 		}
 
-	}
-
-	public String showDetails()
-	{
-		return "CELL : (" + formId + "|" + Integer.toHexString(formId) + ") " + EDID.str + " : " + EDID.str;
 	}
 
 }

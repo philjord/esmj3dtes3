@@ -67,7 +67,7 @@ public class J3dCREA extends J3dRECOTypeCha
 		{
 			if (crea.MODL != null)
 			{
-				String nifFileName = crea.MODL.model.str;// both skel and skin
+				String nifFileName = crea.MODL.model;// both skel and skin
 
 				// must insert x
 

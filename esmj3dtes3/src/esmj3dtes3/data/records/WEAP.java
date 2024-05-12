@@ -12,7 +12,7 @@ import tools.io.ESMByteConvert;
 
 public class WEAP extends RECO
 {
-	public ZString EDID;
+	
 
 	public MODL MODL;
 
@@ -20,11 +20,11 @@ public class WEAP extends RECO
 
 	public DATA DATA;
 
-	public ZString ICON;
+	public String ICON;
 
-	public ZString ENAM;
+	public String ENAM;
 
-	public ZString SCRI;
+	public String SCRI;
 
 	public WEAP(Record recordData)
 	{
@@ -38,7 +38,7 @@ public class WEAP extends RECO
 
 			if (sr.getSubrecordType().equals("NAME"))
 			{
-				EDID = new ZString(bs);
+				setEDID(bs);
 			}
 			else if (sr.getSubrecordType().equals("MODL"))
 			{
@@ -54,15 +54,15 @@ public class WEAP extends RECO
 			}
 			else if (sr.getSubrecordType().equals("ITEX"))
 			{
-				ICON = new ZString(bs);
+				ICON = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("ENAM"))
 			{
-				ENAM = new ZString(bs);
+				ENAM = ZString.toString(bs);
 			}
 			else if (sr.getSubrecordType().equals("SCRI"))
 			{
-				SCRI = new ZString(bs);
+				SCRI = ZString.toString(bs);
 			}
 
 			else
