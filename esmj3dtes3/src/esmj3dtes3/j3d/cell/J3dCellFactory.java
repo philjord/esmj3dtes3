@@ -58,8 +58,13 @@ public class J3dCellFactory extends J3dICellFactory {
 	private WRLD getWRLD(int formId) {
 		try {
 			PluginRecord record = esmManager.getWRLD(formId);
-			WRLD wrld = new WRLD(record);
-			return wrld;
+			if (record != null) {
+				WRLD wrld = new WRLD(record);
+				return wrld;
+			} else {
+				System.err.println("getWRLD record is null " + formId + ", presumably not a world record? ");
+			}
+
 		} catch (DataFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -303,7 +308,7 @@ public class J3dCellFactory extends J3dICellFactory {
 		return null;
 	}
 
-	//TESIII has no persisstent children, so if someone wants it tehy ahve to dig throug all children instead
+	//TESIII has no persistent children, so if someone wants it they have to dig through all children instead
 	@Override
 	public PluginGroup getPersistentChildrenOfCell(int formId) {
 		try {
