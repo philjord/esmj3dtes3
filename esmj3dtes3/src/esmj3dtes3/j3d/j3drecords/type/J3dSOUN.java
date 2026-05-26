@@ -2,7 +2,7 @@ package esmj3dtes3.j3d.j3drecords.type;
 
 import esmj3d.j3d.j3drecords.type.J3dRECOType;
 import esmj3dtes3.data.records.SOUN;
-import utils.ESConfig;
+import utils.convert.ConvertFromNif;
 import utils.source.MediaSources;
 
 /**Notice not from J3dGeneralSOUN at this point as that's a bit odd
@@ -18,7 +18,7 @@ public class J3dSOUN extends J3dRECOType
 		if (soun.FNAM != null)
 		{
 			//TODO: min range as well
-			playSound("Sound\\" + soun.FNAM, soun.MaxRange * ESConfig.ES_TO_METERS_SCALE, -1, soun.Volume / 255f);
+			playSound("Sound\\" + soun.FNAM, ConvertFromNif.toJ3d(soun.MaxRange), -1, soun.Volume / 255f);
 		}
 	}
 

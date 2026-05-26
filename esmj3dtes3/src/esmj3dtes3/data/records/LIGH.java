@@ -10,7 +10,7 @@ import esmj3d.data.shared.subrecords.LString;
 import esmj3d.data.shared.subrecords.MODL;
 import esmj3d.data.shared.subrecords.ZString;
 import tools.io.ESMByteConvert;
-import utils.ESConfig;
+import utils.convert.ConvertFromNif;
 
 public class LIGH extends CommonLIGH
 {
@@ -70,7 +70,7 @@ public class LIGH extends CommonLIGH
 				// lin co = 2/r
 				// quad co = 1/r^2
 
-				float r = radius * ESConfig.ES_TO_METERS_SCALE;
+				float r = ConvertFromNif.toJ3d(radius);
 				this.fade = 2f / r;
 				this.falloffExponent = 1f / (r * r);
 			}

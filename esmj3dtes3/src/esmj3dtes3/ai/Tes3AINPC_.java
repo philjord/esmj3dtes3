@@ -17,6 +17,7 @@ import nif.j3d.animation.J3dNiControllerSequence;
 import nif.j3d.animation.J3dNiGeomMorpherController;
 import tools3d.audio.SimpleSounds;
 import utils.ESConfig;
+import utils.convert.ConvertFromNif;
 
 public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 {
@@ -254,7 +255,7 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 
 		Vector3f dist = new Vector3f(location);
 		dist.sub(charLocation);
-		if (dist.length() < 150 * ESConfig.ES_TO_METERS_SCALE)
+		if (dist.length() < ConvertFromNif.toJ3d(150))
 		{
 			if (chargendockguardStep == 0)
 			{
@@ -355,7 +356,7 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 		Vector3f dist = new Vector3f(location);
 		dist.sub(charLocation);
 
-		if (dist.length() < 180 * ESConfig.ES_TO_METERS_SCALE)
+		if (dist.length() < ConvertFromNif.toJ3d(180))
 		{
 			//Script: CharGenBoatNPC
 			//	System.out.println("I'm thinking " + instRECO.NAMEref.str + " " + location);
