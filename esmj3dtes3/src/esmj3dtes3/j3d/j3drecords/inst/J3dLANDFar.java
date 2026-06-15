@@ -335,8 +335,8 @@ public class J3dLANDFar extends J3dLAND
 		{
 			if (shaderProgram == null)
 			{
-				String vertexProgram = ShaderSourceIO.getTextFileAsString("shaders/landtes3far.vert");
-				String fragmentProgram = ShaderSourceIO.getTextFileAsString("shaders/landtes3far.frag");
+				String vertexProgram = ShaderSourceIO.getTextFileAsString("shaders/tes3_landfar.vert");
+				String fragmentProgram = ShaderSourceIO.getTextFileAsString("shaders/tes3_landfar.frag");
 
 				Shader[] shaders = new Shader[2];
 				shaders[0] = new SourceCodeShader(Shader.SHADING_LANGUAGE_GLSL, Shader.SHADER_TYPE_VERTEX, vertexProgram) {
