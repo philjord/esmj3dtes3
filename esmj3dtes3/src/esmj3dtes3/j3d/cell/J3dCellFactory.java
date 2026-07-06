@@ -210,7 +210,10 @@ public class J3dCellFactory extends J3dICellFactory {
 
 	@Override
 	public J3dCELLDistant makeBGInteriorCELLDistant(int cellId, boolean makePhys) {
-
+		//FIXME: what am I thinking here? Distant cell refrs would need to have a 
+		// "remove when closer than" feature, which I don't have, cos exterior distant 
+		// cell are completely removed and replaced by near cells, but this is not the case for interiors 
+/*
 		try {
 			PluginRecord record = esmManager.getInteriorCELL(cellId);
 
@@ -226,7 +229,7 @@ public class J3dCellFactory extends J3dICellFactory {
 			e1.printStackTrace();
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		}
+		}*/
 		return null;
 	}
 
