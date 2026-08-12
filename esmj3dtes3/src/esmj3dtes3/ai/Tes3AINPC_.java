@@ -16,7 +16,6 @@ import nif.character.NifCharacterTes3;
 import nif.j3d.animation.J3dNiControllerSequence;
 import nif.j3d.animation.J3dNiGeomMorpherController;
 import tools3d.audio.SimpleSounds;
-import utils.ESConfig;
 import utils.convert.ConvertFromNif;
 
 public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
@@ -130,7 +129,7 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 				if (nc != null)
 				{
 
-					J3dNiControllerSequence cs = nc.getCurrentControllerSequence();
+					J3dNiControllerSequence cs = (J3dNiControllerSequence)nc.getCurrentControllerSequence();
 					if (chargenboatguard2Step == 0)
 					{
 						if (!cs.getFireName().equals("walkforward") || cs.isNotRunning())
@@ -461,7 +460,7 @@ public class Tes3AINPC_ extends Tes3AI implements AIActor, AIThinker
 				NifCharacter nc = visual.getJ3dRECOType().getNifCharacter();
 				if (nc != null)
 				{
-					J3dNiControllerSequence cs = nc.getCurrentControllerSequence();
+					J3dNiControllerSequence cs = (J3dNiControllerSequence)nc.getCurrentControllerSequence();
 					if (fargothStep < 2)
 					{
 						if (!cs.getFireName().equals("walkforward") && !cs.getFireName().equals("turnleft") || cs.isNotRunning())
