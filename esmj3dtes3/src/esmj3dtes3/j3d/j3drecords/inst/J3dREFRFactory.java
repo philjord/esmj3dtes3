@@ -149,7 +149,7 @@ public class J3dREFRFactory
 					//return j3dinst;
 					float size = Tes3ModelSizes.getSize(stat.MODL.model, refr.getScale());
 					J3dRECOStatInst j3dinst = new J3dRECOStatInstFar(refr, size);
-					j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model, false, mediaSources));
+					j3dinst.setJ3dRECOType(new J3dRECOTypeStatic(stat, stat.MODL.model, makePhys, mediaSources));
 					return j3dinst;
 				}
 				else
