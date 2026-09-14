@@ -267,7 +267,7 @@ public class J3dNPC_ extends J3dRECOTypeCha
 				nifFileName = "a\\a_iron_skinned.nif";
 			else if (p.partName.equals("a_nordicfur_cuirass") || p.partName.equals("a_nordicfur_gauntlet"))
 				nifFileName = "a\\a_nordicfur_skinned.nif";
-			else if (p.partName.equals("a_steel_cuirass"))
+			else if (p.partName.equals("a_steel_cuirass") || p.partName.equals("a_steel_gauntlet.nif"))
 				nifFileName = "a\\a_steel_skin.nif";
 			else if (p.partName.equals("a_m_chitin_chest"))
 				nifFileName = "a\\a_m_chitin_skinned.nif";
@@ -296,7 +296,7 @@ public class J3dNPC_ extends J3dRECOTypeCha
 
 			//a_nordicfur_hands.1st.nif needs to be considered above
 
-			// looks like things with the name cuirass are skinned with no hands
+			// looks like things with the name cuirass are skinned sometimes with hands
 			// looks like things with the name skin are chest and hands
 			if (!firstPerson || AttachedParts.isFirstPersonVisible(AttachedParts.getPartForLoc(p.index)))
 				attachFileNames.addPart(AttachedParts.getPartForLoc(p.index), nifFileName);
